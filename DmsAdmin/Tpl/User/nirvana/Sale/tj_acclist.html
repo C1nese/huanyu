@@ -1,0 +1,106 @@
+<if condition="($sale:extra eq true) or (count($area) gt 0)"><script type="text/javascript" src="__PUBLIC__/directSell/area_select.js"></script></if>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<!-- <extend name="Public:head" /> -->
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('推广链接审核')}</h2>
+        </div>
+        <div class="pull-right">
+            <button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
+        </div>
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME LEFT -->
+        <form action="#" class="form-horizontal">
+            <div class="col-md-3_1" style="padding-right: 0px;">
+			<div class="panel panel-default">
+				<div class="row">
+					<div class="panel panel-colorful" style="margin-bottom: 0px;">
+						<div class="panel-heading ui-draggable-handle"
+							style="border-bottom: 0px;">
+							<h3 style="margin: 0px;">
+								<span class="fa fa-user"></span> {:GET_F_L('用户信息')}
+							</h3>
+						</div>
+						<div class="text-center">
+							<p style="text-align: center; font-size: 16px; margin-top: 20px;"></p>
+						</div>
+					</div>
+					<div class="panel-body form-group-separated">
+						<div class="form-group" style="padding: 0px; margin: 0px;">
+							<label class="col-md-5 col-xs-5 control-label label-title">{:GET_F_L('用户编号')}</label>
+							<div class="col-md-6 col-xs-7 line-height-35 label-title"
+								style="margin: 0;">
+								{$userinfo.编号} <input type="hidden" value="{$userinfo['编号']}"
+									size="20" name="userid" id="userid" />
+							</div>
+						</div>
+						<foreach name="userlevel" item="lv" key="k">
+						<div class="form-group" style="padding: 0px; margin: 0px;">
+							<label class="col-md-5 col-xs-5 control-label label-title">{:GET_F_L($k)}</label>
+							<div class="col-md-6 col-xs-7 line-height-35 label-title"
+								style="margin: 0;">{:GET_F_L($lv[byname])}</div>
+						</div>
+						</foreach>
+
+					</div>
+				</div>
+			</div>
+		</div>
+        </form>
+    <!-- END CONTENT FRAME LEFT -->
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="col-md-9_1">
+        <form action="#" class="form-horizontal">
+
+            <div class="panel panel-colorful">
+                <div class="panel-heading">
+                    <h3>{:GET_F_L('已选产品')}</h3>
+                </div>
+                <div class="panel-body form-group-separated">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-actions">
+                            <thead>
+                            <tr>
+                                <foreach name="data.field" item="vo">
+                                    <th>{:GET_F_L($vo)}</th>
+                                </foreach>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <foreach name="data.list" item="vo">
+                                <tr class="datalist">
+                                    <foreach name="vo" item="vo1">
+                                        <td ><nobr>{$vo.$key}</nobr></td>
+                                    </foreach>
+                                </tr>
+                            </foreach>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+</div>
+<!-- END CONTENT FRAME -->
+
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+</body>
+</html>

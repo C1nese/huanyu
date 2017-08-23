@@ -1,0 +1,398 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+
+<div class="col-md-12">
+    <div class="alert alert-warning" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+		</button>
+        <strong>{:GET_F_L('提示！')}</strong>{:GET_F_L('您可以在此页面选择申购金转账给其他用户，或者将您的收益转为申购金')}
+    </div>
+</div>
+<!-- END BREADCRUMB -->
+<div class="row get_list" >
+	<div class="col-md-12">
+
+		<form class="form-horizontal" action="__GROUP__/Transfer/giveSave"  method="post"  id="register">
+			<div class="panel panel-colorful">
+				<div class="panel-heading">
+					<h3>{:GET_F_L('货币转账')}</h3>
+					<ul class="panel-controls">
+						<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+					</ul>
+				</div>
+				<div class="panel-body form-group-separated">
+					<div class="form-group line-height-30">
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('转账选择')}</label>
+						<div class="col-md-6 col-xs-12"  style="padding-right:22px;">
+							<select class="form-control select" name="giveTo" onchange="giveType(this.options[this.options.selectedIndex].value)" id="giveTo">
+								<option value="">{:GET_F_L('请选择转账货币')}</option>
+								<foreach name="bankdata" item="bankdata" key='key'>
+									<option value="{$key}">{$bankdata}</option>
+								</foreach>
+							</select>
+						</div>
+					</div>
+					<div class="form-group line-height-30" id='zhye'>
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('账户余额')}</label>
+						<div class="col-md-6 col-xs-12 line-height-35 label-title" >
+							<span class="label label-warning label-form" id='balance'>{:$funbank[$bank->byname]['num']}</span>
+						</div>
+					</div>
+					<div class="form-group line-height-30" id='leixing'>
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('转账类型')}</label>
+						<div class="col-md-6 col-xs-12 line-height-35 label-title" style="padding-right:22px;"> 
+							<span class="text-info">
+								<span id="formbank"></span>  <i class="fa fa-arrow-right"></i>  <span id="tobank"></span>
+							</span>							
+						</div>
+					</div>
+					<div class="form-group line-height-30" id="totype">
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('转账对象')}</label>
+						<div class="col-md-6 col-xs-12 line-height-35 label-title" style="padding-right:22px;">
+							
+							<span id="inptext"></span>
+							<select class="form-control" id='seltype' name="giveTypes" onchange="giveCh(this.options[this.options.selectedIndex].value)">
+								<option value="wu">{:GET_F_L('请选择转账类型')}</option>
+								<option id='me' value="tome">{:GET_F_L('转给自己')}</option>
+								<option id='you' value="toyou">{:GET_F_L('转给其他用户')}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group line-height-30" id="hideuserid">
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('对方编号')}</label>
+						<div class="col-md-6 col-xs-12">
+							<div class="input-group"  style="margin-right:10px;">
+								<span class="input-group-addon"><span class="fa fa-user"></span></span>
+								<input type="text" class="form-control" name="userid" id="userid" value="" onkeyup="getid(this)" autocomplete="off"/>
+							</div>
+							<span id='giveidname' class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group line-height-30">
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('转账金额')}</label>
+						<div class="col-md-6 col-xs-12">
+							<div class="input-group"  style="margin-right:10px;">
+								<span class="input-group-addon"><span class="fa fa fa-rmb"></span></span>
+								<input type="text" class="form-control" name="givesum" id="givesum" value="" autocomplete="off"/>
+							</div>
+							<span id='giveMoneyInt1' class="help-block"></span>
+						</div>
+					</div>
+					<div class="form-group line-height-30">
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('手续费')}(<span id='givetax'></span>%)</label>
+						<div class="col-md-6 col-xs-12">
+							<strong class="line-height-30"><span id="tax">0</span><span id="tax_convert" style="color:red;"></span></strong>
+						</div>
+					</div>
+					<div class="form-group line-height-30" >
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('备注')}</label>
+						<div class="col-md-6 col-xs-12">
+							<textarea class="form-control" rows="5" name="memo" style="resize: none;"></textarea>
+						</div>
+					</div>
+
+					<if condition="($giveMoneyPass2 eq 1)">
+						<div class="form-group line-height-30">
+							<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('交易密码')}</label>
+							<div class="col-md-6 col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+									<input type="password" class="form-control" value="" name="pass2" />
+								</div>
+							</div>
+						</div>
+					</if>
+					<if condition="($giveMoneyPass3 eq 1)">
+						<div class="form-group line-height-30">
+							<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('三级密码')}</label>
+							<div class="col-md-6 col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+									<input type="password" class="form-control" value="" name="pass3" />
+								</div>
+							</div>
+						</div>
+					</if>
+
+					<if condition="($giveMoneySmsSwitch eq 1)">
+						<div class="form-group line-height-30">
+							<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('短信验证码')}</label>
+							<div class="col-md-6 col-xs-12">
+								<div class="input-group">
+									<span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+									<input name="getSmsVerfy" type="text" id="getSmsVerfy" class="form-control">
+									<input style="margin-left:10px" type="button" id="sendMess" value="{:GET_F_L('点击获取')}" />
+								</div>
+							</div>
+						</div>
+					</if>
+
+					<div class="form-group line-height-30">
+						<label class="col-md-3 col-xs-12 control-label">{:GET_F_L('确认操作')}</label>
+						<div class="col-md-6 col-xs-12">
+							<div class="input-group pull-right" style="padding-right:22px;">
+								<if condition="(isset($onlyLock))">
+									<strong class="text-danger">* {:GET_F_L('您有一笔未审核的提现记录，暂不能继续提现')} *</strong>
+									<else/>
+									<input type="hidden" class="form-control" name="giveTypes" id="inptype" value=""/>
+									<input class="btn btn-primary" type="submit"   id="subbut" value="确定" name="but" onclick="tijiao()" />
+								</if>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="panel-footer">
+
+					&nbsp;
+
+				</div>
+
+			</div>
+
+		</form>
+
+	</div>
+</div>
+<include file="Public:footer" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<!-- END WIDGETS -->
+<!--更改选择转账货币触发事件-->
+<script type="text/javascript">
+	$(function(){
+		var givethis=$("#giveTo option:selected").val();
+		giveType(givethis);
+	});
+
+	function giveType(id)
+	{
+		var giveToid = id;
+		$.post('__GROUP__/Transfer/giveType',{giveToid:giveToid},function(data){
+			try
+			{
+				eval("var json="+data);
+				console.log(json);
+				if(json.status == 1)
+				{
+					$('#seltype').val('wu');
+					$('#givesum').attr("value",'');
+					$("#tax").html("0");
+					$("#zhye").show();
+					$("#leixing").show();
+					for(var x in json){
+						if(x=='data'){
+							var bata=json[x];
+							
+							$("#formbank").html(bata.bank);
+							$("#tobank").html(bata.tobank);
+							
+							if(bata.tome==1 && bata.toyou==0){
+								$('#inptext').hide();
+								$('#inptype').val("tome");
+								$('#seltype').hide();
+							}else if(bata.tome==0 && bata.toyou==1){
+								$('#inptext').html('{:GET_F_L("转给其他用户")}');
+								$('#inptype').val("toyou");
+								$('#seltype').hide();
+							}else if(bata.tome==1 && bata.toyou==1){
+								$('#inptext').hide();
+								$('#inptype').hide();
+								$('#seltype').show();
+							}
+							for(var x in bata){
+								if(x=='balance'){
+									$('#balance').html(bata[x]);
+								}
+								
+								if(x=='toyou'){
+									if(bata[x]==1)
+									{
+										$('#hideuserid').show();
+										$('#totype').show();
+										$("#leixing").show();
+										$('#you').show();
+									}else{
+										$('#hideuserid').hide();
+										$('#you').hide();
+									}
+								}
+								if(x=='tome'){
+									if(bata[x]==1)
+									{
+										$('#totype').hide();
+										$("#leixing").show();
+										$('#me').show();
+									}else{
+										$('#me').hide();
+									}
+								}
+								if(x=='intnum'){
+									if(bata[x]>0)
+									{
+										$("#giveMoneyInt1").show();
+										$('#giveMoneyInt1').html('必须为'+bata[x]+'的整数倍');
+									}else{
+										$("#giveMoneyInt1").hide();
+									}
+								}
+								if(x=='tax'){
+									if(bata[x]>0)
+									{
+										$("#givetax").show();
+										$('#givetax').html(bata[x]);
+									}
+								}
+							}
+						}
+					}
+				}else{
+					$("#hideuserid").hide();
+					$("#totype").hide();
+					$("#zhye").hide();
+					$("#leixing").hide();
+					$("#giveMoneyInt1").hide();
+					$("#givetax").hide();
+				}
+			}
+			catch(e)
+			{
+				alert(data);
+				alert("网络异常!");
+			}
+		});
+	}
+</script>
+<!--如果选择只转入自己的货币那么转入人编号输入框不显示-->
+<script>
+	function giveCh(type)
+	{
+		if(type=='tome')
+		{
+			$('#hideuserid').hide();
+		}else{
+			$('#hideuserid').show();
+		}
+	}
+</script>
+<!--如果转账选择没有返回至则隐藏转账类型-->
+<script>
+	$("#hideuserid").hide();
+	$("#totype").hide();
+	$("#zhye").hide();
+	$("#leixing").hide();
+	$("#seltype").hide();
+</script>
+<!--对转入人编号进行验证-->
+<script type="text/javascript">
+	var vd;
+	function getid(e)
+	{
+		clearTimeout(vd);
+		id=e.id;
+		vd = setTimeout("giveAjax('"+e.id+"')",600);
+	}
+	function giveAjax(id)
+	{
+		var userid = $('#'+id).val();
+		$.post('__GROUP__/Transfer/giveAjax/',{userid:userid},function(data){
+			try
+			{
+				eval("var json="+data);
+				if( json.status == 0 )
+				{
+					$('#giveidname').html('编号不正确');
+				}
+				else
+				{
+					var userinfo = json.data;
+					$('#giveidname').html(userinfo['姓名']);
+					//$('#giveidname').html('');
+				}
+			}
+			catch(e)
+			{
+				alert(data);
+				alert("网络异常!");
+			}
+		});
+	}
+</script>
+<!--手续费计算-->
+<script>
+	$("input[name='givesum']").keyup(function(){
+		var sum = $(this).val();
+		if(sum !="" && !isNaN(sum)){
+			var tax = sum * ($('#givetax').html()/100);
+			tax = tax.toFixed(2);
+			if(tax < parseFloat($('#leastComCharge').val())){
+				tax = parseFloat($('#leastComCharge').val());
+			}
+			if(tax > parseFloat($('#limitComCharge').val()) && $('#limitComCharge').val()!=0){
+				tax = parseFloat($('#limitComCharge').val());
+			}
+			$("#tax").html(tax);
+		}else{
+			$("#tax").html("0");
+		}
+	})
+</script>
+<script>
+	//短息验证
+	var wait=300;
+	var sta = true;
+	function time(o){
+		if(sta == true){
+			var type = '转账';
+			var content = '{CONFIG("giveMoneySmsContent")}';
+			$.post('__URL__/sendSmsVerify',{type:type,content:content},function(data){
+				eval('var data='+data);
+				if(data.status == 1){
+					alert('发送成功!');
+				}else{
+					alert('发送失败!');
+				}
+			});
+			sta = false;
+		}
+		if (wait == 0) {
+			o.removeAttribute("disabled");
+			o.value="点击获取";
+			wait = 300;
+			sta = true;
+		} else {
+			o.setAttribute("disabled", true);
+			o.value="重新发送(" + wait + ")";
+			wait--;
+			setTimeout(function() {
+						time(o)
+					},
+					1000)
+		}
+	}
+	$("#sendMess").onclick=function(){time(this);}
+	function tijiao(){
+		var ua = navigator.userAgent.toLowerCase();
+		var s;
+		if ((/firefox\/([\d.]+)/).test(ua)) { //判断火狐浏览器
+			$('#subbut').attr('disabled',true);
+			$('#subbut').val('正在提交,请等待...');
+			$('#giveform').submit();
+			$('#subbut').removeAttr('disabled');
+			$('#subbut').val('确定');
+		} else {
+			$('#subbut').attr('disabled',true);
+			$('#subbut').val('正在提交,请等待...');
+			$('#giveform').submit();
+			$('#subbut').removeAttr('disabled');
+			$('#subbut').val('确定');
+		}
+	}
+</script>
+
+

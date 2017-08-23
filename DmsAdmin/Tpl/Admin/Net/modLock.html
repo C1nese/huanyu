@@ -1,0 +1,29 @@
+<div class="pageContent">
+	<form action="__URL__/saveLock" method="post" class="pageForm required-validate"  onsubmit="return validateCallback(this)">
+		<input type="hidden" name="callbackType" value="closeCurrent"/>
+	    <div class="pageFormContent" layoutH="58">
+		<table cellpadding="3" cellspacing="3" >
+           <tr>
+               <td style="text-align:right;width:150px">网体顶点编号：</td>
+               <td style="text-align:left" ><input type="text"  name="usa" size="40" value="" /></td>
+            </tr>
+            <tr>
+                <td style="text-align:right;width:80px">锁定：</td>
+                <td style="text-align:left" >
+                	<select name="lock" id="">
+                		<option value="1">是</option>
+                		<option value="0">否</option>
+	                </select>
+	            </td>
+            </tr> 
+        </table>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button id="submit" type="submit" >确认</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+  </form>
+	
+</div>

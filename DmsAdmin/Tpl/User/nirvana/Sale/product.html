@@ -1,0 +1,198 @@
+<style>
+    .productSelect {
+        background: #ccc;
+        border-radius: 3px;
+    }
+    #state_productCountMoney {
+        margin: 5px;
+        font-size: 14px;
+        color: red;
+    }
+</style>
+<div class="row">
+
+<div class="panel panel-colorful">
+	<div class="panel-heading">
+		<h3>{:GET_F_L('商业联盟配送产品')}</h3>
+	</div>
+	<div class="panel-body panel-colorful form-group-separated">
+		<div class="table-responsive">
+			<!--<div id="selectedProduct">-->
+				<!---->
+			<!--</div>		-->
+			<php>$ii=1;</php>
+			<foreach name="productArr" item="product" key="fenlei">
+				<div id="productTbody_{$ii}">
+					<volist name="product" id="vo">
+
+						<div class="col-lg-3 col-md-4 col-xs-12 nirvana_shop_item" >
+							<!-- CONTACT ITEM -->
+							<div class="panel shop_list_item">
+								<div>
+									<php>$imgstr=$vo['图片'];</php>
+									<if condition="(strlen($imgstr) eq 0)" >
+										无
+										<php> $productimg='无'; </php>
+										<else/>
+
+										<img src="{$vo.图片}" width='100%' class="img-responsive"/>
+
+										<php>
+											$productimg="<img src='".$vo['图片']."' width='404'  class='img-responsive'/>";
+										</php>
+									</if>
+									<!--<img src="__TMPL__Public/applay/picture/product7.jpg" width="404"  class="img-responsive" alt="Responsive image" >-->
+								</div>
+								<div class="shop_list_descr" style="padding:6px 5px 15px 80px;">
+									<div style="height:20px;overflow:hidden;">
+										<a target="_blank" class="sop_list_title">
+											{$vo.名称}</a>
+									</div>
+									<a href="javascript:void(0)" class="add2cart"></a>
+									<div class="shop_list_price" style="font-weight:900;">商品价格：{$vo[PV]}</div>
+								</div>
+								<ul class="list-unstyled shop-list">
+									<li class="n1">订购数量</li>
+									<li class="n2_1" id="selnum_'+product[0]+'">1</li>
+									<li class="n1">总计金额</li>
+									<li class="n2_1"  id="selprice_'+product[0]+'$vo[PV]">{$vo[PV]}</li>
+									<li class="n4" style="display:none;"><input type="text" name="productNum[{$vo.id}]" value="1"/></li>
+								</ul>
+							</div>
+							<!-- END CONTACT ITEM -->
+						</div>
+
+					</volist>
+				</div>
+				<php>$ii++;</php>
+			</foreach>
+			<table class="table table-bordered table-striped table-actions">
+				<tr>
+	                <td colspan="4"  style="text-align:right">商品总价：</td>
+					<td id="totalprice">{$totals} 元</td>
+					<td colspan="4" style="text-align:right;">
+						<span style="display:inline-block;text-align:left;width:70%"></span>
+						<span>实际支付：</span>
+					</td>
+					<td colspan="4" style="text-align:center;"><span id="totalzf"></span> <span id="njfff">{$total} 元</span></td>
+	            </tr>
+			</table>
+		</div>
+	</div>
+</div>
+
+<if condition="($logistic eq true) or ($zkbool eq true)"><script language="javascript" src="__PUBLIC__/js/cal.js"></script></if>
+<script>
+  $(function(){
+  	<if condition="($logistic eq true) or ($zkbool eq true)">
+		user_getTotalzf('{$sale:name}');
+	</if>
+	var productStock = <if condition="($proobj:productnumCheck eq true) or (adminshow('prostock') eq true)">true<else/>false</if>;
+    $("[id^='productCategory_']").first().addClass('productSelect');
+	$("[id^='productCategory_']").click(function(){
+		if($(this).attr('productCategoryid')!=0){
+			$('[id^=productTbody_]').hide();
+			$('#productTbody_'+$(this).attr('productCategoryid')).show();
+		}else{
+			$('[id^=productTbody_]').show();
+		}		
+	    $('[id^=productCategory_]').removeClass('productSelect');
+	    $(this).addClass('productSelect');
+	});
+    $('[id^=productCategory_]').css({float:'left',cursor:'pointer',padding: '0 5px',margin:'0 3px',border:'1px solid #ccc','border-radius':'3px'});
+	$("")
+    $("[id^=productNum_]").keyup(function(){
+    	change_btn($(this));
+	});
+	$("[id^=shop_plus_]").click(function(){
+		
+		var chp = $(this).prev();
+		var chin = chp.find('input');
+		var chnum = chin.val();
+		
+		chin.val(++chnum);
+    	    change_btn(chin);
+	});
+	$("[id^=shop_minus_]").click(function(){
+		var chp = $(this).next();
+		var chin = chp.find('input');
+		var chnum = chin.val();
+		
+		chin.val(--chnum);
+    	    change_btn(chin);
+	});
+	
+	
+	function change_btn(th){
+		var product =th.attr('productNumInfo').split("_");
+		var productimg = th.attr('productimg');
+		var num = th.val();
+		num = parseInt(num.replace(/\b(0+)/gi,""));
+		if(!(num > 0 && (!isNaN(num)))){
+			th.val('');
+		}
+		//开启库存时，不能超过库存量
+		var realnum=th.attr('pronum');
+		if(productStock && num > realnum){
+			num =  parseInt(realnum);
+			th.val(num);
+		}
+		
+		//定义序号
+		var k=0;
+		$("#selectedProduct > div").each(function(i,v){
+			if($(v).children('div').attr('selectedProductid') == product[0]){
+				$(this).remove();//删除
+			}else{
+				//k=parseInt($(this).find("td:first").html());
+			}
+		});
+		if((!isNaN(num)) && num > 0){
+			$("#selectedProduct").append('<div class="col-md-3 nirvana_shop_item">'
+			+'<div class="panel shop_list_item" selectedProductid="'+product[0]+'">'
+			+'<div>'+productimg+'</div>'
+			+'<div class="shop_list_descr">'
+			+'<a href="javascript:void(0)" class="add2cart"></a>'
+			+'<a href="__URL__/showProinfo/id/{$vo.id}" class="sop_list_title">'+product[2]+'</a>'
+			+'<div class="shop_list_price">￥ '+(product[3])+' / '+(product[4])+'</div>'
+			+'</div>'
+			+'<input type="hidden" class="zzjf" value="'+(num*product[4]).toFixed(2)+'">'
+			+'<ul class="list-unstyled shop-list">'
+			+'<li class="n1">订购数量</li>'
+			+'<li class="n2_1" id="selnum_'+product[0]+'">'+num+'</li>'
+			+'<li class="n1">总计金额</li>'
+			+'<li class="n2_1"  id="selprice_'+product[0]+'">'+(num*product[3]).toFixed(2)+'</li></ul>'
+			+'<eq name="sale:productPV" value="true"><div id="selpv_'+product[0]+'">'+(num*product[4]).toFixed(2)+'</div></eq><if condition="$logistic eq true"><div id="selweight_'+product[0]+'">'+(num*product[5]).toFixed(2)+'</div></if></div></div>');
+		}
+		//统计
+		var countNum = 0;
+		var countMoney = 0;
+		var countPV = 0;
+		var countWeight = 0;
+		$("#selectedProduct > div").each(function(i,v){			
+			var proid=$(this).children('div').attr('selectedproductid');			
+			countNum +=parseFloat($('#selnum_'+proid).html());
+			countMoney +=parseFloat($('#selprice_'+proid).html());
+			<if condition="$sale:productPV eq true">
+				countPV +=parseFloat($('#selpv_'+proid).html());
+			</if>
+			<if condition="$logistic eq true">
+				countWeight +=parseFloat($('#selweight_'+proid).html());
+			</if>
+		});
+		var zzjf = $(".zzjf");
+		$("#totalnum").html(countNum);
+		$("#totalprice").html(countMoney.toFixed(2));
+		<eq name="sale:productPV" value="true">
+			$("#totalpv").html(countPV.toFixed(2));
+		</eq>
+		<if condition="$logistic eq true">
+			$("#totalweight").html(countWeight.toFixed(2));
+		</if>
+		//计算实付款并显示
+		<if condition="($logistic eq true) or ($zkbool eq true)">
+			user_getTotalzf('{$sale:name}',zzjf);
+		</if>
+	}
+});
+</script>

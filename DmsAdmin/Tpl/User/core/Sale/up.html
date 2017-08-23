@@ -1,0 +1,298 @@
+<if condition="($sale:extra eq true) or (count($area) gt 0)"><script type="text/javascript" src="__PUBLIC__/directSell/area_select.js"></script></if>
+<div class="core_main Sale" id="up">
+	<div class="core_title">
+    	<span class="core_title_con"><span>当前位置</span>：{$nowtitle}</span>
+    </div>
+    <div class="core_con">
+        <form name="form1" method="post" action="__GROUP__/Sale/upSave:__XPATH__" id="register">
+            <table class="tablebg" id="table1">
+                <TR>
+                    <TD class="tbkey" >{$userName}编号：</TD>
+                    <TD class="tbval" >	
+                        <if condition="($sale:lockMe eq false)">
+                        <input type="text" value="" size="20" name="userid" id="userid" onkeyup="getInfo(this)" autocomplete="off"/>
+                        <else/>
+                        {$userinfo.编号}
+                        <input type="hidden" value="{$userinfo['编号']}" size="20" name="userid" id="userid"/>
+                        </if>
+                    </TD>
+                    <td>&nbsp;<span id="state_userid"></span></td>
+                </TR>
+                <notempty name="shop">
+                <tr>
+                    <td class="tbkey" >{$shop}：</td>
+                    <td  class="tbval" ><span><input type="text" value="" name="shop"/></span></td>
+                    <td >&nbsp;<span id="state_shop"><if condition="$shopblank eq false">*</if></span></td>
+                </tr>
+                </notempty>
+                <tr>
+                    <td class="tbkey" >新{$sale:lvName}：</td>
+                    <td  class="tbval" >
+                        <select name='lv' id="lv">
+                            <option value="">请选择</option>
+                            <if condition="($sale:lockMe eq true)">
+                            <foreach name='levelsopts'  item='level'>
+                            <option value="{$level.lv}">{$level.name}</option>
+                            </foreach>            
+                            </if>            
+                        </select></td>
+                    <td>&nbsp;<span id="state_shop"> *</span></td>
+                </tr>
+                <if condition="count($area) gt 0">
+			    <tr>
+					<td class="tbkey" >代理区域：</td>
+					<td class="tbval" >
+						<select name="country1" id="country_id1">
+						<option value="">国家</option>
+						</select>
+						<select name="province1" id="province_id1" >
+						<option value="">省份</option>
+						</select>
+						<if condition="$area['city'] neq ''">
+							<select name="city1"  id="city_id1" >
+							<option value="">城市</option>
+							</select>
+						</if>
+						<if condition="$area['county'] neq ''">
+							<select name="county1"  id="county_id1" >
+							<option value="">区县</option>
+							</select>
+						</if>
+						<if condition="$area['town'] neq ''">
+							<select name="town1"  id="town_id1" >
+							<option value="">乡镇街道</option>
+							</select>
+						</if>
+					</td>
+					<td>&nbsp;*</td>
+				</tr>
+				</if>
+               
+            </table> 
+            <if condition="$sale:extra eq true">
+            <table class="tablebg" id="table2">
+                <tr>
+                    <td colspan="2"><span>物流信息</span></TD>
+                </tr>
+                <tr>
+                    <td class="tbkey" >国家：</td>
+                    <td class="tbval" >
+                        <select name="country" id="country_id">
+                            <option value="">请选择</option>
+                        </select>
+                        <select name="province"  id="province_id"  <if condition="$logistic eq true">onChange="user_getTotalzf('{$sale:name}');"</if>>
+                            <option value="">请选择省</option>
+                        </select>
+                        <select name="city"  id="city_id" >
+                            <option value="">请选择城市</option>
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="tbkey" >区县：</td>
+                    <td class="tbval" ><select name="county"  id="county_id" >
+                            <option value="">请选择</option>
+                        </select>
+                        <select name="town"  id="town_id" >
+                            <option value="">请选择街道</option>
+                        </select>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="tbkey" >收货人：</TD>
+                    <td class="tbval" ><input name="reciver" id="reciver" type="text" value="{$userinfo.收货人}"/> <font color='red'>*</font></TD>
+                    
+                </tr>
+                <tr>
+                    <td class="tbkey" >联系电话：</TD>
+                    <td class="tbval" ><input name="mobile" id="mobile" type="text" value="{$userinfo.移动电话}"> <font color='red'>*</font></TD>
+                    
+                </tr>
+                <tr>
+                    <td class="tbkey" >收货地址：</TD>
+                    <td class="tbval" ><input name="address" id="address" type="text" value="{$userinfo.地址}" size="50"/> <font color='red'>*路况信息及门牌号等</font></TD>
+                    
+                </tr>
+            </table>
+        </if>
+            <present name="productArr">
+            <include file="product" />
+            </present>  
+            <present name="bankRatio">
+            <TABlE class="tablebg" style="clear:both;width:90%;margin:10px auto; margin-top:50px;">
+            	<foreach name='bankRatio' key="fkey" item="bankval">
+            	<tr>
+                	<td class="tbkey" style="width:40%">{$bankval.name}（{:$userinfo[$bankval['name']]}）：</td>
+                	<td class="tbval" style="width:20%">&nbsp;&nbsp;
+                	<input  name="val{$fkey}" value="{$bankval.minval}" type="text" size="7"/>&nbsp;%<span id="money{$fkey}">&nbsp;&nbsp;</span></td>
+                	<td class="msg">&nbsp;（默认支付金额范围{$bankval.minval}% - {$bankval.maxval}%，支付时按照设置的比率支付）
+                	</td>
+                </tr>
+                </foreach>
+                <tr><td colspan="3" class="msg">提示：设定的比率最好保证相加达到100%，并且每个货币的余额足够支付的比率，最后一个将会补足余额！</td></tr>
+            </TABLE>
+            </present>
+            <table class="tablebg" id="table3" style="clear:both">
+                <TR>
+                    <TD colspan="3">
+            			<input class="button_text" onMouseDown="this.className='button_onmousedown'" onMouseOver="this.className='button_onmouseover'" onMouseOut="this.className='button_onmouseout'" type="button" value="确认" name="subbut"  id='subbut' onclick="tijiao()" />
+                    </TD>
+                </TR>
+            </table>
+        </form>
+    </div>
+    <div class="core_page"></div>
+</div>
+
+<script type="text/javascript">
+
+var vd;
+function getInfo(e)
+{
+	clearTimeout(vd);
+	vd = setTimeout("upAjax('"+e.id+"')",600);
+}
+
+function upAjax(id)
+{
+	var userid	   = $.trim($('#'+id).val());
+	$.get('__GROUP__/Sale/upAjax:__XPATH__/userid/'+userid,function(data){
+		try
+		{
+			eval("var json="+data);
+			if( json.status == 0 )
+			{
+				$('#state_userid').html("请输入正确的{$userName}编号！");
+			}else{
+				$('#state_userid').html("");
+			}
+
+			$('#lv').empty().append("<option value=''>请选择</option>");
+			var level_list = json.data;
+			for(i=0;i<level_list.length;i++)
+			{
+				$('#lv').append("<option value='"+level_list[i].lv+"'>"+level_list[i].name+"</option>");
+			}
+
+		}
+		catch(e)
+		{
+			alert(data);
+			alert("网络异常!");
+
+		}
+	});
+}
+
+function fn()
+{
+	if($('#tjr').val()==''){
+		$('#rt').html("请输入正确的推荐人编号！");
+				$('#rt').css('color','red');
+	}else{
+	$.get('__GROUP__/Sale/upf:__XPATH__/userid/'+$('#tjr').val(),function(data){
+		try
+		{
+			eval("var json="+data);
+			if( json.status == 0 )
+			{
+				$('#rt').html("请输入正确的推荐人编号！");
+				$('#rt').css('color','red');
+			}else{
+				var a = json.data;
+				$('#rt').html(a);
+			}
+		}
+		catch(e)
+		{
+			alert(data);
+			alert("网络异常!");
+		}
+	});}
+}
+
+function tijiao(){
+	var ua = navigator.userAgent.toLowerCase();
+	if ((/firefox\/([\d.]+)/).test(ua)) { //判断火狐浏览器
+		$('#subbut').attr('disabled',true);
+		$('#subbut').val('正在提交,请等待...');
+		$('#register').submit();
+		$('#subbut').val('确认');
+		$('#subbut').attr('disabled',false);
+	} else {
+		$('#subbut').attr('disabled',true);
+		$('#subbut').val('正在提交,请等待...');
+		$('#register').submit();
+	}
+}
+<if condition="($sale:extra eq true)">
+var country		= "{$userinfo['国家']}";
+var province	= "{$userinfo['省份']}";
+var city		= "{$userinfo['城市']}";
+var county		= "{$userinfo['地区']}";
+var town		= "{$userinfo['街道']}";
+$.area_select_bind( 'country_id' , 'province_id' , 'city_id' , 'county_id','town_id' );
+if(country!='')
+{
+	$("#country_id option[value='{$userinfo['国家']}']").attr('selected',true);
+	$("#country_id").change();
+}
+if(province!='')
+{
+	$("#province_id option[value='{$userinfo['省份']}']").attr('selected',true);
+	//触发省份的 change事件
+	$("#province_id").change();
+}
+if( city!='' )
+{
+	//触发城市的 change事件
+	$("#city_id option[value='{$userinfo['城市']}']").attr('selected',true);
+	$("#city_id").change();
+}
+if(county!='')
+{
+	$("#county_id option[value='{$userinfo['地区']}']").attr('selected',true);
+	$("#county_id").change();
+}
+if( town!='' )
+{
+	$("#town_id option[value='{$userinfo['街道']}']").attr('selected',true);
+}
+</if>
+<if condition="(count($area) gt 0)">
+var country1		= "{$userinfo['代理国家']}";
+var province1	= "{$userinfo['代理省份']}";
+var city1		= "{$userinfo['代理城市']}";
+var county1		= "{$userinfo['代理地区']}";
+var town1		= "{$userinfo['代理街道']}";
+$.area_select_bind( 'country_id1' , 'province_id1' , 'city_id1' , 'county_id1','town_id1' );
+if(country1!='')
+{
+	$("#country_id1 option[value='{$userinfo['代理国家']}']").attr('selected',true);
+	$("#country_id1").change();
+}
+if(province1!='')
+{
+	$("#province_id1 option[value='{$userinfo['代理省份']}']").attr('selected',true);
+	//触发省份的 change事件
+	$("#province_id1").change();
+}
+if( city1!='' )
+{
+	//触发城市的 change事件
+	$("#city_id1 option[value='{$userinfo['代理城市']}']").attr('selected',true);
+	$("#city_id1").change();
+}
+if(county1!='')
+{
+	$("#county_id1 option[value='{$userinfo['代理地区']}']").attr('selected',true);
+	$("#county_id1").change();
+}
+if( town1!='' )
+{
+	$("#town_id1 option[value='{$userinfo['代理街道']}']").attr('selected',true);
+}
+</if>
+</script>

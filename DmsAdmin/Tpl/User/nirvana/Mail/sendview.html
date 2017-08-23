@@ -1,0 +1,132 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame">
+	<!-- START CONTENT FRAME TOP -->
+	<div class="content-frame-top">
+		<div class="page-title">
+			<h2>
+				<span class="fa fa-inbox"></span> {:GET_F_L('工单详情')}
+			</h2>
+		</div>
+
+	</div>
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME LEFT -->
+	<div class="content-frame-left">
+		<div class="block">
+			<a href="__GROUP__/Mail/send" class="btn btn-danger btn-block btn-lg"><span
+				class="fa fa-edit"></span> {:GET_F_L('提交工单')}</a>
+		</div>
+		<div class="block">
+			<div class="list-group border-bottom">
+				<a href="__GROUP__/Mail/index" class="list-group-item"><span
+					class="fa fa-inbox"></span> {:GET_F_L('邮件列表')} <span
+					class="badge badge-warning">{$data.count}</span></a> <a
+					href="__GROUP__/Mail/sendbox" class="list-group-item active"><span
+					class="fa fa-star"></span> {:GET_F_L('发件列表')} </a> <a
+					href="__GROUP__/User/viewNotice" class="list-group-item"><span
+					class="fa fa-rocket"></span> {:GET_F_L('最新消息')}</a>
+			</div>
+		</div>
+
+	</div>
+	<!-- END CONTENT FRAME LEFT -->
+
+	<!-- START CONTENT FRAME BODY -->
+	<div class="content-frame-body">
+
+		<div class="panel panel-default">
+			<!-- START CONTENT FRAME BODY -->
+			<div class="panel-heading">
+				<div class="pull-left">
+					<img
+						src="{$userinfo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}"
+						class="panel-title-image" alt="{$list.发件人}"
+						style="min-height: 30px; min-width: 30px;" />
+					<!-- <h3>
+						{$list.发件人} <small>{$list.发件人类型}</small>
+					</h3> -->
+					<div style="margin-top:2px;float:left"><strong style="font-size:18px;">&nbsp;{:GET_F_L($list['发件人'])}</strong><small>{:GET_F_L($list['发件人类型'])}</small></div>
+				</div>
+				<div class="pull-right">
+					<button class="btn btn-default" onClick="history.back();">
+						<span class="fa fa-mail-reply"></span>
+					</button>
+						<a href="__GROUP__/Mail/del/id/{$list.id}">
+						<button class="btn btn-default">
+							<span class="fa fa-trash-o"></span>
+						</button>
+					</a>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="form-group push-up-20">
+					<div class="messages messages-img">
+						<div class="item in item-visible">
+							<div class="image">
+								<img
+									src="{$userinfo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}"
+									alt="{$list.发件人}"
+									style="min-height: 40px; min-width: 40px;" />
+							</div>
+							<div class="text">
+								<div class="heading">
+									<h3>
+										Re: {$list.标题|htmlspecialchars} <small
+											class="pull-right text-muted"><span
+											class="fa fa-clock-o"></span> {$list.发送时间|date="Y-m-d
+											H:i:s",###}</small>
+									</h3>
+									<p>Hello {$list.收件人|default="管理员"}:</p>
+								</div>
+								{$list.内容}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group push-up-20">
+					<div class="messages messages-img">
+						<gt name="list.回复时间" value="0">
+						<div class="item item-visible">
+							<div class="image">
+								<img
+									src="{$list.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}"
+									alt="{$list.回复人|default='管理员'}"
+									style="min-height: 40px; min-width: 40px;" />
+							</div>
+							<div class="text">
+								<div class="heading">
+									<a href="#">{$list.回复人|default="管理员"}:</a> <span class="date">{$list.回复时间|date="m-d
+										H:i:s",###}</span>
+								</div>
+								{$list.回复内容}
+							</div>
+						</div>
+						</gt>
+					</div>
+				</div>
+			</div>
+
+			<!-- END CONTENT FRAME BODY -->
+			<div class="panel-footer">
+				<button class="btn btn-success pull-right" type="button"
+					onClick="history.back();">
+					<span class="fa fa-mail-reply"></span> {:GET_F_L('返回')}
+				</button>
+			</div>
+		</div>
+
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+	<!-- END CONTENT FRAME -->
+	<include file="Public:footer" />
+	<!-- END WIDGETS -->
+	</body>
+	</html>

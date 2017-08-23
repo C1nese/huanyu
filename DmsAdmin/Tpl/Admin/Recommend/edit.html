@@ -1,0 +1,108 @@
+<script>
+$(document).ready(function(){ 
+    var cate = $("#category").val();
+    if(cate==1){
+        $("#price").show();
+        $("input[name='price']").addClass('required number');
+    }else{
+        $("#price").hide();
+        $("input[name='price']").removeClass('required number');
+    }
+});
+function showpice(){
+    var cate = $("#category").val();
+    if(cate==1){
+        $("#price").show();
+        $("input[name='price']").addClass('required number');
+    }else{
+        $("#price").hide();
+        $("input[name='price']").removeClass('required number');
+    }
+}
+</script>
+<div class="pageContent">
+	<form action="__URL__/editSave" method="post" class="pageForm required-validate" onsubmit="return iframeCallback(this,dialogAjaxDoneReload)">
+		<input type="hidden" name="callbackType" value="closeCurrent"/>
+		<input type="hidden" name="id" value="{$_GET['id']}"/>
+	    <div class="pageFormContent" layoutH="58">
+		<table cellpadding="3" cellspacing="3" >
+            <tr>
+                <td class="tRight" style="text-align:right;width:120px">分类：</td>
+                <td style="text-align:left" >
+                	<select name="category" class="required" id="category" onchange="showpice();">
+                		<option value="1" <if condition="$productInfo[分类] eq 1">selected</if>>商城产品</option>                   
+						<option value="2" <if condition="$productInfo[分类] eq 2">selected</if>>联盟任务</option>
+                    </select>
+                </td>
+            </tr>
+                 
+            <tr>
+                <td class="tRight" style="text-align:right;width:80px">名称：</td>
+                <td style="text-align:left"><input type="text" class="required" name="name" size="40" value="{$productInfo.名称}" /></td>
+            </tr>
+            
+                <td class="tRight" style="text-align:right;width:80px">图片：</td>
+                <td style="text-align:left"><div>
+                    <input type="text" name="image" id="image_0"  size="40" value="{$productInfo.图片}" />
+                  &nbsp; <span style="height:20px;line-height:20px"><a href="__URL__/UploadPhoto/id/0"  target="dialog" mask="true">上传</a></span></div>
+                    <div id="upload_panel">
+                      <ul style="clear:both;float:left">
+                      </ul>
+                    </div></td>
+            </tr>
+     		
+			<tr id="price">
+                <td style="text-align:right;">价格：</td>
+                <td style="text-align:left"><input type="text" class="required number" name="price" value="{$productInfo.价格}"  size="40"/></td>
+            </tr>
+
+            <tr id="score">
+                <td class="tRight" style="text-align:right;">积分：</td>
+                <td class="tLeft"  style="text-align:left" ><input type="text" class="required number" name="score" value="{$productInfo.score}"  size="40"/></td>
+            </tr>
+            
+             <tr>
+                <td class="tRight" style="text-align:right;">链接：</td>
+                <td class="tLeft"  style="text-align:left" ><input type="text" class="required" name="url" value="{$productInfo.url|urldecode=###}"  size="40"/></td>
+            </tr>
+            <tr>
+				  <td class="right">状态：</td>
+				  <td class="left">
+				    <select class="required combox"  name="status">
+                        <option <eq name="productInfo.状态" value="0" >selected</eq> value="0">显示</option>
+                        <option <eq name="productInfo.状态" value="1" >selected</eq> value="1">不显示</option>
+			      </select>
+				  </td>
+			  </tr>
+            <tr>
+                <td style="text-align:right;">描述：</td>
+                <td style="text-align:left"><textarea type="text" rows="5" cols="50" name="description">{$productInfo.描述}</textarea></td>
+            </tr>
+        </table>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button id="submit" type="submit">保存</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+  </form>
+	
+</div>
+<script type="text/javascript">
+//指定当前组模块URL地址 
+var URL = '__URL__';
+
+var upload_id = 1;
+
+//图片上传
+function upload(upload_id)
+{
+	$.pdialog.open(URL+'/UploadPhoto/id/'+upload_id,'UploadPhoto', "产品图片添加",{width:'580',height:'300',mask:true,mixable:true,minable:true,resizable:true,drawable:true,fresh:true});
+}
+//删除这个图片上传
+function delete_upload( upload_id )
+{
+	$('#upload_li_' + upload_id, navTab.getCurrentPanel()).remove();
+}
+</script>

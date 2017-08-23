@@ -1,0 +1,771 @@
+<!-- <extend name="Public:head" /> -->
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/cropper/cropper.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/shop.css" />
+<script type="text/javascript" src="__TMPL__Public/js/shop.js"></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+
+<div class="col-md-12">
+    <div class="alert alert-warning" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+		</button>
+        <strong>{:GET_F_L('提示！')}</strong>{:GET_F_L('请认真填写您的注册资料，有红色 * 号的内容为必须填写项')}
+    </div>
+</div>
+<!-- END BREADCRUMB -->
+
+<div class="content-frame pages-edit-liv" id="usereg">
+	<div class="col-md-12">
+			<form class="form-horizontal" name="form1" method="post"
+				enctype="multipart/form-data"
+				action="__GROUP__/Sale/regSave:__XPATH__" id="form">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="panel panel-colorful">
+							<div class="panel-body">
+								<strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-pencil"></span>&nbsp;{:GET_F_L('基本信息')}</strong>
+							</div>
+
+							<div class="panel-body form-group-separated">
+								<!--基本信息-->
+								<if condition="in_array('name',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title" style="line-height: 35px;"><if condition="in_array('name',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('用户姓名')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-pencil"></span></span> <input type="text" value=""
+												name="name" class="form-control" id='username'/>
+										</div>
+										<span class="help-block msg text-danger" id="state_name"></span>
+									</div>
+								</div>
+								</if>
+								<if condition="in_array('sex',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('sex',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('用户性别')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<label class="checkbox-inline"> <input type="radio"
+												class="iradio" name="sex" value="男" checked />
+												{:GET_F_L('男')}
+											</label> <label class="checkbox-inline"> <input
+												type="radio" class="iradio" name="sex" value="女" />
+												{:GET_F_L('女')}
+											</label>
+										</div>
+										<span class="help-block msg text-danger" id="state_sex"></span>
+									</div>
+								</div>
+								</if>
+								<if condition="in_array('alias',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('alias',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('用户昵称')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-pencil"></span></span> <input type="text" value=""
+												name="alias" class="form-control" />
+										</div>
+										<span class="help-block msg text-danger" id="state_alias"></span>
+									</div>
+								</div>
+								</if>
+								<if condition="in_array('id_card',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('id_card',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('证件号码')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-pencil"></span></span> <input type="text" value=""
+												name="id_card" id="id_card" class="form-control" />
+										</div>
+										<span class="help-block msg text-danger" id="state_id_card"></span>
+									</div>
+								</div>
+								</if>
+								<if condition="in_array('email',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('email',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('电子邮件')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-pencil"></span></span> <input type="text" value=""
+												name="email" class="form-control" />
+										</div>
+										<span class="help-block msg text-danger" id="state_email"></span>
+									</div>
+								</div>
+								</if>
+								<if condition="in_array('qq',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('qq',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('QQ账号')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-pencil"></span></span> <input type="text" value=""
+												name="qq" class="form-control" />
+										</div>
+										<span class="help-block msg text-danger" id="state_qq"></span>
+									</div>
+								</div>
+								</if>
+								<!--微信填写-->
+								<if condition="in_array('weixin',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('weixin',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('微信账号')}</label>
+									<div class="col-md-9">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-pencil"></span></span> <input type="text" value=""
+												name="weixin" onkeyup="getInfo(this)" id="weixin"
+												autocomplete="off" class="form-control" />
+										</div>
+										<span class="help-block msg text-danger" id="state_weixin"></span>
+									</div>
+								</div>
+								</if>
+								<if condition="in_array('country_code',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title">{:GET_F_L('国家区号')}</label>
+									<div class="col-md-9">
+										<!--data-pattern 正则表达式-->
+										<select name='country_code' id="country_code"
+											class="form-control select"
+											style="width: 152px; height: 21px">
+											<foreach name='NumCheck' item='data' key='code'>
+											<option value="{$code}" data-pattern="{$data.exp}">
+												{:GET_F_L($data['zh-cn'])}</option>
+											</foreach>
+										</select>
+									</div>
+									<span class="help-block msg text-danger" id="country_state"></span>
+								</div>
+								</if>
+								<if condition="in_array('mobile',$show) eq true">
+								<div class="form-group">
+									<label class="col-md-3 control-label label-title"><if condition="in_array('mobile',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('移动电话')}</label>
+									<div class="col-md-9 col-xs-12">
+										<div class="input-group">
+											<span class="input-group-addon"><span
+												class="fa fa-mobile"></span></span> <input type="text" value=""
+												name="mobile" id="mobile" class="form-control" />
+										</div>
+										<span class="help-block msg text-danger" id="state_mobile"></span>
+									</div>
+								</div>
+								</if>
+								<!-- <div class="form-group">
+									<label class="col-md-3 control-label label-title">{:GET_F_L('用户头像')}</label>
+									<div class="col-md-9 col-xs-12">
+										<input type="file" multiple="" id="file-simple" name="image"/>									
+									</div>
+								</div>-->
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+                        <!--用户信息-->
+                        <div class="panel panel-colorful">
+                            <div class="panel-body">
+                            	<strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-user"></span>&nbsp;{:GET_F_L('用户信息')}</strong>
+                            </div>
+                            <div class="panel-body form-group-separated">
+                            	<!-- 用户编号 -->
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label label-title">{:GET_F_L(($user->byname).'编号')}</label>
+                                    <div class="col-md-9">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                                            <if condition="($user:idEdit eq true) and ($user:idAutoEdit eq true)">
+                                                <input type="text" class="form-control" value="{$userid}" name="userid" id="userid"/>
+                                                <elseif condition="($user:idAutoEdit eq true)"/>
+												<input type="text" class="form-control" value="{$userid}" name="userid" id="userid" disabled="disabled"/>
+                                                <input type="hidden" value="{$userid}" size="20" name="userid" id="userid"/>
+                                                <else/>
+                                                <input type="text" class="form-control" name="userid" id="userid"/>
+                                            </if>
+                                        </div>
+                                        <span class="help-block msg text-danger" id="state_userid"></span>
+                                    </div>
+                                </div>
+			<!-- 用户等级 -->
+                                <if condition = "($sale:setLv eq true)">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label label-title">{:GET_F_L($levels->byname)}</label>
+                                        <div class="col-md-9">
+                                            <select name='lv' id="lv" class="form-control  select" <if condition="$zkbool eq true">onChange="user_getTotalzf('{:GET_F_L($sale->name)}');"</if>>
+                                            <foreach name='levelsopt' item='level'>
+                                                <notempty name="maxlv">
+                                                    <if condition="$level.lv elt $maxlv">
+                                                        <option value="{$level.lv}">{:GET_F_L($level[name])}</option>
+                                                    </if>
+                                                    <else/>
+                                                    <option value="{$level.lv}">{:GET_F_L($level['name'])}</option>
+                                                </notempty>
+                                            </foreach>
+                                            </select>                                            
+                                        </div>
+                                    </div>
+                                 <else />
+		<input type="hidden" name="lv" id="lv" value="{$sale:defaultLv}" />
+			                    </if>
+			
+                                <if condition="($sale:setNumber eq true)">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label label-title">{:GET_F_L('单数')}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                <input type="text" value="" name="setNumber" class="form-control"/>
+                                            </div>
+                                            <span class="help-block msg text-danger" id="state_setNumber"></span>
+                                        </div>
+                                    </div>
+                                </if>
+
+                                <if condition="($sale:setMoney eq true)">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label label-title">{:GET_F_L('报单金额')}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                <input type="text" value=""  name="setMoney" class="form-control"/>
+                                            </div>
+                                            <span class="help-block msg text-danger" id="state_setMoney"></span>
+                                        </div>
+                                    </div>
+                                </if>
+
+
+                                <if condition="$haveuser eq true">
+                                    <notempty name="fun_val">
+                                        <foreach name="fun_val" item="fun" key="key">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label label-title">{:GET_F_L($key)}</label>
+                                                <div class="col-md-9 col-xs-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
+                                                        <input type="text" value="" name="{$fun}" class="form-control"/>
+                                                    </div>
+                                                    <span class="help-block msg text-danger" id="state_{$fun}"></span>
+                                                </div>
+                                            </div>
+                                        </foreach>
+                                    </notempty>
+                                </if>
+			<!-- 推荐人编号 -->
+                                <if condition="($haveuser eq true)">
+                                    <foreach name='nets' item='net'>
+                                        <if condition="($net.type eq 'text')">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label label-title"><span style="color:red;">*&nbsp;</span>{$net.name}</label>
+                                                <div class="col-md-9 col-xs-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                                                        <input type="text" class="form-control" value="{$net.value}" name="{$net.inputname}" otherpost='{$net.otherpost}' onkeyup="getInfo(this)" id="{$net.inputname}" autocomplete="off"/>
+                                                    </div>
+                                                    <span class="help-block msg text-danger" id="state_{$net.inputname}"></span>
+                                                </div>
+                                            </div>
+                                        </if>
+                                        <!-- 管理人编号、位置 -->
+                                        <if condition="($net.type eq 'select')">
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label label-title"><span style="color:red;">*&nbsp;</span>{$net.name}</label>
+                                                <div class="col-md-9">
+                                                    <select class="form-control select" name='{$net.inputname}'  otherpost='{$net.otherpost}' id="{$net.inputname}" onchange="getInfo(this)">
+                                                        <foreach name='net.Region' item='Region'>
+                                                            <option value='{$Region.name}' <if condition="isset($_GET['position']) and $_GET['position']==$key">selected</if>>{$Region.byname}</option>
+                                                        </foreach>
+                                                    </select>
+                                                    <span class="help-block msg text-danger" id="state_{$net.inputname}"></span>
+                                                </div>
+                                            </div>
+                                        </if>
+                                    </foreach>
+                                </if>
+                                {//xml中的附加配置注册显示字段}
+                                <present name="funReg">
+                                    <foreach name="funReg" item="fun" key="key">
+                                        <div class="form-group">
+                                            <label class="col-md-3 control-label label-title">{$fun}</label>
+                                            <div class="col-md-9">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                    <input type="text" value="" name="{$fun}" class="form-control"/>
+                                                </div>
+                                                <span class="help-block msg text-danger" id="state_{$fun}"></span>
+                                            </div>
+                                        </div>
+                                    </foreach>
+                                </present>
+
+                                <!--商务中心-->
+                                <notempty name="shop">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label label-title"><if condition="in_array('shop',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('联盟机构编号')}</label>
+                                        <div class="col-md-9">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                <input type="text" value="" name="shop"  onkeyup="getInfo(this)" id="shop" autocomplete="off" class="form-control"/>
+                                            </div>
+                                            <span class="help-block msg text-danger" id="state_shop"></span>
+                                        </div>
+                                    </div>
+                                </notempty>
+
+                               
+
+                                <if condition="in_array('address',$show) eq true">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label label-title"><if condition="in_array('address',$require) eq true"><span style="color:red;">*&nbsp;</span></if>
+                                        {:GET_F_L('收货人地址')}</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
+                                                <input type="text"  value="" name="address" class="form-control"/>
+                                            </div>
+                                            <span class="help-block msg text-danger" id="state_address"></span>
+                                        </div>
+                                    </div>
+                                </if>
+                                <if condition="in_array('reciver',$show) eq true">
+                                    <div class="form-group">
+                                        <label class="col-md-3 control-label label-title"><if condition="in_array('reciver',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('收货人姓名')}</label>
+                                        <div class="col-md-9 col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-unlock-alt"></span></span>
+                                                <input type="text" value="" name="reciver" class="form-control"/>
+                                            </div>
+                                            <span class="help-block msg text-danger" id="state_reciver"></span>
+                                        </div>
+                                    </div>
+                                </if>
+
+                            </div>
+
+                          <!--   <div class="panel-footer">
+                                <input class="btn btn-primary pull-right" type="button" value="{:GET_F_L('确定')}" onclick="regAjaxall()" id="regsubbutton">
+                            </div> -->
+                        </div>
+                        <!-- END 用户信息-->
+                    </div>
+				</div>	
+                
+                
+				<div class="row">
+					<div class="col-md-6">
+						<!--交易账户-->						
+							<div class="panel panel-colorful" style="overflow: visible;">
+								<div class="panel-body">
+									<h3>
+										<span class="fa fa-pencil"></span>{:GET_F_L('提现账户')}
+									</h3>
+								</div>
+								<div class="panel-body form-group-separated">
+									<if condition="in_array('bank_apply_name',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('bank_apply_name',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('开户银行')}</label>
+										<div class="col-md-9">
+											<select name="bank_apply_name" id="bank" class="form-control select">
+												<option value="">{:GET_F_L('请选择')}</option>
+												<foreach name="banklist" item="bank">
+												<option value="{$bank.开户行}">{:GET_F_L($bank[开户行])}</option>
+												</foreach>
+											</select>
+											<span class="help-block msg text-danger" id="state_bank_apply_name"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('bank_card',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('bank_card',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('银行卡号')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="text" value=""
+													name="bank_card" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_bank_card"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('bank_name',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('bank_name',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('开户姓名')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="text" value="" name="bank_name" class="form-control" readonly="readonly" id='khname'/>
+											</div>
+											<span class="help-block msg text-danger" id="state_bank_name"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('bank_apply_addr',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('bank_apply_addr',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('开户地址')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="text" value=""
+													name="bank_apply_addr" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger"
+												id="state_bank_apply_addr"></span>
+										</div>
+									</div>
+									</if>
+									<div class="form-group">
+										<div class="col-md-12 col-xs-5">&nbsp;</div>
+									</div>
+								</div>
+							</div>
+					</div>
+						<!-- END 交易账户-->
+					<div class="col-md-6">
+						<!--密保设置-->						
+							<div class="panel panel-colorful">
+								<div class="panel-body">
+									<h3>
+										<span class="fa fa-pencil"></span> {:GET_F_L('密保设置')}
+									</h3>
+								</div>
+								<div class="panel-body form-group-separated">
+									<if condition="in_array('pass1',$show) eq true">
+									 <div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('pass1',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('登录密码')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="password"
+													value="" name="pass1" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_pass1"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('pass1c',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('pass1c',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('登录密码确认')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="password"
+													value="" name="pass1c" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_pass1c"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('pass2',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('pass2',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('交易密码')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="password"
+													value="" name="pass2" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_pass2"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('pass2c',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title"><if condition="in_array('pass2c',$require) eq true"><span style="color:red;">*&nbsp;</span></if>{:GET_F_L('交易密码确认')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="password"
+													value="" name="pass2c" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_pass2c"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('pass3',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title">{:GET_F_L('三级密码')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="password"
+													value="" name="pass3" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_pass3"></span>
+										</div>
+									</div>
+									</if>
+									<if condition="in_array('pass3c',$show) eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title">{:GET_F_L('三级密码确认')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="password"
+													value="" name="pass3c" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger" id="state_pass3c"></span>
+										</div>
+									</div>
+									</if>
+									{//密保问题}
+									<if condition="$reg_safe eq true">
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title">{:GET_F_L('密保问题')}</label>
+										<div class="col-md-9">
+											<select name="secretsafe_name" class="form-control select">
+												<option value="">{:GET_F_L('请选择')}</option>
+												<foreach name="SecretSafelist" item="SecretSafe">
+												<option value="{$SecretSafe.密保问题}">{:GET_F_L('密保问题')}</option>
+												</foreach>
+											</select> <span class="help-block msg text-danger"
+												id="state_secretsafe_name"></span>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="col-md-3 control-label label-title">{:GET_F_L('密保答案')}</label>
+										<div class="col-md-9">
+											<div class="input-group">
+												<span class="input-group-addon"><span
+													class="fa fa-pencil"></span></span> <input type="text" value=""
+													name="secretanswer" class="form-control" />
+											</div>
+											<span class="help-block msg text-danger"
+												id="state_secretanswer"></span>
+										</div>
+									</div>
+									</if>
+									<div class="form-group">
+										<div class="col-md-12 col-xs-5">&nbsp;</div>
+									</div>
+								</div>
+							</div>
+					</div>
+						<!-- END 密保设置-->
+				</div>
+				<div class="row">
+					<present name="productArr">
+					<include file="product" /></present>
+				</div>
+				<div class="col-sm-3 form-group text-center">
+					<div class="col-md-12">
+						<input type="submit" class="btn btn-primary btn-block" value="{:GET_F_L('提交注册')}" <present name='regAgreement'>disabled="disabled"</present>>
+					</div>
+				</div>
+				<present name='regAgreement'>
+				<div class="col-md-4" style="margin-bottom: 5vh;">
+					<input type="checkbox" style="vertical-align:top;" id="agree">&nbsp;已阅读协议并同意注册&nbsp;&nbsp;<a id="read" style="color:#00bfff;cursor: pointer;">点击阅读协议</a>
+				</div>
+				</present>
+			</form>
+		<present name='regAgreement'>
+			<div id="regAgreement" style="display:none;position:absolute;top:0;left:0;z-index:999;width:90%;margin-left:5%;padding:30px;background:#ababab;" class="panel">
+				<table class="tablebg" id="table4">
+					<tr>
+						<td class="tbkey" style="text-align:center;font-size:16px;color:#000;">注册协议内容</td>
+					</tr>
+					<tr>
+						<td class="tbval">{$regAgreement}</td>
+					</tr>
+					<tr>
+						<td class="tbkey"  style="text-align:center;" ><INPUT class="button_text" onMouseDown="this.className='button_onmousedown'" onMouseOver="this.className='button_onmouseover'" onMouseOut="this.className='button_onmouseout'" type="button" value="同意并注册" onclick="$('#regAgreement').hide();$('#salereg').show()"/></td>
+					</tr>
+				</table>
+			</div>
+		</present>
+	</div>
+
+</div>
+<include file="Public:footer" />
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/fileinput/fileinput.min.js"></script>
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/filetree/jqueryFileTree.js"></script>
+
+<!--<script type="text/javascript" src="__TMPL__Public/js/plugins/cropper/cropper.min.js"></script>-->
+
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/jstree/jstree.min.js"></script>
+<script type="text/javascript"
+	src="__TMPL__Public/js/demo_file_handling.js"></script>
+<script type="text/javascript"
+	src="__PUBLIC__/directSell/area_select.js"></script>
+
+<if condition="($alert eq true)"> <!--是否显示确认框-->
+<link rel="stylesheet" href="__PUBLIC__/zxxbox/common.css"
+	type="text/css" />
+<script type="text/javascript"
+	src="__PUBLIC__/zxxbox/jquery.zxxbox.3.0.js"></script> <script
+	type="text/javascript">
+        function alertcheck(){
+            var alertstr ='<table class="tablebg" style="margin-top:0;">';
+            alertstr+='<tr><td class="tbkey" style="padding-right:5px;">'+'{$levels:byname}'+'</td>'
+            alertstr+='<td class="tbval">'+$("#lv option:selected").text()+'</td></tr>';
+            <foreach name='nets' item='net'>
+                <if condition="($net.type eq 'text')">
+                    alertstr+='<tr><td class="tbkey" style="padding-right:5px;">{$net.name}</td>';
+                    alertstr+='<td class="tbval">'+$("#{$net.inputname}").val()+'</td></tr>';
+                </if>
+            </foreach>
+            alertstr+='<tr><td colspan="2" class="tbval" style="text-align:center;">一旦注册，将不能修改，确定请点击确认</td></tr>';
+            alertstr+='</table>';
+            $.zxxbox.ask(alertstr, function(){
+                $('#form').submit();
+                $('#regsubbutton').attr('disabled','true');
+                $.zxxbox.hide();
+            }, null, {
+                title: "友情提示",
+                fix: true
+            });
+        }
+    </script> </if>
+<script>
+    $('#mobile').blur(function () {
+        if (test()) {
+            $('#state_mobile').html('输入正确');
+        } else {
+            $('#state_mobile').html('输入有误！');
+        }
+    });
+    $('#id_card').blur(function () {
+        if (isCardNo()) {
+            $('#state_id_card').html('输入正确');
+        } else {
+            $('#state_id_card').html('输入有误！');
+        }
+    });
+	$('#agree').click(function(){
+		if($("#agree").is(':checked')){
+			$('input[type="submit"]').removeAttr('disabled')
+		}else{
+			$('input[type="submit"]').attr('disabled','disabled')
+		}
+	})
+	$('#read').click(function(){
+		$('#regAgreement').show();
+		var speed=200;//滑动的速度
+		$('body,html').animate({ scrollTop: 0 }, speed);
+		return false;
+	})
+	$('#username').keyup(function(){
+		$('#khname').val($(this).val());
+	})
+    function isCardNo() {
+        var card=document.getElementById('id_card').value;
+        // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+        var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(card) === false){
+            return  false;
+        }
+        return true;
+    }
+    function test() {
+        var str=document.getElementById('mobile').value;
+        var re = /^1\d{10}$/
+        if (re.test(str)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+<script type="text/javascript">
+    $.area_default_show = true; //显示默认区域
+    $.area_select_bind( 'country_id' , 'province_id' , 'city_id' , 'county_id','town_id');
+    var vd;
+    var lastname;
+    console.log($.area_select_bind);
+    function getInfo(e)
+    {
+        console.log(e);
+        var thisname=e.name;
+        if(lastname == thisname){
+
+            clearTimeout(vd);
+            vd = setTimeout("regAjax('"+e.id+"')",600);
+        }else{
+            regAjax(e.id);
+            lastname=thisname;
+        }
+    }
+    function regAjaxall()
+    {
+        $("[id^=state_]").text("");
+        $('#state_productCountMoney').text("");
+        var arr={$jsrequire};
+        var postdata	= {};
+        $("input").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+        });
+        $("select").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+        });
+        $.post('__GROUP__/Sale/regAjax:__XPATH__',postdata,function(data){
+            if(!data)
+            {
+                <if condition="($alert eq true)">
+                    alertcheck();
+                    <else/>
+                    $('#form').submit();
+                    $('#regsubbutton').attr('disabled','true');
+                </if>
+            }
+            else
+            {
+                eval(data);
+                return false;
+            }
+        });
+    }
+    function regAjax(name)
+    {
+        var id			= $('#'+name).val();
+        var postname	= name;
+        var otherpost	= $('#'+name).attr('otherpost');
+        var postdata = {postname:name};
+        $("input").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+
+        });
+        $("select").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+        });
+        $.ajax({
+            url:"__APP__/User/Sale/regAjax:__XPATH__",
+            type:"POST",
+            data:postdata,
+            dataType:"script",
+            global:false,
+            success:function(data){
+                if(data == ''){
+                    $("#state_"+name).html('<img src="__PUBLIC__/Images/ExtJSicons/tick.png"/>');
+                }else{
+                    data;
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

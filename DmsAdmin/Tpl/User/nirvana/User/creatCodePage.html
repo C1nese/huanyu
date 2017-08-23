@@ -1,0 +1,307 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/cropper/cropper.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/shop.css" />
+<script type="text/javascript" src="__TMPL__Public/js/shop.js"></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<div class="content-frame pages-edit-liv" id="usereg">
+	<div class="col-md-12">
+		<div id="salereg"
+			style="present name='regAgreement'&gt;display: none&lt;/present&gt;">
+			<form class="form-horizontal" name="form" method="post"
+				enctype="multipart/form-data"
+				action="__GROUP__/User/creatCode" id="form">
+				<div class="row">
+					
+						
+	<div class="col-md-12">
+                        <!--用户信息-->
+                        <div class="panel panel-colorful">
+                            <div class="panel-body form-group-separated">
+			<!-- 推荐人编号 -->
+                                <if condition="($haveuser eq true)">
+                                    <foreach name='nets' item='net'>
+                                        <if condition="($net.type eq 'text')">
+                                            <if condition="($net.name eq '推荐人编号')">
+                                                    <input type="hidden" name="{$net.inputname}" value="{$net.value}">
+                                            <else/>                                          
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label label-title">{$net.name}</label>
+                                                <div class="col-md-4 col-xs-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                                                        <input type="text" class="form-control" value="{$net.value}" name="{$net.inputname}" otherpost='{$net.otherpost}' onkeyup="getInfo(this)" id="{$net.inputname}" autocomplete="off"/>
+                                                    </div>
+                                                    <span class="help-block msg text-danger" id="state_{$net.inputname}"></span>
+                                                </div>
+                                            </div>
+                                            </if>
+                                        </if>
+                                        <!-- 管理人、位置 -->
+                                        <if condition="($net.type eq 'select')">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label label-title">{$net.name}</label>
+                                                <div class="col-md-4">
+                                                    <select class="form-control select" name='{$net.inputname}'  otherpost='{$net.otherpost}' id="{$net.inputname}" onchange="getInfo(this)">
+                                                        <foreach name='net.Region' item='Region'>
+                                                            <option value='{$Region.name}' <if condition="isset($_GET['position']) and $_GET['position']==$key">selected</if>>{$Region.name}</option>
+                                                        </foreach>
+                                                    </select>
+                                                    <span class="help-block msg text-danger" id="state_{$net.inputname}"></span>
+                                                </div>
+                                            </div>
+                                        </if>
+                                    </foreach>
+                                </if>
+                                {//xml中的附加配置注册显示字段}
+                                <present name="funReg">
+                                    <foreach name="funReg" item="fun" key="key">
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label label-title">{$fun}</label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                    <input type="text" value="" name="{$fun}" class="form-control"/>
+                                                </div>
+                                                <span class="help-block msg text-danger" id="state_{$fun}"></span>
+                                            </div>
+                                        </div>
+                                    </foreach>
+                                </present>
+
+                                <!--商务中心-->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label label-title">{:GET_F_L('商务中心')}</label>
+                                        <div class="col-md-4">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                                <input type="text" value="" name="shop"  onkeyup="getInfo(this)" id="shop" autocomplete="off" class="form-control"/>
+                                            </div>
+                                            <span class="help-block msg text-danger" id="state_shop"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+			<div class="col-sm-7 form-group text-center">
+				<div class="col-md-4 pull-right" style="height:150px;">
+					<input type="submit" class="btn btn-primary btn-block" 
+						value="{:GET_F_L('确认生成')}"  id="confirm">
+				</div>
+			</div>
+                                    </div>
+
+                               
+                            </div>
+
+                          <!--   <div class="panel-footer">
+                                <input class="btn btn-primary pull-right" type="button" value="{:GET_F_L('确定')}" onclick="regAjaxall()" id="regsubbutton">
+                            </div> -->
+                        </div>
+                        <!-- END 用户信息-->
+                    </div>
+				</div>	
+				
+						<!-- END 密保设置-->
+				</div>
+				
+				
+			</form>
+		</div>
+	</div>
+
+</div>
+<include file="Public:footer" />
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/fileinput/fileinput.min.js"></script>
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/filetree/jqueryFileTree.js"></script>
+
+<!--<script type="text/javascript" src="__TMPL__Public/js/plugins/cropper/cropper.min.js"></script>-->
+
+<script type="text/javascript"
+	src="__TMPL__Public/js/plugins/jstree/jstree.min.js"></script>
+<script type="text/javascript"
+	src="__TMPL__Public/js/demo_file_handling.js"></script>
+<script type="text/javascript"
+	src="__PUBLIC__/directSell/area_select.js"></script>
+
+<if condition="($alert eq true)"> <!--是否显示确认框-->
+<link rel="stylesheet" href="__PUBLIC__/zxxbox/common.css"
+	type="text/css" />
+<script type="text/javascript"
+	src="__PUBLIC__/zxxbox/jquery.zxxbox.3.0.js"></script> <script
+	type="text/javascript">
+        function alertcheck(){
+            var alertstr ='<table class="tablebg" style="margin-top:0;">';
+            alertstr+='<tr><td class="tbkey" style="padding-right:5px;">'+'{$levels:byname}'+'</td>'
+            alertstr+='<td class="tbval">'+$("#lv option:selected").text()+'</td></tr>';
+            <foreach name='nets' item='net'>
+                <if condition="($net.type eq 'text')">
+                    alertstr+='<tr><td class="tbkey" style="padding-right:5px;">{$net.name}</td>';
+                    alertstr+='<td class="tbval">'+$("#{$net.inputname}").val()+'</td></tr>';
+                </if>
+            </foreach>
+            alertstr+='<tr><td colspan="2" class="tbval" style="text-align:center;">一旦注册，将不能修改，确定请点击确认</td></tr>';
+            alertstr+='</table>';
+            $.zxxbox.ask(alertstr, function(){
+                $('#form').submit();
+                $('#regsubbutton').attr('disabled','true');
+                $.zxxbox.hide();
+            }, null, {
+                title: "友情提示",
+                fix: true
+            });
+        }
+    </script> </if>
+<script>
+//     $('#mobile').blur(function () {
+//         if (test()) {
+//             $('#state_mobile').html('输入正确');
+//         } else {
+//             $('#state_mobile').html('输入有误！');
+//         }
+//     });
+//     $('#id_card').blur(function () {
+//         if (isCardNo()) {
+//             $('#state_id_card').html('输入正确');
+//         } else {
+//             $('#state_id_card').html('输入有误！');
+//         }
+//     });
+//     function isCardNo() {
+//         var card=document.getElementById('id_card').value;
+//         // 身份证号码为15位或者18位，15位时全为数字，18位前17位为数字，最后一位是校验位，可能为数字或字符X
+//         var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+//         if(reg.test(card) === false){
+//             return  false;
+//         }
+//         return true;
+//     }
+//     function test() {
+//         var str=document.getElementById('mobile').value;
+//         var re = /^1\d{10}$/
+//         if (re.test(str)) {
+//             return true;
+//         } else {
+//             return false;
+//         }
+//     }
+</script>
+<script type="text/javascript">
+    $.area_default_show = true; //显示默认区域
+    $.area_select_bind( 'country_id' , 'province_id' , 'city_id' , 'county_id','town_id');
+    var vd;
+    var lastname;
+    console.log($.area_select_bind);
+    function getInfo(e)
+    {
+        console.log(e);
+        var thisname=e.name;
+        if(lastname == thisname){
+
+            clearTimeout(vd);
+            vd = setTimeout("regAjax('"+e.id+"')",600);
+        }else{
+            regAjax(e.id);
+            lastname=thisname;
+        }
+    }
+    function regAjaxall()
+    {
+        $("[id^=state_]").text("");
+        $('#state_productCountMoney').text("");
+        var arr={$jsrequire};
+        var postdata	= {};
+        $("input").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+        });
+        $("select").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+        });
+        $.post('__GROUP__/Sale/regAjax:{:$regXpath}',postdata,function(data){
+            if(!data)
+            {
+                <if condition="($alert eq true)">
+                    alertcheck();
+                    <else/>
+                    $('#form').submit();
+                </if>
+            }
+            else
+            {
+                eval(data);
+                return false;
+            }
+        });
+    }
+    function regAjax(name)
+    {
+        var id			= $('#'+name).val();
+        var postname	= name;
+        var otherpost	= $('#'+name).attr('otherpost');
+        var postdata = {postname:name};
+        var submit = new Array("0","0");
+        var rec = man = 0;
+        $("input").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+
+        });
+        $("select").each(function(i,n){
+            var postname	= n.name;
+            var value  = n.value;
+            postdata[postname]	= value;
+        });
+        $.ajax({
+            url:"__APP__/User/Sale/regAjax:{:$regXpath}",
+            type:"POST",
+            data:postdata,
+            dataType:"script",
+            global:false,
+            success:function(data){
+                    var str = new Array();
+                    str = data.split("'");
+                    if(data == ''){
+                        $("#state_"+name).html('<img src="__PUBLIC__/Images/ExtJSicons/tick.png"/>');
+                    }else{
+                        data;
+                        if(str[1] == "推荐人不能为空" || str[1] == "推荐人非正式用户"){
+                                submit[0] = 1; 
+                                rec = 1;            
+                        }
+                        if(str[1] == "管理人不能为空" || str[1] == "管理区域指定已经有人" || str[1] == "管理人不存在"){
+                                submit[1] = 1; 
+                                man = 1;               
+                        }
+                        if(!rec && submit[0]){
+                            submit[0] = 2;
+                        }
+                        if(!man && submit[1]){
+                            submit[1] = 2; 
+                        }
+                        if(submit[0] == 2 && submit[1] == 2 ){
+                            $("#confirm").show();
+                        }else{
+                            $("#confirm").hide();
+                        }
+                    }         
+            }
+        });
+    }
+</script>
+</body>
+</html>

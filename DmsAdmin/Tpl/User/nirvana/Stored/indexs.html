@@ -1,0 +1,118 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="row pages-edit">
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action="__URL__/pay_confirms"  method="post">
+            <div class="panel panel-colorful">
+                <div class="panel-heading">
+                    <!-- <h3>{:GET_F_L('在线支付')}</h3>                    -->
+                    <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-ticket"></span>&nbsp;{:GET_F_L('中心钱包充值')}</strong>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body form-group-separated">
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('支付货币类型')}</label>
+                        <div class="col-md-6 col-xs-12 label-title">
+                            <input name="type" class="form-control" type="text" value="中心钱包" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('选择支付方式')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px">
+                            <select  name="payment" onchange="inputname()" id="test"  class="form-control" style="border-radius:4px;">
+                                <option value="">{:GET_F_L('请选择支付方式')}</option>
+                                <foreach name="list" item="payInfo" >
+                                    <present name="payInfo.banklist">
+                                        <foreach name="payInfo.banklist" key="bank_code" item="bank_name">
+                                            <option value="{$key}:{$bank_code}" class="{$key}" >{$bank_name}</option>
+                                        </foreach>
+
+                                        <else />
+
+                                        <option value="{$key}" class="{$key}">{$payInfo.name}</option>
+
+                                    </present>
+
+                                </foreach>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-5 control-label label-title">{:GET_F_L('支付金额')}</label>
+                        <div class="col-md-6 col-xs-12 control-label label-title">
+                            <div class="input-group">
+                                <input type="text" name="money" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-6 col-xs-7">
+                            <div class="input-group pull-right">
+                                <input class="btn btn-primary btn-block"  type="submit" value="确认支付" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-footer">
+
+                    &nbsp;
+
+                </div>
+
+            </div>
+
+        </form>
+        <div class="row">
+            <div class="col-md-12" style="padding: 10px 0 10px 0">
+                <!-- START TABLE HOVER ROWS -->
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-edit"></span>&nbsp;{:GET_F_L('中心钱包说明')}</strong>
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
+                    <div class="panel-body table-responsive">
+
+                    </div>
+
+                </div>
+                <!-- END TABLE HOVER ROWS -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script language="javascript">
+    function inputlv(){
+        var postdata = {};
+        postdata['buylv'] = $("#buylv").val();
+        $.ajax({
+            url:"__APP__/User/Stored/getmoneyAjax",
+            type:"POST",
+            data:postdata,
+            dataType:"text",
+            global:false,
+            success:function(data){
+                if(data == ''){
+                    $("#money").html('0');
+                }else{
+                    $("#money").html(data);
+                }
+            }
+        });
+    }
+</script>

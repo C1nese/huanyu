@@ -1,0 +1,68 @@
+<script language="javascript" type="text/javascript"> 
+function dispinput(isuser)
+{
+	
+	if(isuser=='0')
+	{
+		$('#receiver',navTab.getCurrentPanel()).show();
+	}
+	else
+	{
+		$('#receiver',navTab.getCurrentPanel()).hide();
+	}
+}
+</script> 
+<div class="pageContent">
+<form id="sendform" action="__URL__/dirsend_notice" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDoneOpen)">
+	<input type="hidden" name="callbackType" value="closeCurrent" />
+	<input type="hidden" name="navTabId" value="{:md5(__APP__.'/Admin/Notice/dirindex')}"/>
+	<input type="hidden" name="forwardUrl" value="__APP__/Admin/Notice/dirindex"/>
+	<input type="hidden" name="navTabTitle" value="董事长致辞"/>
+	<div class="pageFormContent" layoutH="58">
+	<table style="width:900px">
+       <tr align="left">
+           <td >致辞标题:</td>
+           <td colspan="2" style="text-align:left;"><input id="title" name="title" type="text" style="width:580px; background:#FFF;"/></td>  
+       </tr>
+	   <tr align="left"> 
+		   <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;语言:</td>
+           <td colspan="2" style="text-align:left;"><select name="lang" >
+			   <option value="zh-cn" <eq name="lang" value="zh-cn">selected</eq>>中文</option>
+			   <option value="en-us" <eq name="lang" value="en-us">selected</eq>>英文</option>
+		   </select>
+      </tr>
+      <tr align="left"> 
+		   <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;应用:</td>
+           <td colspan="2" style="text-align:left;">
+           <select name="zhici" >
+			   <option value="1" >开启</option>
+			   <option value="0">关闭</option>
+		   </select>
+      </tr>
+      <tr align="left">
+         <td height="100" valign="top">内容:</td>
+         <td  colspan="2" style="text-align:left">
+		 <textarea id="NoticeContent" name="content" style="width:700px;height:500px;"></textarea>
+               
+        </td>
+       </tr>
+        </table>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button id="submit" type="submit">发布</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+   </form>
+
+</div>
+
+ <script type="text/javascript"> 
+$(function(){
+KindEditor.create($("#NoticeContent",navTab.getCurrentPanel()), {
+	allowFileManager : true,
+	afterBlur: function(){this.sync();}
+});
+})
+</script>

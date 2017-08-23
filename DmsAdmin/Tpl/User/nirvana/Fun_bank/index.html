@@ -1,0 +1,191 @@
+<!-- END WIDGETS -->
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L($name.'明细')}</h2>        
+            <!-- <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('我的成长进度')}</strong> -->
+        </div>
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME LEFT -->
+   <div class="content-frame-left">
+        <div class="panel panel-primary" >
+            <div class="panel-heading">
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L($name.'明细')}</strong> 
+            </div>
+            <div class="panel-body">
+                <div class="list-group border-bottom">
+                	                	<a class="list-group-item <eq name='name' value='销售奖金'>active</eq>" href="/index.php?s=/User/Tle/index:tle" id="推广奖励明细">{:GET_F_L('推广奖励明细')}</a>
+
+                    <a class="list-group-item <eq name='name' value='申购金'>active</eq>" href="/index.php?s=/User/Fun_bank/index:fun_bank[1]" id="申购钱包明细">{:GET_F_L('申购钱包明细')}</a>
+                    <a class="list-group-item <eq name='name' value='用户收益'>active</eq>" href="/index.php?s=/User/Fun_bank/index:fun_bank[2]" id="用户收益明细">{:GET_F_L('用户收益明细')}</a>
+                     <a class="list-group-item <eq name='name' value='换购积分'>active</eq>" href="/index.php?s=/User/Fun_bank/index:fun_bank[3]" id="换购钱包明细">{:GET_F_L('换购钱包明细')}</a>
+                    <a class="list-group-item <eq name='name' value='持股数量'>active</eq>" href="/index.php?s=/User/Fun_bank/index:fun_bank[4]" id="持股数量明细">{:GET_F_L('持股数量明细')}</a>
+                </div>
+            </div>
+			<div class="panel-footer">
+				<eq name="name" value="电子钱包">
+					<button class="btn btn-primary btn-block" onClick="location.href='/index.php?s=/User/Fun_bank/get:fun_bank[1]'">电子钱包提现</button>
+				</eq>
+				<eq name="name" value="储值钱包">
+					<button class="btn btn-primary btn-block" onClick="location.href='/index.php?s=/User/Stored/index'">储值钱包充值</button>
+				</eq>
+		   </div>
+        </div>
+    </div> 
+    <!-- END CONTENT FRAME LEFT -->
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="content-frame-body">
+        <!-- <div class="col-md-6">
+
+            <div class="widget widget-info">
+                <div class="widget-subtitle"></div>
+                <div class="widget-int"><span data-toggle="counter" data-to="<eq name='$ltotal[余额]' value='0'>0.00<else/>{$ltotal.余额}</eq>"><eq name="$ltotal['余额']" value="0">0.00<else/>{$ltotal.余额}</eq></span></div>
+                <div class="widget-subtitle"></div>                
+                <div class="widget-title">{:GET_F_L('账户余额')}</div>
+                <div class="widget-controls">
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="widget widget-danger">
+                <div class="widget-subtitle"></div>
+                <div class="widget-int"><span data-toggle="counter" data-to="<eq name='$ltotal[金额]' value='0'>0.00<else/>{$ltotal.金额}</eq>"><eq name="$ltotal['金额']" value="0">0.00<else/>{$ltotal.金额}</eq></span></div> 
+                <div class="widget-subtitle"></div>               
+                <div class="widget-title">{:GET_F_L('最近一笔金额')}</div>               
+                <div class="widget-controls">
+                    
+                </div>
+            </div>
+
+        </div> -->
+        <!-- START LINE CHART -->
+        <div class="panel panel-default  visible-lg">
+            <div class="panel-heading">
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('近期明细')}</strong> 
+<!--                 <h3>{:GET_F_L('近期明细')}</h3> -->
+            </div>
+            <div class="panel-body">
+                <div id="morris-line-example" style="height: 300px;"></div>
+            </div>
+        </div>
+        <!-- END LINE CHART -->
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('总计明细')}</strong>
+                <!-- <h3>{:GET_F_L('总计明细')}</h3> -->
+            </div>
+
+            <div class="panel-body panel-body-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-actions">
+                        <thead>
+                        <tr class="nirvana-lin">
+                            <foreach name='data.field' item='naitem'>
+                                <th>{:GET_F_L($naitem)}</th>
+                            </foreach>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name='data.list' item='tblist'>
+                            <tr>
+                                <foreach name="tblist" item='value' key='name1'>
+                                    <td >{$tblist.$name1}</td>
+                                </foreach>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel-footer col-xs-12">
+            	<if condition="$name eq '电子钱包' or $name eq '储值钱包'">
+            	{$show_page}
+            	<else/>
+                <ul class="pagination pagination-sm pull-right">
+                    <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录 ')}{$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] neq 1">
+                        <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                        <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                    </if> -->
+                    <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                    <if condition="isset($data['rollPage'][-2])">
+                        <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][-1])">
+                        <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                    </if>
+                    <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                    <if condition="isset($data['rollPage'][1])">
+                        <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][2])">
+                        <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                    </if>
+                    <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] lt $data['totalPages']">
+                        <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                        <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                    </if> -->
+                </ul>
+                </if>
+            </div>
+
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+
+</div>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/morris/morris.min.js"></script>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+
+<script type="text/javascript">
+    var morrisCharts = function() {
+        Morris.Line({
+            element: 'morris-line-example',
+            data: [
+                <volist name="data.list" id="vo" offset="0" length='15'>
+                    { y: "{$vo.时间}", a: "{$vo.余额}"},
+                </volist>
+            ],
+            xkey: 'y',
+            ykeys: ['a'],
+            labels: ['资金变动'],
+            resize: true,
+            lineColors: ['#33414E']
+        });
+
+    }();
+</script>
+
+</body>
+</html>
+
+
+
+
+

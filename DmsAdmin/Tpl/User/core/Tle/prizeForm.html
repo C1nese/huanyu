@@ -1,0 +1,37 @@
+<div class="core_main Tle" id="prizeForm">
+	<div class="core_title">
+    	<span class="core_title_con"><span>当前位置</span>：{$nowtitle}</span>
+    </div>
+    <div class="core_con">
+        <foreach name="data" item="prize" >	    
+        <table class="tablebg">
+          <tr>
+            <th colspan="5" >{$prize.name}</th>
+          </tr>
+          <tr class="datafield">
+              <td class="source">来源</td>
+              <td class="number">奖金额</td>
+              <td class="calcul">计算方式</td>
+              <td class="layers">层数</td>
+              <td class="tights">紧缩</td>
+          </tr>    
+          <foreach name="prize.list" item="list" >
+          <tr class="datalist">
+              <td >{$list.编号}</td>
+              <td >{$list.val}</td>
+              <td ><if condition="$list.memo eq ''">-----<else/>{$list.memo}</if></td>
+              <td >{$list.layer}</td>
+              <td >{$list.tighten}</td>
+          </tr>
+          </foreach>
+          
+        </table>
+        
+        </foreach>
+        <div style="text-align:center;padding-top:10px;">
+        	<input class="button_text" onMouseDown="this.className='button_onmousedown'" onMouseOver="this.className='button_onmouseover'" onMouseOut="this.className='button_onmouseout'" type="button"  id="but" value="返回" name="but" onClick="history.back();">
+		</div>
+	
+    </div>
+    <div class="core_page"></div>
+</div>

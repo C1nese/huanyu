@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-touch-fullscreen" content="yes"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<meta name="msapplication-tap-highlight" content="no"/>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1"/>
+	<script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/cssindex/base.css">
+	<title>推荐伙伴</title>
+	<style>
+		.sit span{
+			display: inline-block;
+			border:1px solid #000;
+			border-radius: 99999999px;
+			width: 5vw;
+			height: 5vw;
+			font-size: 4vw;
+			text-align: center;
+		}
+		.tabbar{
+			background-color: #2D3945;
+			position: relative;
+			height:1.6rem;
+		}
+		.tabbar>div{
+			/*width: 25vw;*/
+			/*margin-left: 6.25vw;*/
+			text-align: center;
+			color:#FFF;
+			display: inline-block;
+			font-size: 0.6rem;
+			font-weight: 600;
+			margin-top: 4px;
+			position: absolute;
+			bottom: 0px;
+			padding-bottom: 11px;
+		}
+		.active-tab{
+			background-color: #f3796c;
+			color: #2D3945 !important;
+		}
+		.table-info{
+			font-size: 0.6rem;
+			height: 16vw;
+			font-weight: 600;
+			color: #2D3945;
+			text-align: left !important;
+			padding-left: 4px;
+		}
+		.table-div>div{
+			float: left;
+			margin-top: 1vw;
+			height: 16vw;
+
+		}
+		.table-div{
+			height:17vw;
+			padding: 10px 0;
+			border-bottom: 1px solid #DDD;
+		}
+		.table-info>p:last-child{
+			font-size: 0.6rem;
+			color: #757575;
+		}
+		.partner{
+			cursor:pointer;
+			white-space:nowrap;
+			padding: 10px 0px 12px 8px;
+		}
+		.table-time{
+			width: 35%;text-align: 
+			left;border-right:1px solid #DDD;
+			font-size: 0.6rem;
+			color: #757575;
+			font-weight: 600;
+			padding-left: 4px;
+			line-height: 0.9rem
+		}
+	</style>
+</head>
+<body style="background-color: #FFF !important;">
+<div style="padding: 10px 10px 20px;height: 8vw;">
+	<img src="__TMPL__Public/img/lm-4.png" style="height:14vw;margin-top: -2vw"/>
+	<span style="line-height: 12vw;font-size: 1rem;color: #2f2f2f;font-weight: 600">收益明细</span>
+	<span style="line-height: 12vw;font-size: 0.9rem;color: #2f2f2f;float:right;">共	<span style="color:#2D3945;font-size: 1.2rem;padding: 4px 2px 0">{$ucount+$acount}</span>位伙伴</span>
+</div>
+
+<div>
+	<div class="tabbar">
+		<div class="partner active-tab" data="tab1"  style="width: 50%;">
+			推荐奖励{$ucount}位
+		</div>
+		<div class="partner" data="tab2" style="width: 50%; left: 50%">
+			联盟奖励{$acount}位
+		</div>
+	</div>
+</div>
+<div class="tabh" id="tab1">
+	<volist name="user" id="vo">
+		<div class="table-div">
+			<div style="width: 20%;text-align: center;border-right: 1px solid #ddd">
+				<img src="{$vo.头像}" style="width:16vw;height: 16vw;border-radius: 999999px"/>
+			</div>
+			<div class="table-info" style="width: 25%;border-right:1px solid #DDD;line-height: 20px;">
+				<p>{$vo.编号}</p>
+				<p>{$vo.别名}</p>
+				<p>{$vo.from}</p>
+			</div>
+			<div class="table-time">
+				<p>他的伙伴：{$vo.推荐_推荐人数}</p>
+				<!--<p>注册日期：{$vo.注册日期|date="Y.m.d",###}</p>-->
+				<eq name="vo.登入日期" value="0">
+				<p>上次登录：{$vo.注册日期|date="Y.m.d",###}</p>
+				<else/>
+				<p>上次登录：{$vo.登入日期|date="Y.m.d",###}</p>
+				</eq>
+				<p style="color:#757575;font-size: 0.6rem">个人成长值：<span style="color: #2D3945;font-size: 0.6rem">{$vo.个人业绩}</span></p>
+			</div>
+			<div style="width: 15%;text-align: center">
+				<img src="__TMPL__Public/img/lm-5.png" style="width: 6vw"/>
+				<p style="font-weight: 600;font-size: 0.6rem">LV{$vo.级别}</p>
+			</div>
+		</div>
+	</volist>
+</div>
+<div class="tabh" id="tab2" style="display: none;">
+	<volist name="activated" id="vo">
+		<div class="table-div">
+			<div style="width: 20%;text-align: center;border-right: 1px solid #ddd">
+				<img src="{$vo.头像}" style="width:16vw;height: 16vw;border-radius: 999999px"/>
+			</div>
+			<div class="table-info" style="width: 25%;border-right:1px solid #DDD;line-height: 20px;">
+				<p>{$vo.编号}</p>
+				<p>{$vo.别名}</p>
+			</div>
+			<div class="table-time">
+				<p>他的伙伴：{$vo.推荐_推荐人数}</p>
+				<!--<p>注册日期：{$vo.注册日期|date="Y.m.d",###}</p>-->
+				<eq name="vo.登入日期" value="0">
+				<p>上次登录：{$vo.注册日期|date="Y.m.d",###}</p>
+				<else/>
+				<p>上次登录：{$vo.登入日期|date="Y.m.d",###}</p>
+				</eq>
+				<p style="color:#757575;font-size: 0.6rem">个人成长值：<span style="color: #2D3945;font-size: 0.6rem">{$vo.个人业绩}</span></p>
+			</div>
+			<div style="width: 15%;text-align: center">
+				<img src="__TMPL__Public/img/lm-5.png" style="width: 6vw"/>
+				<p style="font-weight: 600;font-size: 0.6rem">LV0</p>
+			</div>
+		</div>
+	</volist>
+</div>
+<script>
+$(function(){
+	$(".partner").click(function(){
+		$(".partner").removeClass('active-tab');
+		$('.tabh').hide();
+		$(this).addClass('active-tab');
+		$("#" + $(this).attr("data")).show();
+	});
+});
+</script>
+</body>
+</html>

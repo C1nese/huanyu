@@ -1,0 +1,580 @@
+<con>
+<user name="用户" byname="用户" unacclog='true' agreement='true'>
+<product name="产品">
+</product>
+<!--使用PV值的用户级别，通过use命令可选择隐藏某个用户级别-->
+<levels name='用户级别' byname='用户级别'>
+<_con lv='10' name='一级荣誉用户' use="#lv1use#" money='#lv1money#'/>
+<_con lv='20' name='二级荣誉用户' use="#lv2use#" money='#lv2money#'/>
+<_con lv='30' name='三级荣誉用户' use="#lv3use#" money='#lv3money#'/>
+<_con lv='40' name='四级荣誉用户' use="#lv4use#" money='#lv4money#'/>
+</levels>
+<!--商务中心级别定义-->
+<levels name='商务中心级别' byname='联盟机构级别'>
+<_con lv='1' name='荣誉用户'/>
+<_con lv='10' name='联盟机构' use="#lmv1use#"/>
+<_con lv='20' name='二级联盟机构' use="#lmv2use#"/>
+<_con lv='30' name='三级联盟机构' use="#lmv3use#"/>
+</levels>
+<!--sale_reg 里面定制化写，accview='服务中心_上级编号,编号'  为服务中心和用户本身可以在用户订单查询中审核订单，服务中心可删除临时订单-->
+<sale_reg lvname="用户级别" name='前台注册' byname='用户注册' user='用户' fromnoname='服务中心' fromnowhere="[服务中心]=1" confirm="false" accbank="常规扣款" accstr='服务中心_上级编号' accview='服务中心_上级编号' productname='产品' levelup='true'>
+<_addval from='[报单金额]' to='管理' set='1' salewhere="[报单状态]!='空单'" now='1'/>
+<_addval from='[报单金额]' to='管理' salewhere="[报单状态]!='空单'"/>
+<_addval from='[报单金额]' to='推荐_个人业绩' salewhere="[报单状态]!='空单'" now='1'/>
+<_addval from='[报单金额]' to='团队业绩' salewhere="[报单状态]!='空单'" now='1'/>
+</sale_reg>
+<!--后台用户注册 user='admin'-->
+<sale_reg lvname="用户级别" name='后台注册' byname='用户注册' user='admin' accstr='服务中心_上级编号' fromnoname='服务中心' fromnowhere="[服务中心]=1" levelup='true'>
+<_addval from='[报单金额]' to='管理' set='1' now='1' salewhere="[报单状态]!='空单'"/>
+<_addval from='[报单金额]' to='管理' salewhere="[报单状态]!='空单'"/>
+<_addval from='[报单金额]' to='推荐_个人业绩' salewhere="[报单状态]!='空单'" now='1'/>
+<_addval from='[报单金额]' to='团队业绩' salewhere="[报单状态]!='空单'" now='1'/>
+</sale_reg>
+<!--sale_up 用户升级 -->
+<sale_up name='前台升级' byname='用户升级' lvname='用户级别' user='用户' accbank='常规扣款' productname='产品'>
+<_addval from='[报单金额]' to='管理' now='1'/>
+</sale_up>
+<sale_up name='后台升级' byname='用户升级' lvname='用户级别' user='admin' accbank='常规扣款'>
+<_addval from='[报单金额]' to='管理' now='1'/>
+</sale_up>
+<!--sale_up 商务中心模块 -->
+<sale_up name='申请商务中心' byname='申请联盟机构' lvname='商务中心级别' user='用户' useracc='false' confirm="false" diff='false' unuse='false'>
+<_update set='服务中心=1' where='M[服务中心]=0'/>
+</sale_up>
+<sale_up name='设置商务中心' byname='设置联盟机构' lvname='商务中心级别' user='admin' diff='false' unuse='true'>
+<_update set='服务中心=1' where='M[服务中心]=0'/>
+</sale_up>
+<!--sale_buy 里面定制化写-->
+<sale_buy name='申请奖金' user='用户' setmoney='true' confirm="false" dispwhere="[服务中心]=1" useracc='false'>
+<_addval from='[报单金额]' to='申购钱包' now='1' bankmome='[申请备注]' bankmode='申请奖金'/>
+</sale_buy>
+<sale_buy lvname="用户级别" name='购物消费' user='用户' accbank='购物扣款' productname="产品">
+</sale_buy>
+<!--accbank 里面有改动-->
+<accbank name='常规扣款'>
+<_bank name="申购钱包" minval='100%'/>
+</accbank>
+<accbank name='购物扣款'>
+<_bank name="换购钱包" minval='100%'/>
+</accbank>
+<!--推荐网络-->
+<net_rec name='推荐' byname='推荐'>
+</net_rec>
+<!--安置关系,注册不显示管理人,存在自动排列,寻找推荐人小区一层,然后找其下从上到下从左到右自动排列-->
+<net_place name='管理' byname='管理' fromnet='推荐' oneinleft='false' addminlayer='0' lockplace='false'>
+<!--该参数如果为 addMinLayer='6'  那么对碰奖业绩将从第6层开始计算-->
+<_region name='A'/>
+<_region name='B'/>
+<!-- <_region name='C' where='#cuse#'/>
+ --></net_place>
+<!--fun_bank  里面有改动-->
+<fun_bank name='申购钱包'/>
+<fun_bank name='用户收益'/>
+<fun_bank name='换购钱包'/>
+<fun_bank name='持股数量'/>
+<fun_bank name='联盟钱包'/>
+<fun_placenum name='团队业绩' netname='管理'/>
+<fun_val name='个人业绩' mode="int(11)" default="0"/>//统计个人业绩
+<fun_val name='产生奖金' mode="int(1)" default="0"/>//空单转实单，如果选择产生业绩，此用户就对上产生奖金，否则不产生奖金，标记为1
+<fun_val name='本次奖励' mode="int(11)" default="0"/>
+<fun_val name='奖励次数' mode="int(11)" default="0"/>
+<tle name='销售奖金' byname='推广奖励' tlemode='d' autogive='false' secautogive='false'>
+<_addval to='用户收益' val='100%' from='收入'/>
+<_addval to='换购钱包' val='-100%' from='换购积分'/>
+<!--里面有定制化开发-->
+<!--		<prize_rec name='推荐奖' lvname='用户级别' netname='推荐' rowfrom='1' rowname='报单金额' where="(报单类别='前台注册' or 报单类别='后台注册') and 产生奖金=0">
+<_con minlv='10' maxlv='10' minlayer='1' maxlayer='1' val='#vrec#%'/>
+<_con minlv='20' maxlv='20' minlayer='1' maxlayer='1' val='#hrec#%'/>
+<_con minlv='30' maxlv='30' minlayer='1' maxlayer='1' val='#brec#%'/>
+<_con minlv='40' maxlv='80' minlayer='1' maxlayer='1' val='#zrec#%'/>
+</prize_rec>
+-->
+<!--对碰奖-->
+<prize_bump name='推广补贴' netname='管理'>
+<_con bump='1:1' only='true' val='#pone#%'/>
+<_con bump='1:1:0' val='#ptwo#%'/>
+<_top where='[用户级别]=10' mode='day' val='#pfv#'/>
+<_top where='[用户级别]=20' mode='day' val='#pfh#'/>
+<_top where='[用户级别]=30' mode='day' val='#pfb#'/>
+<_top where='[用户级别]=40' mode='day' val='#pfz#'/>
+</prize_bump>
+<!--领导奖，里面有定制化开发  紧缩 nlayer是否紧缩  参数里面设置-->
+<prize_rec name='推广分红' lvname='用户级别' netname='推荐' rowfrom='0' rowname='推广补贴'>
+<_con minlv='10' maxlv='10' minlayer='1' maxlayer='1' val='#ldjbl01#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='2' maxlayer='2' val='#ldjbl02#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='3' maxlayer='3' val='#ldjbl03#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='4' maxlayer='4' val='#ldjbl04#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='5' maxlayer='5' val='#ldjbl05#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='6' maxlayer='6' val='#ldjbl06#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='7' maxlayer='7' val='#ldjbl07#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='8' maxlayer='8' val='#ldjbl08#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='10' maxlv='10' minlayer='9' maxlayer='9' val='#ldjbl09#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds1#" />
+<_con minlv='20' maxlv='20' minlayer='1' maxlayer='1' val='#ldjbl21#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='2' maxlayer='2' val='#ldjbl22#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='3' maxlayer='3' val='#ldjbl23#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='4' maxlayer='4' val='#ldjbl24#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='5' maxlayer='5' val='#ldjbl25#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='6' maxlayer='6' val='#ldjbl26#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='7' maxlayer='7' val='#ldjbl27#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='8' maxlayer='8' val='#ldjbl28#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='20' maxlv='20' minlayer='9' maxlayer='9' val='#ldjbl29#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds2#" />
+<_con minlv='30' maxlv='30' minlayer='1' maxlayer='1' val='#ldjbl31#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='2' maxlayer='2' val='#ldjbl32#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='3' maxlayer='3' val='#ldjbl33#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='4' maxlayer='4' val='#ldjbl34#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='5' maxlayer='5' val='#ldjbl35#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='6' maxlayer='6' val='#ldjbl36#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='7' maxlayer='7' val='#ldjbl37#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='8' maxlayer='8' val='#ldjbl38#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='30' maxlv='30' minlayer='9' maxlayer='9' val='#ldjbl39#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds3#" />
+<_con minlv='40' maxlv='40' minlayer='1' maxlayer='1' val='#ldjbl41#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='2' maxlayer='2' val='#ldjbl42#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='3' maxlayer='3' val='#ldjbl43#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='4' maxlayer='4' val='#ldjbl44#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='5' maxlayer='5' val='#ldjbl45#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='6' maxlayer='6' val='#ldjbl46#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='7' maxlayer='7' val='#ldjbl47#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='8' maxlayer='8' val='#ldjbl48#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+<_con minlv='40' maxlv='40' minlayer='9' maxlayer='9' val='#ldjbl49#%' where="U[推荐_层数]-M[推荐_层数]>>=#ldjds4#" />
+</prize_rec>
+<!-- 持股数量<_top mode='all' val='intval([累计收入]/#lj#)*#gq#'/>  val是整数 所以累计收入只有是lj的整数倍才产生-->
+<!--<prize_rebate name='股权奖励' lvname='用户级别' prizemode='1' rowname='id' rowfrom='0'>
+<_con minlv='10' maxlv='40' val='#gq#'/>
+<_top mode='all' val='intval([累计收入]/#lj#)*#gq#'/>
+<_addval to='持股数量' val='100%' from='股权奖励'/>
+</prize_rebate>-->
+<!--里面有定制化开发  统计天数-->
+<!--		
+<prize_rebate name='市场分红' lvname='用户级别' prizemode='1' rowname='id' rowfrom='0' tleMode='r' tleDay='#jgd#,#fb#,1'>
+<_con minlv='10' maxlv='10' val='#v1#' where='M[推荐_推荐人数]=0 and M[分红期数]>>#l1#'/>
+<_con minlv='10' maxlv='10' val='#v2#' where='M[推荐_推荐人数]=1 and M[分红期数]>>#l2#'/>
+<_con minlv='10' maxlv='10' val='#v3#' where='M[推荐_推荐人数]=2 and M[分红期数]>>#l3# '/>
+<_con minlv='10' maxlv='10' val='#v4#' where='M[推荐_推荐人数]>=3 and M[分红期数]>>#l4# '/>
+<_con minlv='20' maxlv='20' val='#h1#' where='M[推荐_推荐人数]=0 and M[分红期数]>>#l1# '/>
+<_con minlv='20' maxlv='20' val='#h2#' where='M[推荐_推荐人数]=1 and M[分红期数]>>#l2# '/>
+<_con minlv='20' maxlv='20' val='#h3#' where='M[推荐_推荐人数]=2 and M[分红期数]>>#l3# '/>
+<_con minlv='20' maxlv='20' val='#h4#' where='M[推荐_推荐人数]>=3 and M[分红期数]>>#l4# '/>
+<_con minlv='30' maxlv='30' val='#b1#' where='M[推荐_推荐人数]=0 and M[分红期数]>>#l1# '/>
+<_con minlv='30' maxlv='30' val='#b2#' where='M[推荐_推荐人数]=1 and M[分红期数]>>#l2# '/>
+<_con minlv='30' maxlv='30' val='#b3#' where='M[推荐_推荐人数]=2 and M[分红期数]>>#l3# '/>
+<_con minlv='30' maxlv='30' val='#b4#' where='M[推荐_推荐人数]>=3 and M[分红期数]>>#l4# '/>
+<_con minlv='40' maxlv='40' val='#z1#' where='M[推荐_推荐人数]=0 and M[分红期数]>>#l1#'/>
+<_con minlv='40' maxlv='40' val='#z2#' where='M[推荐_推荐人数]=1 and M[分红期数]>>#l2#'/>
+<_con minlv='40' maxlv='40' val='#z3#' where='M[推荐_推荐人数]=2 and M[分红期数]>>#l3# '/>
+<_con minlv='40' maxlv='40' val='#z4#' where='M[推荐_推荐人数]>=3 and M[分红期数]>>#l4#'/>
+<_top mode='all' val='#vf#' where='[用户级别]=10'/>
+<_top mode='all' val='#hf#' where='[用户级别]=20'/>
+<_top mode='all' val='#bf#' where='[用户级别]=30'/>
+<_top mode='all' val='#zf#' where='[用户级别]>30'/>
+</prize_rebate>
+-->
+<!--商务中心报单费模块-->
+<prize_salefrom name='联盟机构补贴' lvname='商务中心级别' rowfrom='1' rowname='报单金额' where="([报单类别]='前台注册' or [报单类别]='后台注册') and 产生奖金=0">
+<_con minlv='10' maxlv='10' val='#bdx#%'/>
+<_con minlv='20' maxlv='20' val='#bds#%'/>
+<_con minlv='30' maxlv='30' val='#bdp#%'/>
+</prize_salefrom>
+
+<prize_sql sql="update dms_用户 set 本次奖励=floor(累计收入/#lj#) where 累计收入>=#lj#*(奖励次数+1)" />
+<prize_rebate name='股权奖励' lvname='用户级别' prizemode='0' rowname='本次奖励-奖励次数' rowfrom='0' userdisp='false' admindisp='false'>
+<_con minlv='10' maxlv='80' val='*#gq#' where='M[本次奖励]-M[奖励次数]=1 and M[累计收入]>0'/>
+<_addval to='持股数量' val='100%' now="1"/>
+</prize_rebate>
+<prize_sql sql="update dms_用户 set 奖励次数=本次奖励 where 奖励次数!=本次奖励" />
+
+<!--重复消费模块-->
+<prize_rebate name='换购积分' lvname='用户级别' prizemode='2' rowname='推广补贴+推广分红+联盟机构补贴' rowfrom='0'>
+<_con minlv='10' maxlv='40' val='#sc#%'/>
+</prize_rebate>
+<prize_rebate name='联盟积分' lvname='用户级别' prizemode='2' rowname='推广补贴+推广分红+联盟机构补贴' rowfrom='0'>
+	<_con minlv='10' maxlv='40' val='#scc#%'/>
+</prize_rebate>
+<!--税金模块-->
+<prize_tax name='服务费' taxnum='#tax#' rowname='推广补贴+推广分红+联盟机构补贴'/>
+<!--慈善基金-->
+<prize_tax name='环宇基金' taxnum='#jijin#' rowname='推广补贴+推广分红+联盟机构补贴'/>
+</tle>
+</user>
+<!--用户设置节点,生成奖金设置页面-->
+<tleset>
+<table title="用户设置">
+<tr>
+	<td style="width:70px">
+		用户级别
+	</td>
+	<td style="width:70px">
+		投资金额
+	</td>
+	<td style="width:70px">
+		对碰顶值
+	</td>
+	<td style="width:70px">
+		级别开启
+	</td>
+</tr>
+<tr>
+	<td style="width:70px">
+		一级用户:
+	</td>
+	<td>
+		<input value="1500" name="lv1money" style="width:70px"/>
+	</td>
+	<td style="width:70px">
+		<input value="1500" name="pfv"/>
+	</td>
+	<td style="width:70px">
+		<select name="lv1use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td style="width:70px">
+		二级用户:
+	</td>
+	<td>
+		<input value="3000" name="lv2money" style="width:70px"/>
+	</td>
+	<td style="width:70px">
+		<input value="3000" name="pfh"/>
+	</td>
+	<td style="width:70px">
+		<select name="lv2use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td style="width:70px">
+		三级用户:
+	</td>
+	<td>
+		<input value="10500" name="lv3money" style="width:70px"/>
+	</td>
+	<td style="width:70px">
+		<input value="10500" name="pfb"/>
+	</td>
+	<td style="width:70px">
+		<select name="lv3use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td style="width:70px">
+		四级用户:
+	</td>
+	<td>
+		<input value="15000" name="lv4money" style="width:70px"/>
+	</td>
+	<td style="width:70px">
+		<input value="15000" name="pfz"/>
+	</td>
+	<td style="width:70px">
+		<select name="lv4use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+</table>
+<!-- <table title="管理区开启">
+<tr>
+	<td style="width:200px">
+                    管理C区:
+	</td>
+	<td style="width:200px">
+		<select name="cuse" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+</table>
+ --><table title="对碰奖（推广补贴）">
+<tr>
+	<td style="width:200px">
+                    对碰奖比例:
+	</td>
+	<td style="width:200px">
+		<input value="10" name="pone"/>%
+	</td>
+</tr>
+<tr>
+	<td>
+                    剩余与小区:
+	</td>
+	<td>
+		<input value="12" name="ptwo"/>%
+	</td>
+</tr>
+</table>
+
+<table title="推广分红（领导奖）来源：推广补贴">
+<tr>
+	<td style="width:50px">
+		用户级别
+	</td>
+	<td style="width:50px">
+		享受代数
+	</td>
+	<td style="width:50px">
+		一代
+	</td>
+	<td style="width:50px">
+		二代
+	</td>
+	<td style="width:50px">
+		三代
+	</td>
+	<td style="width:50px">
+		四代
+	</td>
+	<td style="width:50px">
+		五代
+	</td>
+	<td style="width:50px">
+		六代
+	</td>
+	<td style="width:50px">
+		七代
+	</td>
+	<td style="width:50px">
+		八代
+	</td>
+	<td style="width:50px">
+		九代
+	</td>
+</tr>
+<tr>
+	<td style="width:60px">
+		一级用户:
+	</td>
+	<td>
+		<input value="3" name="ldjds1" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="100" name="ldjbl01" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="20" name="ldjbl02" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="10" name="ldjbl03" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl04" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl05" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl06" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl07" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl08" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl09" style="width:60px"/>
+	</td>
+</tr>
+<tr>
+	<td style="width:60px">
+		二级用户:
+	</td>
+	<td>
+		<input value="3" name="ldjds2" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="100" name="ldjbl21" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="20" name="ldjbl22" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="10" name="ldjbl23" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl24" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl25" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl26" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl27" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl28" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl29" style="width:60px"/>
+	</td>
+</tr>
+<tr>
+	<td style="width:60px">
+		三级用户:
+	</td>
+	<td>
+		<input value="3" name="ldjds3" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="100" name="ldjbl31" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="20" name="ldjbl32" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="10" name="ldjbl33" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl34" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl35" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl36" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl37" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl38" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl39" style="width:60px"/>
+	</td>
+</tr>
+<tr>
+	<td style="width:60px">
+		四级用户:
+	</td>
+	<td>
+		<input value="3" name="ldjds4" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="100" name="ldjbl41" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="20" name="ldjbl42" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="10" name="ldjbl43" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl44" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl45" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl46" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl47" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl48" style="width:60px"/>
+	</td>
+	<td style="width:50px">
+		<input value="0" name="ldjbl49" style="width:60px"/>
+	</td>
+</tr>
+</table>
+<table title="报单费（联盟机构补贴）">
+<tr>
+	<td style="width:200px">
+		一级联盟机构:
+	</td>
+	<td style="width:200px">
+		<input value="5" name="bdx"/>%
+	</td>
+	<td style="width:70px">
+		<select name="lmv1use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		二级联盟机构:
+	</td>
+	<td>
+		<input value="8" name="bds"/>%
+	</td>
+	<td style="width:70px">
+		<select name="lmv2use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+<tr>
+	<td>
+		三级联盟机构:
+	</td>
+	<td>
+		<input value="10" name="bdp"/>%
+	</td>
+	<td style="width:70px">
+		<select name="lmv3use" type="select">
+			<option value="true">开启</option>
+			<option value="false">关闭</option>
+		</select>
+	</td>
+</tr>
+</table>
+<table title='相关费用'>
+<tr>
+	<td>
+                    换购积分
+	</td>
+	<td>
+		<input value='10' name='sc'/>%
+	</td>
+</tr>
+<tr>
+	<td>
+		联盟积分
+	</td>
+	<td>
+		<input value='10' name='scc'/>%
+	</td>
+</tr>
+<tr>
+	<td style="width:200px">
+                    服务费
+	</td>
+	<td style="width:200px">
+		<input value='10' name='tax'/>%
+	</td>
+</tr>
+<tr>
+	<td>
+                    环宇基金
+	</td>
+	<td>
+		<input value='5' name='jijin'/>%
+	</td>
+</tr>
+</table>
+<table title='股权奖励'>
+<tr>
+	<td style="width:405px">
+		累计收入每达
+		<input value='20000' name='lj'/>元，奖<input value='100' name='gq'/>股股权
+	</td>
+</tr>
+</table>
+</tleset>
+</con>

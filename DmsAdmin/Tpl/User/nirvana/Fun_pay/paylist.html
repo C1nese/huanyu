@@ -1,0 +1,83 @@
+<load href="__PUBLIC__/My97DatePicker/WdatePicker.js" />
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- START TABLE HOVER ROWS -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <!-- <h3>{:GET_F_L('支付订单')}</h3>       -->
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-edit"></span>&nbsp;{:GET_F_L('支付订单')}</strong>
+                <div class="pull-right">
+                 
+                </div>
+            </div>
+            <div class="panel-body table-responsive">
+                <table class="table table-hover table-bordered table-striped table-actions">
+                    <thead>
+                    <tr class="nirvana-lin">
+                    	<foreach name='data.field' item='name'>
+                        <th ><nobr>{:GET_F_L($name)}</nobr></th>
+                        </foreach>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name='data.list' item='name'>
+                        <tr class="datalist">
+                        	<foreach name="name" item='value' key='name1'>
+                            <td ><nobr>{$name.$name1}</nobr></td>
+                            </foreach>
+                        </tr>
+                    </foreach>
+                    <notempty name="sum">
+                    	<tr class="datalist">
+                    	<foreach name="sum" item="vo">
+                    		<td><nobr>{$vo}</nobr></td>
+                    	</foreach>
+                    	</tr>
+                    </notempty>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <ul class="pagination pagination-sm pull-right">
+                    <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录')} {$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] neq 1">
+                        <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                        <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                    </if> -->
+                    <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                    <if condition="isset($data['rollPage'][-2])">
+                        <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][-1])">
+                        <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                    </if>
+                    <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                    <if condition="isset($data['rollPage'][1])">
+                        <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][2])">
+                        <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                    </if>
+                    <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] lt $data['totalPages']">
+                        <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                        <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                    </if> -->
+                </ul>
+            </div>
+        </div>
+        <!-- END TABLE HOVER ROWS -->
+    </div>
+</div>
+<include file="Public:footer" />
+
+</body>
+</html>
+

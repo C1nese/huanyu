@@ -1,0 +1,160 @@
+<include file="Public:header" />
+<style>
+  .page-container{
+  background:#efefee;
+  padding-bottom:50px;
+  }
+  </style>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<div class="row" id="default">
+
+    <div class="col-md-12 col-xs-12 form-horizontal" style="margin:0px;padding: 0px;">
+        <div class="col-md-12 col-xs-12">
+            <div class="panel panel-colorful">
+                <div class="panel-heading ui-draggable-handle" style="border-bottom: 0px;">
+                                                                  <div class="alert alert-success" role="alert" style='margin-top:10px;'>
+            <strong>提示：</strong>
+            当未激活的用户达到LV1等级时，系统将按照激活时间自动排序在已开启的联盟当中，默认开启全局自动激活，您也可以自定义选择指定联盟或指定用户开启自动激活功能。
+  
+
+                    <if condition="$check == 1">
+                        <div class="lm-check" style="width:120px;height:28px;float:right;border:outset;background:#E10601;font-size:16px;color:#fff;text-align:center;" data-id="1">全局自动激活</div>
+                    <else/>
+                        <div class="lm-check" style="width:120px;height:28px;float:right;border:outset;background:gray;font-size:16px;color:#fff;text-align:center;" data-id="1">全局自动激活</div>
+                    </if>
+                </div>     </div>
+            </div>
+        </div>
+    </div>
+    <volist name="yeji" id="vo">
+        <div class="form-horizontal">
+            <div class="col-md-4 col-xs-12">
+                <!-- CONTACT ITEM -->
+                <div class="panel panel-default ">
+                    <div class="row">
+                        <div class="panel-body profile">
+                            <div class="profile-image">
+                                <img src="__TMPL__Public/img/my-{$vo.area}.png" alt="{$vo.name}" style="width:40%;height:40%;"/>
+                            </div>
+                            <div class="profile-data">
+                                <div class="profile-data-name" style="text-align:left;font-size:16px;font-weight:600;">
+                                    {$vo.name}
+                                </div>
+                                <span style="text-align:left;font-size:14px;float:left;color:#fff;">
+                                    共 {$vo.num} 位伙伴
+                                </span>
+                                <span style="float:right;text-align:right;color:#fff;font-size:18px;font-weight:600;" class="dis-{$vo.area}">{$vo.display}</span>
+                            </div>
+                        </div>
+                        <div class="panel-body form-group-separated">
+                            <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+                                <div class="col-md-3 col-xs-3 text-center line-height30" style="margin: 0px;padding:0px;">新增积分</div>
+                                <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">结转积分</div>
+                                <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">累计积分</div>
+                                <div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding:0px;">自动激活</div>
+                            </div>
+                            <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+                                <div class="col-md-3 col-xs-3 text-center line-height30" style="margin: 0px;padding:0px;">{$vo.add}</div>
+                                <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{$vo.last}</div>
+                                <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{$vo.total}</div>
+                                <if condition="$vo['check'] == 1">
+                                    <div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding-top:7px;padding-left:25px;"><div class="lm-check" style="width:80%;height:20px;background:#E10601;font-size:11px;color:#fff;line-height:18px;" data-id="{$vo.area}">激活</div></div>
+                                <else/>
+                                    <div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding-top:7px;padding-left:25px;"><div class="lm-check" style="width:80%;height:20px;background:gray;font-size:11px;color:#fff;line-height:18px;" data-id="{$vo.area}">激活</div></div>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </volist>
+    <div class="col-md-4 col-xs-12 form-horizontal">
+        <!-- CONTACT ITEM -->
+        <div class="panel panel-default">
+            <div class="row">
+                <div class="panel-body profile">
+                    <div class="profile-image">
+                        <img src="__TMPL__Public/assets/images/users/10.png" alt="我要帮助TA" style="width:40%;height:40%;"/>
+                    </div>
+                    <div class="profile-data">
+                        <div class="profile-data-name" style="text-align:left;font-size:19px;font-weight:600;">
+                            我要帮助TA
+                        </div>
+                        <span style="float:right;text-align:right;color:#fff;font-size:14px;">
+                            输入伙伴编号，点击激活，即可帮助。
+                        </span>
+                    </div>
+                </div>
+                <div class="panel-body form-group-separated">
+                    <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+                        <div class="col-md-6 col-xs-6 text-center line-height30" style="margin: 0px;padding:0px;">伙伴编号</div>
+                        <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">所在联盟</div>
+                        <div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding:0px;">自动激活</div>
+                    </div>
+                    <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+                        <if condition="$check">
+                            <div class="col-md-6 col-xs-6 text-center line-height30" style="margin: 0px;padding:0px;"><input type="text" id="friend" style="height:20px;font-size:12px;line-height:20px" value="{$check}"></div>
+                            <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">第 <span id="union">{$area}</span> 联盟</div>
+                            <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding-top:7px;padding-left:25px;"><div class="lm-check non button" style="width:80%;height:20px;background:#E10601;font-size:11px;color:#fff;line-height:18px;" data-id="">激活</div></div>
+                        <else/>
+                            <div class="col-md-6 col-xs-6 text-center line-height30" style="margin: 0px;padding:0px;"><input type="text" id="friend" style="height:20px;font-size:12px;line-height:20px" value="{$check}"></div>
+                            <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">第 <span id="union"></span> 联盟</div>
+                            <div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding-top:7px;padding-left:25px;"><div class="lm-check non button" style="width:80%;height:20px;background:gray;font-size:11px;color:#fff;line-height:18px;" data-id="">激活</div></div>
+                        </if>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END CONTACT ITEM -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.lm-check').unbind('click');
+        $('.lm-check').on('click', function () {
+            if(!$(this).hasClass("non")){
+                if($(".dis-"+$(this).attr("data-id")).html() == "暂未开启"){
+                    alert('该联盟中心尚未开启');
+                }else{
+                    $('.lm-check').css("background","gray");
+                    $(this).css('background',"#E10601");
+                    $.get("http://pcc.mzooe.com/index.php?s=/User/User/autoPlace",
+                            {data: $(this).attr("data-id")},
+                            function(e){
+                                if(e.data == 1){
+                                    alert("激活成功")
+                                }else{
+                                    alert("激活失败")
+                                }
+                            },
+                            "json");
+                    event.stopPropagation();
+                }
+            }
+        })
+        $("#friend").blur(function(){
+            $.get("http://pcc.mzooe.com/index.php?s=/User/User/checkMember",
+                    {data: $("#friend").val()},
+                    function(e){
+                        if(e.data == 1){
+                            $(".non").removeClass('non');
+                            $(".button").attr("data-id",$("#friend").val());
+                            $("#union").html(e.msg);
+                        }else{
+                            alert(e.msg)
+                        }
+                    },
+                    "json");
+        });
+    })
+</script>
+<include file="Public:footer" />
+<!-- END WIDGETS -->

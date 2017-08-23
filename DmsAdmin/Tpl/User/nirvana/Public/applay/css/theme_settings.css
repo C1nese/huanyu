@@ -1,0 +1,182 @@
+﻿/* *** colors.css *** */
+/*FirstColor: #00b9de - Blue*/
+/*SecondColor: #ea497e - Pink*/
+
+::selection {background:#00b9de;}
+::-moz-selection {background:#00b9de;}
+
+footer hr,
+.widget_flickr .flickr_badge_image .flickr_fadder,
+.widget_nav_menu ul li a:hover,
+.widget_nav_menu ul li a:hover:before,
+.shortcode_accordion_item_title:hover .ico,
+.shortcode_toggles_item_title:hover .ico,
+.shortcode_accordion_item_title:hover, 
+.shortcode_toggles_item_title:hover,
+.feedback_form .feedback_reset:hover,
+#commentform #reset:hover,
+#commentform #submit,
+.feedback_form .feedback_go,
+.module_gallery .post_type,
+.carouselslider ul li .smallproflinks a:hover,
+.shortcode_tab_item_title:hover,
+.shortcode_button.btn_type4,
+.filter_navigation ul li ul li.selected a,
+.quantity .minus:hover,
+.quantity .plus:hover {
+	background-color:#00b9de;
+}
+.header_social_block .header_social_content,
+.header_cart_block .header_cart_content,
+.header_search_block .header_search_content,
+header nav ul.menu > li.current-menu-parent > a,
+header nav ul.menu > li.current-menu-item > a,
+.shortcode_accordion_item_title.ui-state-active .ico,
+.shortcode_toggles_item_title.ui-state-active .ico,
+.shortcode_accordion_item_title.ui-state-active,
+.shortcode_toggles_item_title.ui-state-active,
+.carouselslider ul li .item h5 a:hover,
+.featured_slider .item:hover .post_type,
+.most_popular .price_item_btn:hover,
+.shortcode_button.btn_type1:hover,
+.columns1 .element:hover .post_type,
+.columns2 .element:hover .post_type,
+.columns3 .element:hover .post_type,
+.columns4 .element:hover .post_type,
+.blog_post_preview:hover .post_type,
+.blog_post_head:hover .post_type,
+.pagerblock li a.current,
+.pagerblock li a:hover,
+.shop_list_item:hover .shop_list_descr .add2cart,
+.btn_login:hover,
+.product_add2cart:hover:before,
+.product_add2cart:hover,
+.tparrows:hover,
+.nivo-directionNav a:hover {
+	background-color:#00b9de!important;
+}
+
+blockquote span,
+header .slogan span,
+.dropcap.colored,
+header ul.sub-menu li a:hover,
+header ul.sub-menu li.current-menu-item > a,
+header ul.sub-menu li:hover > a,
+.carouselslider ul li .item:hover h5 a,
+.module_gallery  .gallery_descr a:hover,
+.shortcode_promoblock h1,
+.team_slider ul .item:hover .carousel_title h5,
+header .mobile_menu > li > a:hover,
+.columns2 .portfolio_info_wrapper .portfolio_descr_info div a:hover,
+.columns2 .portfolio_descr_in a:hover,
+.columns3 .portfolio_info_wrapper .portfolio_descr_info div a:hover,
+.columns3 .portfolio_descr_in a:hover,
+.columns3 .portfolio_dscr a:hover,
+.columns4 .portfolio_info_wrapper .portfolio_descr_info div a:hover,
+.columns4 .portfolio_descr_in a:hover,
+.columns4 .portfolio_dscr a:hover,
+.blog_post_preview .blogpost_info_wrapper .blog_info_block div a:hover,
+.blog_post_preview .category a:hover,
+.blog_post_head .blogpost_info_wrapper .blog_info_block div a:hover,
+.blog_post_head .category a:hover,
+.blog_post_preview article.contentarea a:hover,
+.blog_post_preview a.blogpost_title:hover h5,
+.cart_widget_list li .read_more a:hover,
+.product_price,
+.testimonials_list .text_light,
+.all_body_cont a:hover,
+a:hover {
+	color:#00b9de;
+}
+.popular_posts li .read_more a:hover,
+.recent_posts li .read_more a:hover,
+.twitter_list li a:hover,
+.shortcode_iconbox:hover .ico,
+.carousel_readmore:hover,
+.most_popular .price_item_cost h1,
+.most_popular .price_item_cost h1 span,
+.columns1 .portfolio_dscr a:hover,
+.columns2 .portfolio_dscr a:hover,
+.columns3 .portfolio_dscr a:hover,
+.columns4 .portfolio_dscr a:hover,
+.module_sitemap a:hover,
+.module_contact_info .continfo_item a:hover,
+.blog_post_page article a:hover,
+ol.commentlist li .thiscommentbody .comment_info span a:hover,
+.columns1 .portfolio_preview_head a:hover h5,
+.colored2txt,
+.columns1 .portfolio_more:hover,
+.shop_list_item:hover .shop_list_descr .sop_list_title,
+.selectbox li:hover,
+.forgot_password a:hover,
+.product_meta div a:hover,
+.columns2 .element:hover .portfolio_info_wrapper h5 a,
+.columns3 .element:hover .portfolio_info_wrapper h5 a,
+.columns4 .element:hover .portfolio_info_wrapper h5 a {
+	color:#00b9de!important;
+}
+
+hr.colored {
+	border-color:#00b9de;
+}
+.class1 {
+	border-color:#00b9de!important;
+}
+
+
+/* -Second Color- */
+
+.header_search_block a:hover,
+.header_social_block a:hover,
+.header_cart_block a:hover,
+.header_social_content ul li a:hover,
+.featured_slider .item .post_type,
+.skill_li .diagram_bg .skill_div,
+.price_item_btn:hover,
+.shortcode_button.btn_type5,
+.columns1 .element .post_type,
+.columns2 .element .post_type,
+.columns3 .element .post_type,
+.columns4 .element .post_type,
+.blog_post_preview .post_type,
+.blog_post_head .post_type,
+.shop_list_item .shop_list_descr .add2cart,
+.product_add2cart:before {
+	background-color:#ea497e;
+}
+.shortcode_messagebox.box_type5 .box_icon,
+.widget_filter .ui-slider-range,
+.widget_filter #slider-range .ui-slider-handle,
+.user_pic_layout .footer_search_block > a:hover, 
+.user_pic_layout .footer_social_block > a:hover,
+.footer_social_content ul li a:hover,
+.panel_toggler:hover {
+	background-color:#ea497e!important;
+}
+
+.dropcap.colored2,
+.shortcode_iconbox .ico,
+.price_item_cost h1,
+.price_item_cost h1 span,
+.module_sitemap a,
+.module_contact_info .continfo_item a,
+.blog_post_page article a,
+.columns1 .portfolio_more,
+.forgot_password a,
+.cart_widget_total span,
+.product_meta div a,
+a,
+.twitter_list li a {
+	color:#ea497e;
+}
+
+.class2 {
+	color:#ea497e!important;
+}
+
+hr.colored2 {
+	border-color:#ea497e;
+}
+.class2 {
+	border-color:#ea497e!important;
+}

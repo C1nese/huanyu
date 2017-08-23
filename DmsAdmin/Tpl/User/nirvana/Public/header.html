@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- META SECTION -->
+	<title>{$SYSTEM_TITLE}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link rel="icon" href="__TMPL__Public/favicon.ico" type="image/x-icon" />
+	<!-- END META SECTION -->
+
+	<!-- CSS INCLUDE -->
+	
+	
+	<link rel="stylesheet" type="text/css" id="theme" href="__TMPL__Public/css/theme-default.css"/>
+	
+	<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/style.css"/>
+	<!-- EOF CSS INCLUDE -->
+	<!-- START PRELOADS -->
+	<!-- <audio id="audio-alert" src="__TMPL__Public/audio/alert.mp3" preload="auto"></audio>
+	<audio id="audio-fail" src="__TMPL__Public/audio/fail.mp3" preload="auto"></audio> -->
+	<!-- END PRELOADS -->
+
+	<!-- START SCRIPTS -->
+	<!-- START PLUGINS -->
+	<script type="text/javascript" src="__TMPL__Public/js/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/plugins/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap.min.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/plugins/jquery/jquery-migrate.min.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+	<script type="text/javascript" src="__TMPL__Public/js/btx.js"></script>
+	<!-- START THIS PAGE PLUGINS-->
+	<!-- END THIS PAGE PLUGINS-->
+	<!-- END PLUGINS -->
+	<script src="__TMPL__Public/js/transfer_plus.js"></script>
+	<script src="__TMPL__Public/js/main.js"></script>
+	<style>
+		.head-table{
+			color:#FFF;
+			font-size:14px;
+		}
+		.btn.btn-rounded{
+			color:#FFF
+		}
+		.theme-settings .ts-button{
+			border-radius:0
+		}
+		.ts-button{
+			border-bottom:1px solid #908e8e
+		}
+	</style>
+</head>
+<body>
+<div style="display:none">
+<script language="javascript" type="text/javascript" src="//js.users.51.la/19173246.js"></script>
+	<noscript style="display:none">
+		<a href="//www.51.la/?19173246" target="_blank">
+		<img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="//img.users.51.la/19173246.asp" style="display:none" />
+		</a>
+	</noscript>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$('.ts-button').each(function(){
+			$(this).click(function(){
+				if($(this).attr('cont') == 'close'){
+					$('.theme-settings').removeClass('active');
+					$('.ts-button[cont="kind"]').css('border-bottom-left-radius','4px');
+					$(this).hide();
+				}else{
+					$('.theme-settings').addClass('active');
+					$('.ts-body').hide();
+					$('.ts-button[cont="kind"]').css('border-bottom-left-radius','');
+					$('.'+$(this).attr('cont')).show();
+					$('.ts-button[cont="close"]').show();
+				}
+			});
+		});
+		$('button').each(function(){
+			$(this).click(function(){
+				$(this).parent().parent().children('.list').hide();
+				$(this).parent().parent().children('.'+$(this).attr('href')).show();
+			});
+		});
+		$('.x-navigation-minimize').click(function(){
+			var logo = $("#nlogo");
+			if(logo.text().length>2){
+				logo.text('');
+			}else{
+ 				logo.text('商 业 联 盟 推 广 事 业 中 心');
+			}
+		});
+	})
+</script>
+
+<!-- START PAGE CONTAINER -->
+<div class="page-container">
+
+	<!-- START PAGE SIDEBAR -->
+	<div class="page-sidebar">
+		<!-- START X-NAVIGATION -->
+		<ul id='btx_nav' class="x-navigation">
+			<li class="xn-logo">
+				<a href="__GROUP__/Index/index" id="nlogo">商 业 联 盟 推 广 事 业 中 心</a>
+				<a href="#" class="x-navigation-control"></a>
+			</li>
+			<li class="xn-profile">
+				<a href="__GROUP__/User/edit" class="profile-mini">
+					<img src="{$userinfo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}" alt="{$userinfo.编号}" style="min-height: 34px;min-width: 34px;"/>
+				</a>
+				<div class="profile">
+					<div class="profile-image">
+						<img src="{$userinfo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}" alt="{$userinfo.编号}" style="min-height: 100px;min-width: 100px;"/>
+					<if condition="($userinfo['商务中心级别'] gt 1)">	
+					<img src="__TMPL__Public/assets/images/users/logo.png" alt="联盟机构" style="width:35px;height:35px;min-width:auto;min-height:auto;position:absolute;top: 51%;left:55%">
+					</div>
+					</if>
+					<div class="profile-data">
+						<div class="profile-data-name">{$userinfo.编号}  *&nbsp <span style="color:#FF680F;">{$userlevel['用户级别']['byname']}</span></div>       
+					</div>
+					<div class="profile-controls">
+						<a href="__GROUP__/User/edit" class="profile-control-left"><span class="fa fa-info"></span></a>
+						 <a href="__GROUP__/Mail/index" class="profile-control-right">	 	
+					 	<span class="fa fa-envelope"></span>
+					 	<!--<img class="admin-pic img-circle" src="http://api.randomuser.me/portraits/thumb/men/10.jpg" alt="" style="position: relative;left: 1530px;top: -102px;">-->
+						 </a> 
+						<div class="informer informer-danger" style="margin-top:30px;margin-right:-5px;"><if condition="$mailcount_new gt 0">{$mailcount_new}</if></div>
+					</div>
+				</div>
+			</li>
+			<li class="active">
+				<a href="__GROUP__/Index/index"><span class="fa fa-desktop"></span> <span class="xn-text">系统首页<b id="zbcsd"></b></span></a>
+			</li>
+			<if condition="isset($menu)">
+                <foreach name="menu" item="vo" key="key">
+                <li class="xn-openable"><a href="javascript:;"><span class="{$vo.icon}"></span> <span class="xn-text">{$key}</span></a>
+					<ul>
+						<foreach name="vo.menus" item="val">
+						<li>
+							<a class="report <if condition="$val['action'] eq $now_action && $val['model'] eq $now_model">navul-a</if>" href="__GROUP__/{$val.model}/{$val.action}" id="{$val.title}"><span class="{$val.icon}"></span>{$val[title]}</a>
+						</li>
+						</foreach>
+						<div class="clear"></div>
+					</ul>
+                </li>
+                </foreach>
+            </if>
+
+		</ul>
+		<!-- END X-NAVIGATION -->
+	</div>
+	<!-- END PAGE SIDEBAR -->
+
+	<!-- PAGE CONTENT -->
+	<div class="page-content">
+
+		<!-- START X-NAVIGATION VERTICAL -->
+		<ul class="x-navigation x-navigation-horizontal x-navigation-panel" style='position:relative;'>
+			<!-- TOGGLE NAVIGATION -->
+			<li class="xn-icon-button">
+				<a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+			</li>
+			<!-- END TOGGLE NAVIGATION -->
+			<!-- SEARCH -->
+			 <li >
+				<a href="./" class="icon icon-home">
+					<i class="icon icon-home"></i>
+				</a>				
+			</li>
+		
+		<!-- 	
+		<li class="icon icon-home" title="" data-original-title="home"></li> -->
+
+
+
+			<!-- END SEARCH -->
+
+			<!-- <li class="xn-icon-button"><a href="#" id="zbx"></a></li>
+			<li class="xn-icon-button"><a href="#" id="zby"></a></li>
+
+			<li class="xn-icon-button"><a href="#" id="zbmukf"></a></li> -->
+			<!-- SIGN OUT -->
+			<li class="xn-icon-button pull-right">
+				<a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a>
+			</li>
+			<!-- END SIGN OUT -->
+			<!-- MESSAGES -->
+			<li class="xn-icon-button pull-right">
+				<!-- <a href="#"><span class="fa fa-comments"></span></a> -->
+				<a href="#"><span class="fa fa-envelope"></span></a> 
+
+				<div class="informer informer-danger"><if condition="$mailcount_new gt 0">{$mailcount_new}</if></div>
+				<div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+					<div class="panel-heading">
+						<h3 ><span class="fa fa-comments"></span>邮件</h3>
+						<div class="pull-right">
+							<span class="label label-danger">{$mailcount_new}新</span>
+						</div>
+					</div>
+					<div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+						<volist name="mail" id="m">
+						<a href="__GROUP__/Mail/view/id/{$m.id}" class="list-group-item">
+							<div class="list-group-status status-online"></div>
+							<img src="{$m.头像|default='TMPL__Public/assets/images/users/no-image.jpg'}" class="pull-left" alt="{$m.发件人}"/>
+							<span class="contacts-title">{$m.发件人}</span>
+							<p>{$m.标题}</p>
+						</a>
+						</volist>
+					</div>
+					<div class="panel-footer text-center">
+						<a href="__GROUP__/Mail/index">查看全部邮件</a>
+					</div>
+				</div>
+			</li>
+			<li class="xn-icon-button pull-right">
+				<a href="http://news.looksr.com" target="_blank"><span class="fa fa-globe"></span></a>
+			</li>
+            
+			<!-- END MESSAGES -->
+			<!-- TASKS -->
+			
+			<!-- END TASKS -->
+			<!-- LANG BAR -->
+
+            <!-- END LANG BAR -->
+		</ul>
+		<!-- 菜单悬浮 -->
+		<div id="btx" style="display:none;position:fixed;top:0;z-index:9999;">
+		<!-- START X-NAVIGATION -->
+		<ul id="btx_top" class="x-navigation">
+			<li class="xn-logo">
+				<a href="__GROUP__/Index/index" style="background-size: 100% 100%;">商 业 联 盟 推 广 事 业 中 心</a>
+				<a id='btx_control' href="#" class="x-navigation-control"></a>
+			</li>
+			<li class="xn-profile">
+				<a href="__GROUP__/User/edit" class="profile-mini">
+					<img src="" alt="{$userinfo.编号}" style="min-height: 34px;min-width: 34px;"/>
+				</a>
+				<div class="profile">
+					<div class="profile-image">
+						<img src="" alt="{$userinfo.编号}" style="min-height: 100px;min-width: 100px;"/>
+					</div>
+					<div class="profile-data">
+						<div class="profile-data-name">{$userinfo.编号} - <span style="color:#FF680F;">{$userlevel['用户级别']['byname']}</span></div>
+					</div>
+					<div class="profile-controls">
+						<a href="__GROUP__/User/edit" class="profile-control-left"><span class="fa fa-info"></span></a>
+						<a href="__GROUP__/Mail/index" class="profile-control-right"><span class="fa fa-envelope"></span></a><div class="informer informer-danger" style="margin-top:30px;margin-right:-5px;"><if condition="$mailcount_new gt 0">{$mailcount_new}</if></div>
+					</div>
+				</div>
+			</li>
+			<li class="active">
+				<a href="__GROUP__/Index/index"><span class="fa fa-desktop"></span> <span class="xn-text">系统首页<b id="zbcsd"></b></span></a>
+			</li>
+			<if condition="isset($menu)">
+                <foreach name="menu" item="vo" key="key">
+                <if condition="($userPrentmenu && in_array($key,$userPrentmenu)) or $userinfo['用户级别'] gt 10">
+                <li class="xn-openable"><a href="javascript:;"><span class="{$vo.icon}"></span> <span class="xn-text">{$key}</span></a>
+					<ul>
+						<foreach name="vo.menus" item="val">
+						<if condition="!$userMenuPower or in_array($val['model'].'-'.$val['action'],$userMenuPower)">
+						<li>
+						<a class="report <if condition="$val['action'] eq $now_action && $val['model'] eq $now_model">navul-a</if>" href="__GROUP__/{$val.model}/{$val.action}" id="{$val.title}"><span class="{$val.icon}"></span>{$val[title]}</a>
+						</li>
+						</if>
+						</foreach>
+						<div class="clear"></div>
+					</ul>
+                </li>
+                </if>
+                </foreach>
+            </if>
+
+		</ul>
+		<!-- END X-NAVIGATION -->
+	<!-- END PAGE SIDEBAR -->
+
+		<!-- START X-NAVIGATION VERTICAL -->
+		<ul class="x-navigation x-navigation-horizontal x-navigation-panel btx_top" style='position:relative;'>
+			<!-- TOGGLE NAVIGATION -->
+			<li class="xn-icon-button">
+				<a href="#" class="x-navigation-minimize"><span class="fa fa-dedent"></span></a>
+			</li>
+			<!-- END TOGGLE NAVIGATION -->
+			<!-- SEARCH -->
+			<li >
+				<a href="./" class="btn btn-primary btn-condensed">
+					<i class="glyphicon glyphicon-home"></i>
+				</a>				
+			</li>
+			<!-- END SEARCH -->
+
+			<!-- <li class="xn-icon-button"><a href="#" id="zbx"></a></li>
+			<li class="xn-icon-button"><a href="#" id="zby"></a></li>
+
+			<li class="xn-icon-button"><a href="#" id="zbmukf"></a></li> -->
+			<!-- SIGN OUT -->
+			<li class="xn-icon-button pull-right">
+				<!-- <a href="#" class="mb-control" data-box="#mb-signout"><span class="fa fa-sign-out"></span></a> -->
+
+			</li>
+			<!-- END SIGN OUT -->
+			<!-- MESSAGES -->
+			<li class="xn-icon-button pull-right">
+				<!-- <a href="#"><span class="fa fa-comments"></span></a> -->
+				<a href="#"><span class="fa fa-envelope"></span></a>
+				<div class="informer informer-danger"><if condition="$mailcount_new gt 0">{$mailcount_new}</if></div>
+				<div class="panel panel-primary animated zoomIn xn-drop-left xn-panel-dragging">
+					<div class="panel-heading">
+						<h3 ><span class="fa fa-comments"></span>邮件</h3>
+						<div class="pull-right">
+							<span class="label label-danger">{$mailcount_new}新</span>
+						</div>
+					</div>
+					<div class="panel-body list-group list-group-contacts scroll" style="height: 200px;">
+						<volist name="mail" id="m">
+						<a href="__GROUP__/Mail/view/id/{$m.id}" class="list-group-item">
+							<div class="list-group-status status-online"></div>
+							<img src="{$m.头像|default='TMPL__Public/assets/images/users/no-image.jpg'}" class="pull-left" alt="{$m.发件人}"/>
+							<span class="contacts-title">{$m.发件人}</span>
+							<p>{$m.标题}</p>
+						</a>
+						</volist>
+					</div>
+					<div class="panel-footer text-center">
+						<a href="__GROUP__/Mail/index">查看全部邮件</a>
+					</div>
+				</div>
+			</li>
+		</ul>
+	</div>
+		<script>
+		function change_lang(lang){
+			Cookies.set("lang",lang);
+			  location.reload();
+		}
+		</script> 
+		<!-- END X-NAVIGATION VERTICAL -->

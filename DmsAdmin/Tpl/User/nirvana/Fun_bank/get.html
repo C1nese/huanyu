@@ -1,0 +1,434 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="row get_list" >
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action="__GROUP__/Fun_bank/getSave:__XPATH__" method="post"  id="register" >
+            <div class="panel panel-colorful">
+                <div class="panel-heading">
+                    <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-money"></span>&nbsp;{:GET_F_L($name)}</strong>
+                    <!-- <h3>{:GET_F_L($name)}</h3> -->
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body form-group-separated">
+
+                    <if condition="($bank:getMoneyBank eq 1) OR ($bank:getMoneyBank eq true)">
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('银行卡号')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-credit-card"></span></span>
+                                    <input type="text" name="cardnumble" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('开户行')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-th"></span></span>
+                                    <input type="text" name="bankname" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('开户地址')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
+                                    <input type="text" name="cardaddress" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('开户名')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                                    <input type="text" name="cardname" class="form-control"/>
+                                </div>
+                            </div>
+                        </div>
+                        <else/>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('开户银行')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px">
+                                    <span class="input-group-addon"><span class="fa fa-th"></span></span>
+                                    <input type="text" class="form-control" value="{$userinfo['开户银行']}" Readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('银行卡号')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-credit-card"></span></span>
+                                    <input type="text" class="form-control" value="{$userinfo['银行卡号']}" Readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('开户名')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-user"></span></span>
+                                    <input type="text" class="form-control" value="{$userinfo['开户名']}" Readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('可提现余额')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <ul class="list-inline" style="margin-right:10px;">
+                               
+                                <if condition="isset($funbank_Per) AND $name eq '电子钱包提现'">
+                                <li><strong class="text-info">{:$funbank[$bank->byname]['num_r']}</strong></li>  
+                                <li>    <span></span><span id="tax_convert" style="color:red;"></span></li>
+                                <li>（（{:$funbank[$bank->byname]['num']}+{$userallget}）*{$funbank_Per}%）-{$userallget}={:$funbank[$bank->byname]['num_r']}</li>
+                                <else/>
+                                	<li><strong class="text-info">{:$funbank[$bank->byname]['num']}</strong></li>                                
+                                </if>
+                                <li>{:GET_F_L('手续费 ')}: <span id="tax">0</span><span id="tax_convert" style="color:red;"></span></li>
+                                <li>({$bank:getMoneyTax}%)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('提现金额')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group" style="margin-right:10px;">
+                                <span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+                                <input type="text" class="form-control" value="" name="getsum" />
+                            </div>
+                            <span class="help-block"><if condition="$bank:getMoneyInt neq 0">{:GET_F_L('必须为'.$bank->getMoneyInt.'的整数倍')}</if></span>
+                        </div>
+                    </div>
+                    <if condition="($bank:getMoneyPass2 eq true)">
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('交易密码')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+                                    <input type="password" class="form-control" value="" name="pass2" />
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="($bank:getMoneyPass3 eq true)">
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('三级密码')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+                                    <input type="password" class="form-control" value="" name="pass3" />
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+
+                    <if condition="($bank:getMoneySmsSwitch eq true)">
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('短信验证码')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+                                    <input name="getSmsVerfy" type="text" id="getSmsVerfy" class="form-control">
+                                    <input style="margin-left:10px" type="button" id="sendMess" value="{:GET_F_L('点击获取')}" />
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+                    <if condition="(($reg_safe eq true) and ($bank:getSecretSafe eq true))">
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('密保问题')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    {:GET_F_L($userinfo['密保问题'])}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('密保答案')}</label>
+                            <div class="col-md-6 col-xs-12">
+                                <div class="input-group" style="margin-right:10px;">
+                                    <span class="input-group-addon"><span class="fa fa-rmb"></span></span>
+                                    <input type="text" class="form-control" value="" name="getsafeanswer" />
+                                </div>
+                            </div>
+                        </div>
+                    </if>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label">{:GET_F_L('确认操作')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group pull-right">
+                                <if condition="(isset($onlyLock))">
+                                 <strong class="text-danger">* {:GET_F_L('您有一笔未审核的提现记录，暂不能继续提现')} *</strong>
+                                    <else/>
+                                        <input class="btn btn-primary"
+                                               type="button" value="确  认" name="subbut"  id='subbut' onclick="tijiao()" style="margin-right:10px"/>
+                                </if>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {__TOKEN__}
+        </form>
+
+        <div class="panel panel-default panel-colorful">
+            <div class="panel-heading ui-draggable-handle">
+                <!-- <h3>{:GET_F_L(($name).'列表')}</h3> -->              
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-list-ul"></span>&nbsp;{:GET_F_L(($name).'列表')}</strong>
+                <ul class="panel-controls">
+                    <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                </ul>
+            </div>
+            <div class="panel-body panel-body-table table-responsive">
+                <table class="table table-bordered table-striped table-actions">
+                    <thead>
+                    <tr class="nirvana-lin">
+                        <foreach name='data.field' item='name'>
+                            <th >{:GET_F_L($name)}</th>
+                        </foreach>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <foreach name='data.list' item='name'>
+                            <tr class="datalist">
+                                <foreach name="name" item='value' key='name1'>
+                                    <td><nobr>{$name.$name1}</nobr></td>
+                                </foreach>
+                            </tr>
+                        </foreach>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="panel-footer">
+                <ul class="pagination pagination-sm pull-right">
+                    <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录')} {$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] neq 1">
+                        <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                        <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                    </if> -->
+                    <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                    <if condition="isset($data['rollPage'][-2])">
+                        <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][-1])">
+                        <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                    </if>
+                    <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                    <if condition="isset($data['rollPage'][1])">
+                        <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][2])">
+                        <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                    </if>
+                    <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] lt $data['totalPages']">
+                        <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                        <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                    </if> -->
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script>
+$(function(){
+    $("input[name='getsum']").focus();
+    $("input[name='getsum']").keyup(function(){
+        var sum = $(this).val();
+        if(sum !="" && !isNaN(sum)){
+            var tax = sum * ({$bank:getMoneyTax}/100);
+            tax = tax.toFixed(2);
+            if(tax < {$bank:getMoneyTaxMin}){
+                tax = {$bank:getMoneyTaxMin};
+            }else if({$bank:getMoneyTaxMax}!=0 && tax > {$bank:getMoneyTaxMax}){
+                tax = {$bank:getMoneyTaxMax};
+            }
+            $("#tax").html(tax);
+        }else{
+            $("#tax").html("0");
+        }
+        <php>if($bank->getMoneyRatio!=1){</php>
+	        var rmb=sum * ({$bank:getMoneyRatio});
+	        rmb = rmb.toFixed(2);
+	        $("#getsum_convert").html(rmb+"{:GET_F_L('人民币')}");
+	        var rmbt=tax*({$bank:getMoneyRatio});
+	        rmbt = rmbt.toFixed(2);
+	        $("#tax_convert").html("&nbsp;&nbsp;&nbsp;("+rmbt+"{:GET_F_L('人民币')})");
+        <php>}</php>
+    });
+});
+function tijiao(){
+var mess = "";
+    <if condition="($bank:getMoneyBank eq 1) OR ($bank:getMoneyBank eq true)">
+    if($("input[name='cardname']").val()==""){
+        mess = "{:GET_F_L('开户名不能为空！')}\\r\\n" + mess;
+        $("input[name='cardname']").focus();
+    }
+    if($("input[name='cardaddress']").val()==""){
+        mess = "{:GET_F_L('开户地址不能为空！')}\\r\\n" + mess;
+        $("input[name='cardaddress']").focus();
+    }
+    if($("input[name='bankname']").val()==""){
+        mess = "{:GET_F_L('开户行不能为空！')}\\r\\n" + mess;
+        $("input[name='bankname']").focus();
+    }
+    if($("input[name='cardnumble']").val()==""){
+        mess = "{:GET_F_L('银行卡号不能为空！')}\\r\\n" + mess;
+        $("input[name='cardnumble']").focus();
+    }else if(isNaN($("input[name='cardnumble']").val())){
+        mess = "{:GET_F_L('银行卡号必须为数字！')}\\r\\n"+ mess;
+        $("input[name='cardnumble']").focus();
+    }
+    </if>
+    if($("input[name='getsum']").val()==""){
+        mess = "{:GET_F_L('提现金额不能为空！')}\r\n" + mess;
+        $("input[name='getsum']").focus();
+    }else if(isNaN($("input[name='getsum']").val())){
+        mess = "{:GET_F_L('提现金额必须为数字！')}\r\n"+ mess;
+        $("input[name='getsum']").focus();
+    }
+    <if condition="$bank:getMoneyInt neq 0">
+        else if($("input[name='getsum']").val()%{$bank:getMoneyInt}!=0){
+            mess = "{:GET_F_L('提现金额必须为'.$bank->getMoneyInt.'的整数倍！')}\\r\\n"+ mess;
+            $("input[name='getsum']").focus();
+        }
+    </if>
+    if(mess !=""){
+        alert(mess);
+        $('#subbut').attr('disabled',false);
+        $('#subbut').val('{:GET_F_L("提交")}');
+        return false;
+
+    }else{
+    	var ua = navigator.userAgent.toLowerCase();
+        var s;
+        if ((/firefox\/([\d.]+)/).test(ua)) { //判断火狐浏览器
+    	    $('#subbut').attr('disabled',true);
+            $('#subbut').val('{:GET_F_L("正在提交,请等待...")}');
+            $('#register').submit();
+            setTimeout(function () {
+                $('#subbut').val('{:GET_F_L("确认")}');
+    	        $('#subbut').attr('disabled',false);
+            }, 500);
+        } else {
+    	    $('#subbut').attr('disabled',true);
+            $('#subbut').val('{:GET_F_L("正在提交,请等待...")}');
+            $('#register').submit();
+        }
+        //  return true;
+    }
+
+}
+
+/*function checkform(){
+    var mess = "";
+    <if condition="($bank:getMoneyBank eq 1) OR ($bank:getMoneyBank eq true)">
+    if($("input[name='cardname']").val()==""){
+        mess = "开户名不能为空！\\r\\n" + mess;
+        $("input[name='cardname']").focus();
+    }
+    if($("input[name='cardaddress']").val()==""){
+        mess = "开户地址不能为空！\\r\\n" + mess;
+        $("input[name='cardaddress']").focus();
+    }
+    if($("input[name='bankname']").val()==""){
+        mess = "开户行不能为空！\\r\\n" + mess;
+        $("input[name='bankname']").focus();
+    }
+    if($("input[name='cardnumble']").val()==""){
+        mess = "银行卡号不能为空！\\r\\n" + mess;
+        $("input[name='cardnumble']").focus();
+    }else if(isNaN($("input[name='cardnumble']").val())){
+        mess = "银行卡号必须为数字！\\r\\n"+ mess;
+        $("input[name='cardnumble']").focus();
+    }
+    </if>
+    if($("input[name='getsum']").val()==""){
+        mess = "提现金额不能为空！\r\n" + mess;
+        $("input[name='getsum']").focus();
+    }else if(isNaN($("input[name='getsum']").val())){
+        mess = "提现金额必须为数字！\r\n"+ mess;
+        $("input[name='getsum']").focus();
+    }
+    <if condition="$bank:getMoneyInt neq 0">
+        else if($("input[name='getsum']").val()%{$bank:getMoneyInt}!=0){
+            mess = "提现金额必须为{$bank:getMoneyInt}的整数倍！\\r\\n"+ mess;
+            $("input[name='getsum']").focus();
+        }
+    </if>
+    if(mess !=""){
+        alert(mess);
+        return false;
+    }else{
+        return true;
+    }
+}
+
+function sendSmsVerify(){
+	var type = '{$bank:name}提现';
+	var content = '{$bank:getMoneySmsContent}';
+	$.post('__URL__/sendSmsVerify',{type:type,content:content},function(data){
+		
+		eval('var data='+data);
+		if(data.status == 1){
+			alert('发送成功!');
+		}else{
+			alert('发送失败!');
+		}
+	});
+}*/
+var wait=300;
+var sta = true;
+function time(o) {
+    if(sta == true){
+        var type = '{:GET_F_L(($bank->name)."提现")}';
+        var content = '{$bank:getMoneySmsContent}';
+        $.post('__URL__/sendSmsVerify',{type:type,content:content},function(data){
+          eval('var data='+data);
+          if(data.status == 1){
+            alert('{:GET_F_L("发送成功!")}');
+          }else{
+            alert('{:GET_F_L("发送失败!")}');
+          }
+        });
+        sta = false;
+    }
+    if (wait == 0) {
+      o.removeAttribute("disabled");      
+      o.value="{:GET_F_L('点击获取')}";
+      wait = 300;
+      sta = true;
+    } else {
+      o.setAttribute("disabled", true);
+      o.value="{:GET_F_L('重新发送')}(" + wait + ")";
+      wait--;
+      setTimeout(function() {
+        time(o)
+      },
+      1000)
+    }
+  }
+document.getElementById("sendMess").onclick=function(){time(this);}
+
+</script>

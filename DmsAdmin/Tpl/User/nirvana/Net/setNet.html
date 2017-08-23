@@ -1,0 +1,99 @@
+<link rel="stylesheet" type="text/css" id="theme" href="__TMPL__Public/css/theme-default.css" />
+<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/style.css" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/jquery/jquery-ui.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript">
+function checkval(){	
+	var gu = $("#gu").val();
+	var gw = $("#where").val();	
+	
+	if(gu==''){
+		$("#gu_span").html('事业伙伴不能为空');
+	}
+	
+	$.post('__GROUP__/Net/setNetajax',{gu:gu,gw:gw},function(data){
+		if(data.sta==0){
+			$("#form").submit();
+		}else if(data.sta==1){
+			$("#where_span").html(data.mes);
+		}else if(data.sta==2){
+			$("#gu_span").html(data.mes);
+		}else{
+			alert('错误');
+		}
+	},"json");
+}
+</script>
+<div class="content-frame pages-edit-liv">
+	<div class="col-md-12" style="padding:0px">
+		<form class="form-horizontal" name="form" method="post"
+			action="__GROUP__/Net/setNet" id="form" style="padding:0px;margin:0px;">
+			<div class="row">
+				<div class="col-md-12" style="padding:0px">
+					<!--用户信息-->
+					<div class="panel panel-colorful" style="padding:0px;margin: 0px;">
+						<div class="panel-body form-group-separated">
+							<!-- 推荐人编号 -->
+							<foreach name="userNetList" item="net" key="net_name">
+							<php>
+								$superior_id = $userInfo[ $net_name . '_上级编号' ];
+								if($net_name == '管理'){
+									$netname = '事业伙伴';
+									$netinput = 'gu';
+								}else{									
+									$netname = '联名伙伴';
+									$netinput = 'tu';
+								}
+							</php>
+							<div class="form-group">
+								<label class="col-md-3 col-xs-12 control-label label-title">{$netname}</label>
+								<div class="col-md-9 col-xs-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<span class="fa fa-user"></span>
+										</span> 
+										<input type="text" id="{$netinput}" class="form-control" value="{$superior_id}" name="{$net_name}人" <if condition="$superior_id">readonly</if>/>
+									</div>
+									<span class="help-block msg text-danger" id="{$netinput}_span"></span>						
+								</div>
+								
+							</div>
+							<present name="net.ramus">
+							<div class="form-group">
+								<label class="col-md-3 col-xs-12 control-label label-title">联盟中心</label>
+								<div class="col-md-9 col-xs-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<span class="fa fa-user"></span>
+										</span> 
+										<select name="{$net_name}_位置" class="form-control" id="where">
+											<foreach name="net.ramus" item="ramu" key="key">
+												<option value="{$ramu}"	
+												<if condition="($userInfo[ $net_name . '_位置' ] eq $ramu)">selected="true"</if>
+													>{$ramu}
+												</option>
+											</foreach>
+										</select>
+										
+									</div>
+									<span class="help-block msg text-danger" id="where_span"></span>
+								</div>
+							</div>
+							</present> </foreach>
+						</div>
+
+						<div class="panel-footer">
+							<input type="hidden" name="id" value="{$userInfo.id}"/>
+							<input class="btn btn-primary pull-right" type="button" onclick="checkval();" value="{:GET_F_L('确定')}" id="regsubbutton">
+						</div>
+					</div>
+					<!-- END 用户信息-->
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+</body>
+</html>

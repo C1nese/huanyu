@@ -1,0 +1,263 @@
+<php>
+function printGender($gender)
+{
+    if($gender==0)
+    {
+        return GET_F_L('男');
+    }
+    else
+    {
+        return GET_F_L('女');
+    }
+}
+</php>
+<!-- <extend name="Public:head" /> -->
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap pages-edit">
+   <div class="row">
+	<div class="col-md-6">
+		<!-- START PANEL WITH CONTROL CLASSES -->
+		<div class="panel panel-colorful form-horizontal">
+			<div class="panel-heading">
+				<span class="fa fa-users" style="font-size:18px;color:#3c3c3c;"></span><strong style="font-size:18px;color:#3c3c3c;">&nbsp;{:GET_F_L('用户信息')}</strong>
+				<!-- <h3><i class="fa fa-users"></i> {:GET_F_L('用户信息')}</h3> -->
+				<ul class="panel-controls">
+					<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+					<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+					<li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+					<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+				</ul>
+			</div>
+			<div class="panel-body form-group-separated">
+				<div class="form-group line-height-30">
+					<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('用户编号')}：</label>
+					<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+						<span>{$userinfo.编号}&nbsp;</span>
+					</div>
+				</div>
+				<if condition="in_array('name',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('用户姓名')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.姓名}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<if condition="in_array('alias',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('用户昵称')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.别名}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<!--<div class="form-group  line-height-30">
+					<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('推荐伙伴')}：</label>
+					<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+						<span>{$userinfo.服务中心推荐人}&nbsp;</span>
+					</div>
+				</div>-->
+				<if condition="in_array('sex',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('用户性别')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{:GET_F_L($userinfo['性别'])}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<if condition="in_array('reciver',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('收货人')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.收货人}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<foreach name="userlevel" item="lv" key="k">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L($k)}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{:GET_F_L($lv[byname])}&nbsp;</span>
+						</div>
+					</div>
+				</foreach>
+				<div class="form-group line-height-30">
+					<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('激活时间')}：</label>
+					<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+						<span>{$userinfo.注册日期|date="Y-m-d H:i:s",###}&nbsp;</span>
+					</div>
+				</div>
+				<if condition="in_array('id_card',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('证件号码')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.证件号码}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<if condition="in_array('email',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('电子邮件')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.email}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<if condition="in_array('qq',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">QQ账号：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.QQ}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+
+				<if condition="in_array('weixin',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('微信账号')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.微信账号}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+				<if condition="in_array('mobile',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('移动电话')}：</label>
+						<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+							<span>{$userinfo.移动电话}&nbsp;</span>
+						</div>
+					</div>
+				</if>
+			</div>
+		</div>
+		<!-- END PANEL WITH CONTROL CLASSES -->
+	</div>
+
+
+	<div class="col-md-6">
+
+		<div class="row">
+
+			<!-- START PANEL WITH CONTROL CLASSES -->
+			<div class="panel panel-colorful form-horizontal">
+				<div class="panel-heading">
+					<span class="fa fa-users" style="font-size:18px;color:#3c3c3c;"></span><strong style="font-size:18px;color:#3c3c3c;">&nbsp;{:GET_F_L('用户地址')}</strong>
+					<!-- <h3><i class="fa fa-users"></i> {:GET_F_L('用户地址')}</h3> -->
+					<ul class="panel-controls">
+						<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+						<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+						<li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+						<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+					</ul>
+				</div>
+				<div class="panel-body form-group-separated">
+					<if condition="in_array('area',$show) eq true">
+						<div class="form-group line-height-30">
+							<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('国家')}：</label>
+							<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+								<span>{$userinfo.国家}&nbsp;</span>
+							</div>
+						</div>
+						<div class="form-group line-height-30">
+							<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('省/州')}：</label>
+							<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+								<span>{$userinfo.省份}&nbsp;</span>
+							</div>
+						</div>
+						<div class="form-group line-height-30">
+							<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('城市')}：</label>
+							<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+								<span>{$userinfo.城市}&nbsp;</span>
+							</div>
+						</div>
+						<div class="form-group line-height-30">
+							<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('地区')}：</label>
+							<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+								<span>{$userinfo.地区}&nbsp;</span>
+							</div>
+						</div>
+					</if>
+					<if condition="in_array('address',$show) eq true">
+						<div class="form-group line-height-30">
+							<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('地址')}：</label>
+							<div class="col-md-8 col-xs-7" style="padding-top:13px;">
+								<if condition="($userinfo['地址'] neq null && $userinfo['地址'] neq ' ')">
+									<span>{$userinfo.地址}</span>
+								<else/>									
+									<span>还没设置地址</span>
+								</if>								
+							</div>
+						</div>
+					</if>
+				</div>
+			</div>
+			<!-- END PANEL WITH CONTROL CLASSES -->
+
+		</div>
+
+		<div class="row">
+
+			<!-- START PANEL WITH CONTROL CLASSES -->
+			<div class="panel panel-colorful form-horizontal">
+				<div class="panel-heading">
+					<span class="fa fa-users" style="font-size:18px;color:#3c3c3c;"></span><strong style="font-size:18px;color:#3c3c3c;">&nbsp;{:GET_F_L('账户信息')}</strong>
+					<!-- <h3><i class="fa fa-users"></i> {:GET_F_L('账户信息')} </h3> -->
+					<ul class="panel-controls">
+						<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+						<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+						<li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+						<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+					</ul>
+				</div>
+				<div class="panel-body form-group-separated">
+					<if condition="in_array('bank_apply_name',$show) eq true">			
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('开户银行')}：</label>
+						<div class="col-md-8 col-xs-7"  style="padding-top:13px;">
+							<span>{$userinfo.开户银行}&nbsp;</span>
+						</div>
+					</div>
+					</if>
+					<if condition="in_array('bank_card',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('银行卡号')}：</label>
+						<div class="col-md-8 col-xs-7"  style="padding-top:13px;">
+							<span>{$userinfo.银行卡号}&nbsp;</span>
+						</div>
+					</div>
+					</if>
+					<if condition="in_array('bank_name',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('开户姓名')}：</label>
+						<div class="col-md-8 col-xs-7"  style="padding-top:13px;">
+							<span>{$userinfo.开户名}&nbsp;</span>
+						</div>
+					</div>
+					</if>
+					<if condition="in_array('bank_apply_addr',$show) eq true">
+					<div class="form-group line-height-30">
+						<label class="col-md-4 col-xs-5 control-label label-title">{:GET_F_L('开户地址')}：</label>
+						<div class="col-md-8 col-xs-7"  style="padding-top:13px;">
+							<span>{$userinfo.开户地址}&nbsp;</span>
+						</div>
+					</div>
+					</if>
+				</div>
+			</div>
+			<!-- END PANEL WITH CONTROL CLASSES -->
+
+		</div>
+
+	</div>
+</div>
+</div>
+<!-- END PAGE CONTENT WRAPPER -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->

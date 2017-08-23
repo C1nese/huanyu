@@ -1,0 +1,311 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/jstree/jstree.min.js"></script>
+<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/jstree/jstree.min.css">
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+     <table width="100%">
+        <tbody>
+            <tr>
+                <td height="30" align="center">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal"  action="__URL__/listDisp:__XPATH__" method="post" name="form1" id="form1">
+                                        <input name="nettype" type="hidden" value="{$style}"/>
+                                        <div class="form-group">
+                                            <div class="col-md-8">
+                                                <div class="input-group">
+                                                    <div class="input-group-addon" style="line-height:30px">
+                                                        <span class="fa fa-search"></span>
+                                                    </div>
+	<input id='userid' type="text" class="form-control" name="userid"								   value="" size="12" style="border-radius:0px;"/>
+           <div class="input-group-btn">
+	<input id="button" class="btn btn-primary"	 class="button_onmousedown" type="submit" value="{:GET_F_L('搜索')}" style="height:34px;border-radius:0px 4px 4px 0px;">
+           <if condition="$current_info['管理_层数'] neq 1">
+                     <input class="btn btn-primary" class="button_onmousedown" type="button" name="btnSearch" style="margin-left:2px;height:34px" value="{:GET_F_L('上一层')}" id="btnSearch"  onclick="location.href='__GROUP__/Net/listDisp:__XPATH__/userid/{:$current_info[$name.'_上级编号']}';" >
+                    <input class="btn btn-primary" class="button_onmousedown" type="button" name="btnSearch" style="margin-left:2px;height:34px" value="{:GET_F_L('置顶')}" id="btnSearch"  onclick="location.href='__GROUP__/Net/listDisp:__XPATH__';">
+           </if>
+            </div>
+        </div>
+    </div>
+ <div class="col-md-4">
+<!--<select name="changeStyle" onchange="changesty();" id="changeStyle" class="form-control select">-->
+<!--<option value="net_place" <if condition="$rec_tagname eq 'net_place'">selected</if>>{:GET_F_L('事业体系')}</option>-->
+<!--<option value="net_rec" <if condition="$rec_tagname eq 'net_rec'">selected</if>>{:GET_F_L('推荐伙伴')}</option>-->
+<!--</select>-->
+<select name="changeStyle" onchange="changesty();" id="changeStyle" class="form-control select">
+	<option value="0">{:GET_F_L('默认结构')}</option>
+		<!--<option value="1">{:GET_F_L('树形结构')}</option>-->
+	</select>
+<script>
+         	function changesty(){
+		if ($("#changeStyle").val() == 1) {
+			$('#default').hide();
+			$('#tree').show();
+			$('#intro').hide();
+			$('#button').attr('type', 'button');
+		}
+		if ($("#changeStyle").val() == 0) {
+			$('#tree').hide();		
+			$('#default').show();						
+			$('#intro').show();
+			$('#button').attr('type', 'submit');
+						}
+                                                	}
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </form>
+			<!--	<div style="text-align:left;margin-left:10px;" id="intro">
+				<button class="btn btn-success" style="margin-top:3px;">CU：消费联盟
+				</button>
+				<button class="btn btn-warning"  style="margin-top:3px;">NP：新增积分</button>
+				<button class="btn btn-info"  style="margin-top:3px;">COP：结转积分</button>
+				<button class="btn btn-danger"  style="margin-top:3px;">CP：累计积分</button>
+			</div>	-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="row" id="default">
+	<div class="col-md-12 col-xs-12 form-horizontal" style="margin:0px;padding: 0px;">
+		<div class="col-md-12 col-xs-12">
+			<div class="panel panel-colorful">
+				<div class="panel-heading ui-draggable-handle" style="border-bottom: 0px;">
+					<h4 style="margin: 0px;"><span class="fa fa-user"></span> {$net_nowtit}</h4>
+				</div>		
+			</div>
+		</div>
+	</div>
+	 <div class="col-md-12 col-xs-12 form-horizontal" style="margin:0px;padding: 0px;">
+		<div class="col-md-4_1 col-xs-12 form-horizontal">
+		    <!-- CONTACT ITEM -->
+		    <div class="panel panel-default">
+		     <div class="row">
+		         <div class="panel-body profile">
+		             <div class="profile-image">
+		                 <img src="{$current_info.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}" alt="{$current_info.姓名}"/>
+		             </div>
+		             <div class="profile-data">
+		                 <div class="profile-data-name">{$current_info.编号} - {$current_info.姓名}
+		                     <br/>
+							 <foreach name="levelsArr" item="v" key="key">
+								 <if condition="($current_info['用户级别'] eq $key)">
+									 {:GET_F_L($v)}
+								 </if>
+							 </foreach>
+							 <if condition="$vo['状态'] eq '无效'">
+								 <span style="color:red;font-weight:bold;">【未激活】</span>
+							 </if>
+							 <br/>
+		                     {$current_info.注册日期|date='Y-m-d H:i:s',###}
+		                 </div>
+		                 
+		             </div>
+		             <div class="profile-controls">
+		             	<if condition="$current_info[$name.'_上级编号'] && $current_info['编号'] neq $userno">
+		             		<a href="__GROUP__/Net/listDisp:__XPATH__/userid/{:$current_info[$name.'_上级编号']}" class="profile-control-left text-danger"><span class="fa fa-arrow-up"></span></a>
+		             	<else/>
+		             		<a class="profile-control-left"><span class="fa fa-arrow-up"></span></a>
+		             	</if>
+		                 <if condition="$current_info[$name.'_团队总人数'] gt 0">
+		                 	<a href="__GROUP__/Net/listDisp:__XPATH__/userid/{:$current_info['编号']}" class="profile-control-right text-danger"><span class="fa fa-arrow-down"></span></a>
+						<else/>
+						  <a class="profile-control-right"><span class="fa fa-arrow-down"></span></a>
+						</if>
+		             </div>
+		         </div>
+		         <div class="panel-body form-group-separated">
+		         	<div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+		         		<div class="col-md-3 col-xs-3 text-center line-height30" style="margin: 0px;padding:0px;">事业中心</div>
+		         		<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">本期推广</div>
+			             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">上期结转</div>
+			             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">本期累计</div>
+		         	</div>
+		             <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+		             	<div class="col-md-3 col-xs-3 text-center line-height30" style="margin: 0px;padding:0px;color:red;font-weight:bold;">
+							<if condition="empty($current_info['管理_A区'])">
+								<a href="__GROUP__/Sale/reg:sale_reg[1]/pid/{:$current_info['编号']}/position/0" style="color:red;font-weight:bold;">【1】虚位以待</a>
+							<else/>
+								<a href="__GROUP__/Net/listDisp:net_place/userid/{:$current_info['管理_A区']}" style="color:red;font-weight:bold;">【1】{:$current_info['管理_A区']}</a>
+							</if>
+		             	</div>
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($current_info['团队业绩_A区本期业绩'],2)}</div>
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($current_info['管理_A区结转业绩'],2)}</div>
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($current_info['团队业绩_A区本期业绩']+$current_info['管理_A区结转业绩'],2)}</div>
+		             </div>
+		             <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">
+							<if condition="empty($current_info['管理_B区'])">
+								<a href="__GROUP__/Sale/reg:sale_reg[1]/pid/{:$current_info['编号']}/position/1" style="color:red;font-weight:bold;">【2】虚位以待</a>
+							<else/>
+								<a href="__GROUP__/Net/listDisp:net_place/userid/{:$current_info['管理_B区']}" style="color:red;font-weight:bold;">【2】{:$current_info['管理_B区']}</a>
+							</if>
+		             	</div>
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($current_info['团队业绩_B区本期业绩'],2)}</div>
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($current_info['管理_B区结转业绩'],2)}</div>
+		             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($current_info['团队业绩_B区本期业绩']+$current_info['管理_B区结转业绩'],2)}</div>
+		             </div>
+		         </div>
+		     </div>
+		    </div>
+		    <!-- END CONTACT ITEM -->
+		</div>
+	 </div>
+    <volist name="data.list" id="vo">
+    <div class="form-horizontal">
+        <div class="col-md-4_1 col-xs-12">
+            <!-- CONTACT ITEM -->
+            <div class="panel panel-default ">
+	            <div class="row">
+	                <div class="panel-body profile">
+	                    <div class="profile-image">
+	                        <a href="__GROUP__/Net/listDisp:__XPATH__/userid/{:$vo['编号']}" ><img src="{$vo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}" alt="{$vo.姓名}"/></a>
+	                    </div>
+	                    <div class="profile-data">
+	                        <div class="profile-data-name">{$vo.编号} - {$vo.姓名}
+								<br/>
+								<foreach name="levelsArr" item="v" key="key">
+									<if condition="($vo['用户级别'] eq $key)">
+										{:GET_F_L($v)}
+									</if>
+								</foreach>
+								<if condition="$vo['状态'] eq '无效'">
+									<span style="color:red;font-weight:bold;">【未激活】</span>
+								</if>
+								<br/>
+							{$vo.注册日期|date='Y-m-d H:i:s',###}
+	                        </div>
+	                    </div>
+	                    <div class="profile-controls">
+	                        <a href="__GROUP__/Net/listDisp:__XPATH__/userid/{:$vo['管理_上级编号']}" class="profile-control-left text-danger"><span class="fa fa-arrow-up"></span></a>
+	                        <if condition="$vo[$name.'_团队总人数'] gt 0">
+                              <a href="__GROUP__/Net/listDisp:__XPATH__/userid/{:$vo['编号']}" class="profile-control-right text-danger"><span class="fa fa-arrow-down"></span></a>
+                          <else/>
+                            <a class="profile-control-right"><span class="fa fa-arrow-down"></span></a>
+                          </if>
+	                    </div>
+	                </div>
+	                <div class="panel-body form-group-separated">
+	                	<div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+		         		<div class="col-md-3 col-xs-3 text-center line-height30" style="margin: 0px;padding:0px;">事业中心</div>
+		         		<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">本期推广</div>
+			             	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">上期结转</div>
+			             	<div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding:0px;">本期累计</div>
+		         	</div>
+	                    <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+	                    	<div class="col-md-3 col-xs-3 text-center line-height30" style="margin: 0px;padding:0px;color:red;font-weight:bold;">
+								<if condition="empty($vo['管理_A区'])">
+									<a href="__GROUP__/Sale/reg:sale_reg[1]/pid/{:$vo['编号']}/position/0" style="color:red;font-weight:bold;">【1】虚位以待</a>
+								<else/>
+									<a href="__GROUP__/Net/listDisp:net_place/userid/{:$vo['管理_A区']}" style="color:red;font-weight:bold;">【1】{:$vo['管理_A区']}</a>
+								</if>
+	                    	</div>
+	                    	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($vo['团队业绩_A区本期业绩'],2)}</div>
+	                    	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($vo['管理_A区结转业绩'],2)}</div>
+	                    	<div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($vo['团队业绩_A区本期业绩']+$vo['管理_A区结转业绩'],2)}</div>
+	                    </div>
+	                    <div class="form-group" style="padding:0px;margin: 0px;line-height:35px;">
+	                    	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;color:red;font-weight:bold;">
+								<if condition="empty($vo['管理_B区']) or $vo['管理_B区'] eq '&nbsp'">
+									<a href="__GROUP__/Sale/reg:sale_reg[1]/pid/{:$vo['编号']}/position/1" style="color:red;font-weight:bold;">【2】虚位以待</a>
+								<else/>
+									<a href="__GROUP__/Net/listDisp:net_place/userid/{:$vo['管理_B区']}" style="color:red;font-weight:bold;">【2】{:$vo['管理_B区']}</a>
+								</if>
+	                    	</div>
+	                    	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($vo['团队业绩_B区本期业绩'],2)}</div>
+	                    	<div class="col-md-3 col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($vo['管理_B区结转业绩'],2)}</div>
+	                    	<div class="col-md-3  col-xs-3 text-center" style="margin: 0px;padding:0px;">{:number_format($vo['团队业绩_B区本期业绩']+$vo['管理_B区结转业绩'],2)}</div>                    
+	                    </div>
+	                </div>
+	            </div>
+            </div>
+            <!-- END CONTACT ITEM -->
+        </div>
+	</div>
+	</volist>
+</div>
+
+
+<div class="row" id='tree' style="display:none;">
+	<div class="col-md-12 form-horizontal">
+		<div class="panel panel-default">
+			<div class="panel-body" id="parent">
+				<div id="jstree"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function () {
+		$('#jstree').jstree({
+			'core': {
+				'data': {
+					'url': '__GROUP__/Net/test:__XPATH__',
+					'dataType': 'json',
+					'data': function (node) {
+						return {'id': node.id};
+					}
+				},
+				'themes': {
+					'responsive': false
+				}
+			},
+			"types": {
+				"default": {
+					"icon": "fa fa-user"
+				},
+				"demo": {
+					"icon": "fa fa-user"
+				}
+			},
+			'plugins': ['types']
+		});
+		$('#button').click(function () {
+			$('#jstree').remove();
+			$('#parent').append('<div id="jstree"></div>');
+			var uid = $('#userid').val();
+			$('#jstree').jstree({
+				'core': {
+					'data': {
+						'url': '__GROUP__/Net/test:__XPATH__',
+						'dataType': 'json',
+						'data': function (node) {
+							if (uid == '') {
+								return {'id': node.id};
+							} else {
+								return {'uid': uid};
+							}
+						}
+					},
+					'themes': {
+						'responsive': false
+					}
+				},
+				"types": {
+					"default": {
+						"icon": "fa fa-user"
+					},
+					"demo": {
+						"icon": "fa fa-user"
+					}
+				},
+				'plugins': ['types']
+			});
+			uid = '';
+		});
+	});
+</script>
+<include file="Public:footer" />
+<!-- END WIDGETS -->

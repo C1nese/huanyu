@@ -1,0 +1,13 @@
+[ 2017-04-12T23:45:18+08:00 ] /pc_denglu.php?s=/Pay/do_add/navTabId/854fea1f37514d4a423f70dd864e8eb6 | ERR: (ThinkException) Column 'name' cannot be null
+[ 2017-04-12T23:45:18+08:00 ] /pc_denglu.php?s=/Pay/do_add/navTabId/854fea1f37514d4a423f70dd864e8eb6 | ERR: (ThinkException) [17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Lib/Driver/Db/DbMysql.class.php (179) DbMysql->error()
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Lib/Core/Db.class.php (846) DbMysql->execute(INSERT INTO `pay_onlineaccount` (`pay_type`,`pay_attr`,`pay_name`,`pay_amount`,`name`,`account`,`state`,`credit`,`time`) VALUES ('ChangJie','a:5:{s:17:\"在线支付_name\";s:12:\"在线支付\";s:20:\"在线支付_account\";s:0:\"\";s:11:\"HuiSignInfo\";s:0:\"\";s:18:\"在线支付_proxy\";s:0:\"\";s:26:\"在线支付_merchant_rate\";s:1:\"1\";}','a:5:{i:0;s:18:\"支付方式名称\";i:1;s:8:\"商户ID\";i:2;s:12:\"商户签名\";i:3;s:12:\"php转发Url\";i:4;s:12:\"实付倍数\";}',0,null,null,'1','No',1492011918))
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Lib/Core/Model.class.php (357) Db->insert(Array, Array, )
+[17-04-12 23:45:04] /data/web/yxjifen/Admin/Lib/Action/PayAction.class.php (221) Model->add()
+[17-04-12 23:45:04]  () PayAction->do_add()
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Lib/Core/App.class.php (132) call_user_func(Array)
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Lib/Core/App.class.php (159) App::exec()
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Lib/Core/Think.class.php (48) App::run()
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/Common/runtime.php (241) Think::Start()
+[17-04-12 23:45:04] /data/web/yxjifen/ThinkPHP/ThinkPHP.php (41) require(/data/web/yxjifen/ThinkPHP/Common/runtime.php)
+[17-04-12 23:45:04] /data/web/yxjifen/pc_denglu.php (7) require(/data/web/yxjifen/ThinkPHP/ThinkPHP.php)
+

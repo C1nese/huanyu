@@ -1,0 +1,67 @@
+﻿/* *** fonts.css *** */
+/*All Font Families*/
+@font-face {
+    font-family: 'CoreIconsRegular';
+    src: url('fonts/coreicons-webfont.eot');
+    src: url('fonts/coreicons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/coreicons-webfont.woff') format('woff'),
+         url('fonts/coreicons-webfont.ttf') format('truetype'),
+         url('fonts/coreicons-webfont.svg#coreiconsregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+* {
+	font-family:'Open Sans', sans-serif;
+	font-weight:400;
+}
+
+header .slogan,
+header .slogan span,
+.header_cart_content .cart_cost,
+.header_search_block.toggled .header_search_content .field_search,
+.login_form .form_field {
+	font-family:'Open Sans', sans-serif!important;
+}
+
+.shortcode_iconbox .ico {
+    font-family: 'CoreIconsRegular';
+}
+
+p, td, div { 
+	font-size:13px; 
+	color:#454545; 
+	line-height:16px;
+}
+
+h1, h2, h3, h4, h5, h6,
+h1 span, h2 span, h3 span, h4 span, h5 span, h6 span,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+	font-family:'Open Sans', sans-serif!important;
+}
+
+h1, h1 span, h1 a {
+	font-size:34px;
+	line-height:36px;
+}
+h2, h2 span, h2 a {
+	font-size:28px;
+	line-height:30px;
+}
+h3, h3 span, h3 a {
+	font-size:22px;
+	line-height:24px;
+}
+h4, h4 span, h4 a {
+	font-size:20px;
+	line-height:22px;
+}
+h5, h5 span, h5 a {
+	font-size:14px;
+	line-height:16px;
+}
+h6, h6 span, h6 a {
+	font-size:12px;
+	line-height:14px;
+}
+

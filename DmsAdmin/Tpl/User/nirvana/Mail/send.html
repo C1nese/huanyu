@@ -1,0 +1,94 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame">
+	<!-- START CONTENT FRAME TOP -->
+	<div class="content-frame-top">
+		<div class="page-title">
+			<h2><span class="fa fa-pencil"></span> {:GET_F_L('提交工单')}</h2>
+		</div>
+	</div>
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME LEFT -->
+	<div class="content-frame-left">
+		<div class="block">
+			<a href="__GROUP__/Mail/send" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> {:GET_F_L('提交工单')}</a>
+		</div>
+		<div class="block">
+			<div class="list-group border-bottom">
+				<a href="__GROUP__/Mail/index" class="list-group-item"><span class="fa fa-inbox"></span> {:GET_F_L('收件列表 ')}</a>
+				<a href="__GROUP__/Mail/sendbox" class="list-group-item"><span class="fa fa-star"></span> {:GET_F_L('发件列表 ')}</a>
+				<a href="__GROUP__/User/viewNotice" class="list-group-item"><span class="fa fa-rocket"></span> {:GET_F_L('最新消息')}</a>
+			</div>
+		</div>
+
+	</div>
+	<!-- END CONTENT FRAME LEFT -->
+
+	<!-- START CONTENT FRAME BODY -->
+	<div class="content-frame-body">
+		<div class="block">
+			<form role="form" class="form-horizontal" id="sendform" action="__GROUP__/Mail/send_email" method="post" onsubmit="return form_check()">
+				<if condition="$mailset eq true">
+					<div class="form-group">
+						<label class="col-md-2 control-label">{:GET_F_L('收件人：')}</label>
+						<div class="col-md-10">
+							<input type="text" class="form-control" name="receiver" id="receiver" />
+						</div>
+					</div>
+				</if>
+				<div class="form-group">
+					<label class="col-md-1 control-label" style="font-size:15px">{:GET_F_L('标题')}</label>
+					<div class="col-md-11">						
+						<input type="text" class="form-control" name="title" id="title"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-1 control-label" style="font-size:15px">{:GET_F_L('内容')}</label>
+					<div class="col-md-11">
+						<!-- <script id="editor" type="text/plain" style="width:100%;height:500px;"></script> -->
+						<textarea id="editor" name="center" style="width:100%;height:500px;"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-12">
+						<div class="pull-right">
+							<button class="btn btn-danger" type="submit"><span class="fa fa-envelope"></span> {:GET_F_L('发送')}</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+</div>
+<script type="text/javascript" charset="utf-8" src="__TMPL__Public/js/UE/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__TMPL__Public/js/UE/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="__TMPL__Public/js/UE/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+var ue = UE.getEditor('editor');
+function form_check()
+{
+	if($('#title').val()=='')
+	{
+		alert('请输入标题！');
+		$('#title').focus();
+		return false;
+	}	
+	return true;
+}
+</script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/summernote/summernote.js"></script>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+
+</body>
+</html>

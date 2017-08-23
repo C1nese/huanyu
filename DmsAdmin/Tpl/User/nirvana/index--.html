@@ -1,0 +1,329 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+    <include file="Public:head" />
+
+    <!-- END WIDGETS -->
+    <div class="row">
+
+        <div class="col-md-8">
+
+            <div class="row">
+                
+
+            <div class="row">
+
+                <div class="col-md-6" style="padding-left: 0;">
+
+                    <!-- START SALES & EVENTS BLOCK -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title-box">
+                                <h3>{:GET_F_L('市场业绩')}</h3>
+                                <span></span>
+                            </div>
+                            <ul class="panel-controls" style="margin-top: 2px;">
+                                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                                <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> {:GET_F_L('收起')}</a></li>
+                                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> {:GET_F_L('移除')}</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-body padding-0">
+                            <div class="chart-holder" id="dashboard-line-1" style="height: 200px;"></div>
+                        </div>
+                    </div>
+                    <!-- END SALES & EVENTS BLOCK -->
+
+                </div>
+
+                <div class="col-md-6" style="padding-right: 0;">
+
+                    <!-- START USERS ACTIVITY BLOCK -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="panel-title-box">
+                                <h3>{:GET_F_L('销售奖金')}</h3>
+                                <span></span>
+                            </div>
+                            <ul class="panel-controls" style="margin-top: 2px;">
+                                <li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+                                <li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-cog"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span> {:GET_F_L('收起')}</a></li>
+                                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span> {:GET_F_L('移除')}</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-body padding-0">
+                            <div class="chart-holder" id="dashboard-bar-1" style="height: 200px;"></div>
+                        </div>
+                    </div>
+                    <!-- END USERS ACTIVITY BLOCK -->
+
+                </div>
+
+            </div>
+
+				            <div class="row">
+                <!-- START SALES BLOCK -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title-box">
+                            <h3>{:GET_F_L('用户分布')}</h3>
+                            <span></span>
+                        </div>
+                        <ul class="panel-controls panel-controls-title">
+                            <li>
+                                <div id="reportrange" class="dtrange">
+                                    <span></span><b class="caret"></b>
+                                </div>
+                            </li>
+                            <li><a href="#" class="panel-fullscreen rounded"><span class="fa fa-expand"></span></a></li>
+                        </ul>
+
+                    </div>
+                    <div class="panel-body">
+                        <div class="row stacked">
+                            <div class="col-md-4">
+                                <div class="progress-list">
+                                    <div class="pull-left"><strong>{:GET_F_L('亚洲')}</strong></div>
+                                    <div class="pull-right"></div>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 75%;">75%</div>
+                                    </div>
+                                </div>
+                                <div class="progress-list">
+                                    <div class="pull-left"><strong>{:GET_F_L('欧洲')}</strong></div>
+                                    <div class="pull-right"></div>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 35%;">15%</div>
+                                    </div>
+                                </div>
+                                <div class="progress-list">
+                                    <div class="pull-left"><strong class="text-danger">{:GET_F_L('北美洲')}</strong></div>
+                                    <div class="pull-right"></div>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 55%;">35%</div>
+                                    </div>
+                                </div>
+                                <div class="progress-list">
+                                    <div class="pull-left"><strong class="text-warning">{:GET_F_L('南美洲')}</strong></div>
+                                    <div class="pull-right"></div>
+                                    <div class="progress progress-small progress-striped active">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 25%;">5%</div>
+                                    </div>
+                                </div>
+                                <p><span class="fa fa-warning"></span></p>
+                            </div>
+                            <div class="col-md-8">
+                                <div id="dashboard-map-seles" style="width: 100%; height: 200px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END SALES BLOCK -->
+            </div>
+
+            </div>
+            
+            <div class="row">
+                <!-- 平台公告 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>{:GET_F_L('平台公告')}</h3>
+                        <ul class="panel-controls">
+                            <li><a href="#"><span class="fa fa-plus"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="panel-body list-group list-group-contacts">
+                        <ul class="list-group">
+                            <volist name="nownotice" id="vo">
+                                <li class="list-group-item">
+                                    <ul class="list-inline list-inline-notice">
+                                        <li class="pull-right">
+                                            <eq name="vo.type" value="problem"><span class="label label-warning label-form">{:GET_F_L('帮助')}</span></eq>
+                                            <eq name="vo.type" value="news"><span class="label label-info label-form">{:GET_F_L('新闻')}</span></eq>
+                                        </li>
+                                        <li class="pull-right">{:date('Y-m-d H:i',$vo['创建时间'])}</li>
+                                        <li class="gg_icot"></li>
+                                        <li class="gg_title"><a href="__GROUP__/User/showNotice/id/{$vo.id}" class="text-primary">{:GET_C_L($vo[标题],'notice',$vo['id'],'tit')}</a></li>
+                                    </ul>
+                                </li>
+                            </volist>
+                        </ul>
+                    </div>
+                </div>
+                <!-- END 平台公告 -->
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="row">
+                <!-- 最新任务 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>{:GET_F_L('最新任务')}</h3>
+                        <ul class="panel-controls">
+                        </ul>
+                    </div>
+                    <div class="panel-body list-group list-group-contacts">
+                        <a href="http://media.mzooe.com" class="list-group-item" target="_blank">
+                            <div class="list-group-status status-sort1"></div>
+                            <img src="__TMPL__Public/renwu/4.jpg" class="pull-left" alt="网信理财注册投资任务" style="width: 70px;border:0;border-radius:0"/>
+                            <span class="contacts-title">网信理财注册投资任务</span>
+                            <p>任务要求：扫描二维码简单注册首投100送140000元宝。</p>
+                        </a>
+                        <a href="http://media.mzooe.com" class="list-group-item" target="_blank">
+                            <div class="list-group-status status-sort2"></div>
+                            <img src="__TMPL__Public/renwu/2.jpg" class="pull-left" alt="电网金融2期 - 电网供应链金融领导者" style="width: 70px;border:0;border-radius:0"/>
+                            <span class="contacts-title">电网金融2期 - 电网供应链金融领导者</span>
+                            <p>任务要求：简单注册首投100送105000元宝。</p>
+                        </a>
+                        <a href="http://media.mzooe.com" class="list-group-item" target="_blank">
+                            <div class="list-group-status status-sort3"></div>
+                            <img src="__TMPL__Public/renwu/3.jpg" class="pull-left" alt="有糖注册任务" style="width: 70px;border:0;border-radius:0"/>
+                            <span class="contacts-title">寻投3期 - 领未来金融，创财富起点</span>
+                            <p>首投10元就送45500元宝！</p>
+                        </a>
+                        <a href="http://media.mzooe.com" class="list-group-item" target="_blank">
+                            <div class="list-group-status status-sort4"></div>
+                            <img src="__TMPL__Public/renwu/1.jpg" class="pull-left" alt="【微盘街】纯注册任务" style="width: 70px;border:0;border-radius:0"/>
+                            <span class="contacts-title">【微盘街】纯注册任务</span>
+                            <p>任务要求：简单注册送12500元宝。</p>
+                        </a>
+                        <a href="http://media.mzooe.com" class="list-group-item" target="_blank">
+                            <div class="list-group-status status-sort5"></div>
+                            <img src="__TMPL__Public/renwu/5.jpg" class="pull-left" alt="[试玩] 大主宰4期-世界由我主宰！" style="width: 70px;border:0;border-radius:0"/>
+                            <span class="contacts-title">[试玩] 大主宰4期-世界由我主宰！</span>
+                            <p>类型： 网页试玩</p>
+                        </a>
+                        <a href="http://media.mzooe.com" class="list-group-item" target="_blank">
+                            <div class="list-group-status status-sort6"></div>
+                            <img src="__TMPL__Public/renwu/6.jpg" class="pull-left" alt="[试玩] 莽荒纪一期" style="width: 70px;border:0;border-radius:0"/>
+                            <span class="contacts-title">[试玩] 莽荒纪一期</span>
+                            <p>类型： 网页试玩</p>
+                        </a>                        
+                    </div>
+                </div>
+                <!-- END 最新任务 -->
+            </div>
+
+            <div class="row">
+                <!-- 新品上线 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>{:GET_F_L('新品上线')}</h3>
+                        <ul class="panel-controls">
+                        </ul>
+                    </div>
+                    <div class="panel-body list-group list-group-contacts">
+                        <a href="http://mall.mzooe.com" class="list-group-item"  target="_blank">
+                            <img src="__TMPL__Public/assets/images/users/bao.png" class="pull-left" alt="John Doe" style="border-radius: 0; width: 65px;"/>
+                            <span class="contacts-title">罗缨 清新柔软流苏小包软流苏小 文艺单肩日系斜挎女包信封包 </span>
+                            <p class="clearfix"><b class="text-danger">&yen;188.00 </b> <s class="text-muted"> &yen;288.00</s></p>
+                        </a>
+                        <a href="http://mall.mzooe.com" class="list-group-item"  target="_blank">
+                            <img src="__TMPL__Public/assets/images/users/bao.png" class="pull-left" alt="John Doe" style="border-radius: 0; width: 65px;"/>
+                            <span class="contacts-title">罗缨 清新柔软流苏小包软流苏小 文艺单肩日系斜挎女包信封包 </span>
+                            <p class="clearfix"><b class="text-danger">&yen;188.00 </b> <s class="text-muted"> &yen;288.00</s></p>
+                        </a>
+                        <a href="http://mall.mzooe.com" class="list-group-item"  target="_blank">
+                            <img src="__TMPL__Public/assets/images/users/bao.png" class="pull-left" alt="John Doe" style="border-radius: 0; width: 65px;"/>
+                            <span class="contacts-title">罗缨 清新柔软流苏小包软流苏小 文艺单肩日系斜挎女包信封包 </span>
+                            <p class="clearfix"><b class="text-danger">&yen;188.00 </b> <s class="text-muted"> &yen;288.00</s></p>
+                        </a>
+                    </div>
+                </div>
+                <!-- END 新品上线 -->
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!-- START DASHBOARD CHART -->
+    <div class="block-full-width">
+        <div class="panel-body padding-0 hidden">
+            <div class="chart-holder" id="dashboard-donut-1" style="height: 200px;"></div>
+        </div>
+        <div style="background: url(__TMPL__Public/img/footer_bg.png);height:250px;"></div>
+        <div class="chart-legend">
+            <div id="dashboard-legend"></div>
+        </div>
+    </div>
+    <!-- END DASHBOARD CHART -->
+
+</div>
+<!-- END PAGE CONTENT WRAPPER -->
+</div>
+<!-- END PAGE CONTENT -->
+
+</div>
+<!-- END PAGE CONTAINER -->
+<!-- MESSAGE BOX-->
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+	<div class="mb-container">
+		<div class="mb-middle">
+			<div class="mb-title"><span class="fa fa-sign-out"></span> <strong>{:GET_F_L('退出')}</strong> ?</div>
+			<div class="mb-content">
+				<p>{:GET_F_L('你确定要退出吗？')}</p>
+				<p>{:GET_F_L('如果你想继续工作点击否；点击是注销当前用户。')}</p>
+			</div>
+			<div class="mb-footer">
+				<div class="pull-right">
+					<a href="__GROUP__/Public/logout" class="btn btn-success btn-lg">{:GET_F_L('是')}</a>
+					<button class="btn btn-default btn-lg mb-control-close">{:GET_F_L('否')}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END MESSAGE BOX-->
+
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='__TMPL__Public/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/scrolltotop/scrolltopcontrol.js"></script>
+
+<script type="text/javascript" src="__TMPL__Public/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/morris/morris.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/rickshaw/d3.v3.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/rickshaw/rickshaw.min.js"></script>
+<script type='text/javascript' src='__TMPL__Public/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js'></script>
+<script type='text/javascript' src='__TMPL__Public/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js'></script>
+<script type='text/javascript' src='__TMPL__Public/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/owl/owl.carousel.min.js"></script>
+
+<script type="text/javascript" src="__TMPL__Public/js/plugins/moment.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- END THIS PAGE PLUGINS-->
+
+<script type="text/javascript" src="__TMPL__Public/js/settings.js"></script>
+
+<script type="text/javascript" src="__TMPL__Public/js/plugins.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/actions.js"></script>
+
+<script type="text/javascript" src="__TMPL__Public/js/demo_dashboard.js"></script>
+<!-- END TEMPLATE -->
+<!-- END SCRIPTS -->
+</body>
+</html>

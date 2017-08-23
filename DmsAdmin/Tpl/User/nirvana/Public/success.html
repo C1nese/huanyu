@@ -1,0 +1,70 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+
+<div class="row">
+    <div class="col-md-12" style="padding:15% 0;">
+
+        <div class="panel-body profile" style="width:380px; margin:0 auto; float: none; box-shadow: 2px 2px #29343F; border-radius: 5px;">
+
+            <div class="profile-data">
+                <present name="message" >
+                    <div class="profile-data-name" style="color:#12EA22;">{$message}</div>
+                </present>
+                <present name="error" >
+                    <div class="profile-data-name" style="color:#E34724">{$error}</div>
+                </present>
+                <present name="closeWin" >
+                    <div class="profile-data-name">{:GET_F_L('系统即将自动跳转')}</div>
+                    <br>
+                    <hr style="background: #000">
+                    <div class="profile-data-title">{:GET_F_L('如果不想等待,直接点击 ')}<a id="href" href="{$jumpUrl}">{:GET_F_L('这里')}</a> {:GET_F_L('关闭')}</div>
+                </present>
+                <notpresent name="closeWin" >
+                    <div class="profile-data-name">{:GET_F_L('系统即将自动跳转')}</div>
+                    <br>
+                    <hr style="background: #000">
+                    <div class="profile-data-title">{:GET_F_L('如果不想等待,直接点击')} <a id="href" href="{$jumpUrl}">{:GET_F_L('这里')}</a> {:GET_F_L('跳转')}</div>
+                </notpresent>
+                <span id="wait" style="display:none;">{$waitSecond}</span> 
+            </div>
+			
+        </div>
+
+    </div>
+</div>
+
+<meta http-equiv='Refresh' content='{$waitSecond};URL={$jumpUrl}'>
+
+<style type="text/css">
+    .message
+    {
+        color:#972D01;
+
+    }
+</style>
+<div class="main Public" id="success">
+    <div class="core_con">
+        <div class="message">
+
+        </div>
+    </div>
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script type="text/javascript">
+    (function(){
+        var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+        var interval = setInterval(function(){
+            var time = --wait.innerHTML;            
+            (time == 0) && (location.href = href);        
+        }, 1000);
+    })();
+</script>
+</body>
+</html>

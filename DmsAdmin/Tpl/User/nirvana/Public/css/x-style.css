@@ -1,0 +1,122 @@
+.bank-card{
+    padding: 10px;
+}
+
+.bank-card div{
+    height: 180px;
+    background: #00a8c6;
+    border-radius: 10px;
+}
+
+.pages-edit-liv .form-group{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.pages-edit .form-group-separated{
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.table-moth{
+    background-color: #EDEDED;
+}
+
+.wizard .actionBar {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.wizard .anchor li{
+    width: 33.33%;
+}
+.huangg{
+    height: 170px;
+    width: 100%;
+    background-origin:content-box;
+    background: url('../img/icons/huanguan.png');
+    background-size:80% 100%;
+    background-repeat:no-repeat;
+    background-position:center;
+}
+.get_list .form-group label,
+.get_list .form-group .list-inline li{
+    line-height: 30px;
+}
+
+.nirvana-lin>th{white-space: nowrap;}
+#balance{font-weight: bold}
+
+.img-a2{
+    max-height: 120px;
+}
+
+.pages-reg .form-group{
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.pages-reg .form-group-separated .form-group [class^="col-md-"] {
+    padding: 8px;
+    line-height: 30px;
+}
+.list-inline-notice{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.list-inline-notice .gg_title{
+    white-space:nowrap;
+    width:10em;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.gg_icot{
+    width: 26px;
+    height: 26px;
+    margin-bottom: -8px;
+    background: url('../img/icons/h16.png');
+    background-size:100% 100%;
+    background-repeat:no-repeat;
+}
+.list-inline-notice>.pull-right>.label-form{
+    margin-top: -4px;
+}
+
+.panel-colorful{
+    overflow:hidden;
+}
+
+td .profile-data-name{
+    background: #fff;
+    color: #0a0a0a !important;
+    margin: 0;
+}
+td .profile-data-name a{
+    color: #0a0a0a;
+    border: none;
+}
+
+td .profile {
+    padding: 15px 0 0 0;
+    border: none;
+}
+
+
+.profile-nirv-title{
+    display: block;
+    border: 1px solid #29343f;
+    margin: 170px 5px 10px 5px;
+    padding: 4px;
+    line-height: 25px;
+    background: #2d3945;
+    color: #fff;
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -ms-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    overflow: hidden;
+    text-align: center;
+}

@@ -1,0 +1,465 @@
+<include file="Public:header" />
+<php>
+    define('regXpath',$regXpath);
+</php>
+<link href="__TMPL__Public/css/netstyle.css" rel="stylesheet" type="text/css" />
+<div class="core_title" >
+    <span><a href="#">{:GET_F_L('当前位置')}：</a></span>
+    <span class="active">{$nowtitle}</span>
+</div>
+
+<div class="core_con" name="placetreeContent{$firstUserInfo['id']}" style="overflow:auto;">
+
+        <if condition="$firstUserInfo">
+            <table align="center" cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td>
+                     <table width="100%">
+                        <tbody>
+                            <tr>
+                                <td height="30" align="center"> {// 表单查询 }
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-default">
+                                                <div class="panel-body">
+                                                    <form class="form-horizontal"  action="__URL__/disp:__XPATH__" method="post" name="form1" id="form1">
+                                                        <input name="nettype" type="hidden" value="{$style}"/>
+                                                        <div class="form-group">
+                                                            <div class="col-md-8">
+                                                                <div class="input-group">
+                                                                    <div class="input-group-addon">
+                                                                        <span class="fa fa-search"></span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control" name="uid" value="" size="12" style="border-radius:0px;"/>
+                                                                    <div class="input-group-btn">
+                                                                        <input class="btn btn-primary" class="button_onmousedown" type="submit" style="height:34px;border-radius:0px;" value="{:GET_F_L('搜索')}">
+                                                                        <if condition="$firstUserInfo['编号'] neq $thisUser['编号']">
+                                                                            <input class="btn btn-primary" class="button_onmousedown" type="button" name="btnSearch" value="{:GET_F_L('上一层')}" id="btnSearch"  onclick="location.href='__GROUP__/Net/disp:__XPATH__/uid/{:$firstUserInfo[$netNode->name.'_上级编号']}';">
+                                                                            <input class="btn btn-primary" class="button_onmousedown" type="button" name="btnSearch" value="{:GET_F_L('置顶')}" id="btnSearch"  onclick="location.href='__GROUP__/Net/disp:__XPATH__';">
+                                                                        </if>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <select name="changeStyle" id="changeStyle" class="form-control select">
+                                                                    <option value="ramus" <eq name="style" value="ramus">selected="true"</eq>>{:GET_F_L('分支节点')}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </td>
+                </tr>
+                {// 第一层 }
+                <tr>
+                    <td valign="top">
+                    <table cellpadding="0" cellspacing="1" class="topLayer">
+                        <tbody>
+                            <tr>
+                                <td class="topLayerTd1">
+                                <table cellspacing="1" cellpadding="0" id="overUser_{$firstUserInfo.编号}" class="topLayerTb1">
+                                    <tbody>
+                                        <tr>
+                                            {//编号}
+                                            <td class="topLayerTb1Td1 <eq name='firstUserInfo.状态' value='有效'>topLayerTb1De<else/>topLayerTb1St</eq>">
+                                                <div class="panel-body profile">
+                                                    <div class="profile-image">
+                                                         <img src="{$firstUserInfo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}" alt="{$firstUserInfo.编号}" style="min-height: 100px;min-width: 100px;">
+                                                    </div>
+                                                    <div class="profile-data">
+                                                        <div class="profile-data-name">{$firstUserInfo.编号}</div>
+                                                        <div class="profile-data-name">
+                                                            <foreach name="levelsArr" item="level" key='levelname'>
+                                                                    <eq name="levelname" value="职称">
+                                                                        {$firstUserInfo['img']}
+                                                                        <else/>
+                                                                        <eq name="levelname" value="用户级别">
+                                                                        {:GET_F_L($level[$firstUserInfo[$levelname]])}
+                                                                        </eq>
+                                                                    </eq>
+                                                            </foreach>
+                                                        </div>
+                                                    </div>
+                                                    <div class="profile-controls">
+                                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {//姓名}
+                                        <eq name="netNode:userNameDisp" value="true">
+                                        <tr>
+                                             <td class="topLayerTb1Td1 <eq name='firstUserInfo.状态' value='有效'>topLayerTb1De<else/>topLayerTb1St</eq>"><notempty name="firstUserInfo['姓名']">{$firstUserInfo.姓名}<else/>[{:GET_F_L('暂无')}]</notempty></td>
+                                        </tr>
+                                        </eq>
+                                        {//昵称}
+                                        <eq name="netNode:userAnotherNameDisp" value="true">
+                                        <tr>
+                                            <td class="topLayerTb1Td1 <eq name='firstUserInfo.状态' value='有效'>topLayerTb1De<else/>topLayerTb1St</eq>"><notempty name="firstUserInfo['昵称']">{$firstUserInfo.昵称}<else/>[{:GET_F_L('暂无')}]</notempty></td>
+                                        </tr>
+                                        </eq>
+                                   </table></td>
+                            </tr>
+                        </tbody>
+                    </table> {:getfloatDiv($firstUserInfo,$netName,$levelsArr,$netPlaceName,$netNode)} </td>
+                </tr>
+                </tbody>
+            </table>
+            </td>
+            </tr>
+            {//第一层结束}
+            <tr>
+                <td> {// 向下递归遍历网络图的所有子节点 }
+                {:print_tree(0,$netTree,$netPlaceName,$firstUserInfo,$netName,$levelsArr,$showLayer,$netNode,$thisUser,$bdreg)} </td>
+            </tr>
+            </table>
+            <else/>
+            <table class='list' style="width:500px">
+                <thead>
+                    <tr>
+                        <th>&nbsp;{:GET_F_L('提示信息')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="height:150px">
+                        <td><b>{:GET_F_L('该网络暂无人员！')}</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </if>
+
+
+        <php>
+            /*
+            * 递归遍历网络图函数
+            */
+            function print_tree($layer,$netTree,$netPlaceName,$parent,$netName,$levelsArr,$showLayer,$netNode,$thisUser,$bdreg)
+            {
+            if($layer >= $showLayer-1) return;
+        </php>
+        {//下面上下线}
+        <table border="0" align="center" cellspacing="0" cellpadding="0" style="margin:0px auto 0 auto;">
+            <tbody>
+                <tr>
+                    <td align="center" style="line-height: 10px; height: 10px;"><img style="width:1px;height:20px" alt="" src="/Public/Images/admin/line.gif" border="0"></td>
+                </tr>
+            </tbody>
+        </table>
+        <table border="0" align="center" cellspacing="0" cellpadding="0" style="margin:0px auto 0 auto;">
+
+            <tbody>
+                <tr>
+                    <td valign="top">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <php>
+                                	
+                                    $j=count($netPlaceName[$netName]);
+                                    if(CONFIG("cuse")=='false')$j=2;
+                                    $i = -1;
+                                    foreach($netPlaceName[$netName] as $position){
+                                    if(CONFIG("cuse")=='false' && $position=='C')continue;
+                                    	$userInfo = array();
+                                    	$i++;
+                                    	if(isset($netTree[$layer])){
+                                    	foreach($netTree[$layer] as $val){
+                                    		if($val[$netName.'_上级编号'] === $parent['编号'] && $val[$netName.'_位置'] == $position){
+                                    			$userInfo = $val;
+                                    			break;
+                                   			}
+                                    	}
+                                    }
+                                </php>
+                                <notempty name="userInfo">
+                                    <td valign="top"> {//上面上下线}
+                                    <table border="0" cellspacing="0" cellpadding="0" style="margin:0px auto 0 auto;width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" valign="top" style="height:10px;line-height:10px">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="topppppppppppppppppp">
+                                                    <tbody>
+                                                        <tr>
+                                                            {// 左右轨迹条显示,这里判断是显示在 左边 还是 右边 }
+                                                            <php>
+                                                                if($i>0 && $i<($j-1) && $j >2){
+                                                            </php>
+                                                            <td width="50%" height="1" bgcolor="#003399"></td>
+                                                            <td width="50%" height="1" bgcolor="#003399"></td>
+                                                            <php>
+                                                                }else if($j == 1){
+                                                            </php>
+                                                            <td width="50%" height="0"></td>
+                                                            <td width="50%" height="0"></td>
+                                                            <php>
+                                                                }else{
+                                                            </php>
+                                                            <td width="50%" height="1" <eq name="i" value="$j-1">bgcolor="#003399"</eq> ></td>
+                                                            <td width="50%" height="1" <eq name="i" value="0">bgcolor="#003399"</eq> ></td>
+                                                            <php>
+                                                                }
+                                                            </php>
+                                                        </tr>
+                                                    </tbody>
+                                                </table> {// 上下轨迹条显示} <img style="width:1px;height:20px;line-height:20px" alt="" src="/Public/Images/admin/line.gif" border="0"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table> {//用户信息主体}
+                                    <table cellpadding="0" cellspacing="1" class="topLayer">
+                                        <tbody>
+                                            <tr>
+                                                <td  class="topLayerTd1"> {//输出用户的相关信息 }
+                                                <table cellspacing="1" cellpadding="0" id="overUser_{$userInfo['编号']}" class="topLayerTb1">
+                                                    <tbody>
+                                                        {//编号}
+                                                        <tr>
+                                                            <td class="topLayerTb1Td1 <eq name='userInfo.状态' value='有效'>topLayerTb1De<else/>topLayerTb1St</eq>">
+                                                                <div class="panel-body profile">
+                                                                    <div class="profile-image">
+                                                                        <!-- <img src="{$userInfo.头像|default='__TMPL__Public/assets/images/users/no-image.jpg'}" alt="{$userInfo.编号}" style="min-height: 100px;min-width: 100px;"> -->
+                                                                        <img src="<if condition="$userInfo['头像'] == 1">__TMPL__Public/assets/images/users/{$userInfo['用户级别']}.png<else/>{$userInfo['头像']}</if>" alt="{$userInfo.编号}" style="min-height: 100px;min-width: 100px;">
+                                                                    </div>
+                                                                    <div class="profile-data">
+                                                                        <div class="profile-data-name"><a class="currentNavTab" href="__URL__/disp:__XPATH__/uid/{$userInfo['编号']}/style/ramus">{$userInfo['编号']}</a></div>
+                                                                        <div class="profile-data-name">
+                                                                            <foreach name="levelsArr" item="level" key='levelname'>
+                                                                                <eq name="levelname" value="职称">
+                                                                                    {$userInfo['img']}
+                                                                                    <else/>
+                                                                                    <eq name="levelname" value="用户级别">
+			                                                                        {:GET_F_L($level[$userInfo[$levelname]])}
+			                                                                        </eq>
+                                                                                   
+                                                                                </eq>
+                                                                            </foreach>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="profile-controls">
+                                                                        <a href="#" class="profile-control-left"><span class="fa fa-info"></span></a>
+                                                                        <a href="#" class="profile-control-right"><span class="fa fa-phone"></span></a>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <eq name="netNode:userNameDisp" value="true">
+                                                            <tr>
+                                                                <td class="topLayerTb1Td1 <eq name='userInfo.状态' value='有效'>topLayerTb1De<else/>topLayerTb1St</eq>"><notempty name="userInfo['姓名']">{$userInfo.姓名}<else/>[{:GET_F_L('暂无')}]</notempty></td>
+                                                            </tr>
+                                                        </eq>
+                                                        <eq name="netNode:userAnotherNameDisp" value="true">
+                                                            <tr>
+                                                                <td class="topLayerTb1Td1 <eq name='userInfo.状态' value='有效'>topLayerTb1De<else/>topLayerTb1St</eq>"><notempty name="userInfo['昵称']">{$userInfo.昵称}<else/>[{:GET_F_L('暂无')}]</notempty></td>
+                                                            </tr>
+                                                        </eq>
+                                                    </tbody>
+                                                </table> {:getfloatDiv($userInfo,$netName,$levelsArr,$netPlaceName,$netNode)} </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> {// 向下递归遍历网络图的所有子节点 }
+                                    {:print_tree($layer+1,$netTree,$netPlaceName,$userInfo,$netName,$levelsArr,$showLayer,$netNode,$thisUser,$bdreg)} </td>
+                                    <else/>
+                                    {//显示注册框}
+                                    <td valign="top">
+                                    <table border="0" cellspacing="0" cellpadding="0" style="margin:0px auto 0 auto;width:100%">
+                                        <tbody>
+                                            <tr>
+                                                <td align="center" valign="top" style="height:10px;line-height:10px">
+                                                <table style="width:100%" border="0" cellspacing="0" cellpadding="0" id="topppppppppppppppppp">
+                                                    <tbody>
+                                                        <tr>
+                                                            {// 左右轨迹条显示,这里判断是显示在 左边 还是 右边 }
+                                                            <php>
+                                                                if($i>0 && $i<($j-1) && $j >2){
+                                                            </php>
+                                                            <td width="50%" height="1" bgcolor="#003399"></td>
+                                                            <td width="50%" height="1" bgcolor="#003399"></td>
+                                                            <php>
+                                                                }else if($j == 1){
+                                                            </php>
+                                                            <td width="50%" height="0"></td>
+                                                            <td width="50%" height="0"></td>
+                                                            <php>
+                                                                }else{
+                                                            </php>
+                                                            <td width="50%" height="1" <eq name="i" value="$j-1">bgcolor="#003399"</eq> ></td>
+                                                            <td width="50%" height="1" <eq name="i" value="0">bgcolor="#003399"</eq> ></td>
+                                                            <php>
+                                                                }
+                                                            </php>
+                                                        </tr>
+                                                    </tbody>
+                                                </table><img style="WIDTH: 1px; HEIGHT: 21px" alt="" src="/Public/Images/admin/line.gif" border="0"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="newreg topReg" cellpadding="0" cellspacing="1">
+                                        <tbody>
+                                            <tr>
+                                                <td class="topRegTd1">
+                                                <table cellspacing="1" cellpadding="0" class="topRegTb1">
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><if condition="$bdreg eq true">
+                                                            <a class="btn btn-success btn-rounded" href="__GROUP__/Sale/reg:{:constant('regXpath')}/pid/{$parent.编号}/position/{$i}">{:GET_F_L('注册')}</a>
+                                                            <else /><a>{:GET_F_L('无')}</a></if>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                    </tr>
+                                            </tr>
+                                    </table></td>
+                            </tr>
+                        </tbody>
+                    </table></td>
+                    </notempty>
+                    <php>
+                        }
+                    </php>
+                </tr>
+            </tbody>
+        </table>
+        </td></tr>
+        </tbody>
+        </table>
+        <php>
+            $layer++;}
+        </php>
+        <php>
+            //获得浮动层
+            function getfloatDiv($userInfo,$netName,$levelsArr,$netPlaceName,$netNode){
+            //判断该系统是否有对碰奖金
+            $bump = X('prize_bump');
+            if($bump){
+            $is_jiezhuan = true;
+            }else{
+            $is_jiezhuan = false;
+            }
+        </php>
+        <div id="floatDiv_{$userInfo['编号']}" style="border:3px solid #d5dDdF;display:none;position:absolute;background:#FFFFFF;padding:10px">
+            <table>
+                <tr>
+                    <td style="text-align:right;height:20px;line-height:20px">{:GET_F_L('编号')}：</td>
+                    <td style="text-align:left;height:20px;line-height:20px">{$userInfo['编号']}</td>
+                </tr>
+                <eq name="netNode:userNameDisp" value="true">
+                    <tr>
+                        <td style="text-align:right;height:20px;line-height:20px">{:GET_F_L('姓名')}：</td>
+                        <td style="text-align:left;height:20px;line-height:20px">
+                        <empty name="userInfo.姓名">
+                            [{:GET_F_L('暂无')}]
+                            <else/>
+                            {$userInfo['姓名']}
+                        </empty></td>
+                    </tr>
+                </eq>
+                <empty name="$userInfo.审核日期">
+                    <tr>
+                        <td style="text-align:right;height:20px;line-height:20px">{:GET_F_L('注册日期')}：</td>
+                        <td style="text-align:left;height:20px;line-height:20px">{$userInfo.注册日期|date='Y-m-d H:i:s',###}</td>
+                    </tr>
+                    <else/>
+                    <tr>
+                        <td style="text-align:right;height:20px;line-height:20px">{:GET_F_L('审核日期')}：</td>
+                        <td style="text-align:left;height:20px;line-height:20px">{$userInfo.审核日期|date='Y-m-d H:i:s',###}</td>
+                    </tr>
+                </empty>
+                {//级别}
+                <foreach name="levelsArr" item="level" key='levelname'>
+                    <tr>
+                        <td style="text-align:right;height:20px;line-height:20px">{:GET_F_L($levelname)}：</td>
+                        <td style="text-align:left;height:20px;line-height:20px">{:($level[$userInfo[$levelname]])}</td>
+                    </tr>
+                </foreach>
+                <eq name="netNode:userBgxs" value="true">
+                    <tr>
+                        <td colspan='2'>
+                        <foreach name="netPlaceName" item="placeNames" key="ky">
+                            <table border="0" cellpadding="3" cellspacing="1" width="100%" align="center" style="background-color: #b9d8f3;">
+                                <tr style="text-align: center; color:#5A4B24; BACKGROUND-COLOR: #F4FAFF;">
+                                    <td style="border-width:1px;border-style:solid;border-color:#B9D8F3;">{$ky}</td><td style="border-width:1px 1px 1px 0;border-style:solid;border-color:#B9D8F3;">{:GET_F_L('新增')}</td>
+                                    <if condition="$is_jiezhuan">
+                                        <td style="border-width:1px 1px 1px 0;border-style:solid;border-color:#B9D8F3;">{:GET_F_L('结转')}</td>
+                                    </if><td style="border-width:1px 1px 1px 0;border-style:solid;border-color:#B9D8F3;">{:GET_F_L('累计')}</td>
+                                </tr>
+                                <foreach name="placeNames" item="placeName">
+                                    <tr style="text-align: center; color:#5A4B24; BACKGROUND-COLOR: #F4FAFF;">
+                                        <td style="border-width:0 1px 1px 1px;border-style:solid;border-color:#B9D8F3;"> {:GET_F_L($netNode->showregion($placeName))}</td>
+                                        <td style="border-width:0 1px 1px 0;border-style:solid;border-color:#B9D8F3;"> {:number_format($userInfo['团队业绩_'.$placeName.'区本期业绩'],$netNode->decimal)} </td>
+                                        <if condition="$is_jiezhuan">
+                                            <td style="border-width:0 1px 1px 0;border-style:solid;border-color:#B9D8F3;"> {:number_format($userInfo[$ky.'_'.$placeName.'区结转业绩'],$netNode->decimal)} </td>
+                                        </if>
+                                        <td style="border-width:0 1px 1px 0;border-style:solid;border-color:#B9D8F3;"> {:number_format($userInfo['团队业绩_'.$placeName.'区累计业绩'],$netNode->decimal)} </td>
+                                    </tr>
+                                </foreach>
+                            </table>
+                        </foreach></td>
+                    </tr>
+                </eq>
+            </table>
+        </div>
+        <php>
+            }
+        </php>
+        <br>
+    </div>
+
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script>
+    $(function() {
+        $("[id^='overUser_']").mousemove(function(e) {
+            var idArr = $(this).attr('id').split('_');
+            var width = $('#floatDiv_' + idArr[1]).width();
+            var height = $('#floatDiv_' + idArr[1]).height();
+            var xx = e.pageX;
+            if (xx > ($(document.body).width() - width - 60)) {
+                xx = xx - width - 30;
+            } else {
+                xx = xx + 15;
+            }
+            var yy = e.pageY;
+            if (yy > ($(document.body).height() - height - 60)) {
+                yy = yy - height - 30;
+            } else {
+                yy = yy + 15;
+            }
+            $('#floatDiv_' + idArr[1]).show();
+            $('#floatDiv_' + idArr[1]).css('left', xx);
+            $('#floatDiv_' + idArr[1]).css('top', yy);
+            $('#floatDiv_' + idArr[1]).css('z-index', 99);
+            $(this).mouseout(function() {
+                $('#floatDiv_' + idArr[1]).hide();
+            })
+        });
+    });
+    showscroll();
+    function showscroll() {
+      document.getElementsByName("placetreeContent{$firstUserInfo['id']}")[0].scrollLeft = (document.getElementsByName("placetreeContent{$firstUserInfo['id']}")[0].scrollWidth - document.getElementsByName("placetreeContent{$firstUserInfo['id']}")[0].offsetWidth) / 2;
+      document.getElementById("selectplacediv{$firstUserInfo['id']}").style.margin = "0 " + Math.abs(((document.getElementsByName("placetreeContent{$firstUserInfo['id']}")[0].scrollWidth - document.getElementsByName("placetreeContent{$firstUserInfo['id']}")[0].offsetWidth) / 2)) + "px";
+    }
+</script>
+<script>
+    $(function() {
+        $("[id^='changeStyle']").change(function() {
+            window.location = '__URL__/disp:__XPATH__/nettype/' + $(this).val();
+        });
+    }); 
+</script>

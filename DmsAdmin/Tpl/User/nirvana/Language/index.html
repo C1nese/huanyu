@@ -1,0 +1,86 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+	<!-- START CONTENT FRAME TOP -->
+	<div class="content-frame-top">
+		<div class="page-title">
+			<h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('多语言切换')}</h2>
+		</div>
+		<div class="pull-right">
+			<button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
+		</div>
+	</div>
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME LEFT -->
+	<div class="content-frame-left">
+
+		&nbsp;
+
+	</div>
+	<!-- END CONTENT FRAME LEFT -->
+
+	<!-- START CONTENT FRAME BODY -->
+	<div class="content-frame-body">
+		<div class="core_main Language" id="index">
+
+			<div class="core_con">
+				<table class="tablebg">
+					<tr>
+						<td class="tbkey">{:GET_F_L('多语言设置')}：</td>
+						<td class="tbval">
+					<span style='font-size:15px'>
+						<a onclick="change_lang('zh');" href="javascript:;">{:GET_F_L('简体')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('yue');" href="javascript:;">{:GET_F_L('粤语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('cht');" href="javascript:;">{:GET_F_L('繁体')}</a>&nbsp;|&nbsp;
+						<a onclick="change_lang('en');" href="javascript:;">{:GET_F_L('英语')}</a>&nbsp;|&nbsp;
+						<a onclick="change_lang('jp');" href="javascript:;">{:GET_F_L('日语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('kor');" href="javascript:;">{:GET_F_L('韩语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('fra');" href="javascript:;">{:GET_F_L('法语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('spa');" href="javascript:;">{:GET_F_L('西班牙语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('th');" href="javascript:;">{:GET_F_L('泰语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('ara');" href="javascript:;">{:GET_F_L('阿拉伯语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('ru');" href="javascript:;">{:GET_F_L('俄语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('pt');" href="javascript:;">{:GET_F_L('葡萄牙语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('de');" href="javascript:;">{:GET_F_L('德语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('it');" href="javascript:;">{:GET_F_L('意大利语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('el');" href="javascript:;">{:GET_F_L('希腊语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('nl');" href="javascript:;">{:GET_F_L('荷兰语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('pl');" href="javascript:;">{:GET_F_L('波兰语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('bul');" href="javascript:;">{:GET_F_L('保加利亚语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('est');" href="javascript:;">{:GET_F_L('爱沙尼亚语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('dan');" href="javascript:;">{:GET_F_L('丹麦语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('fin');" href="javascript:;">{:GET_F_L('芬兰语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('cs');" href="javascript:;">{:GET_F_L('捷克语')}</a>&nbsp;|&nbsp;	
+						<a onclick="change_lang('rom');" href="javascript:;">{:GET_F_L('罗马尼亚语')}</a>&nbsp;|&nbsp;			
+						<a onclick="change_lang('slo');" href="javascript:;">{:GET_F_L('斯洛文尼亚语')}</a>&nbsp;|&nbsp;			
+						<a onclick="change_lang('swe');" href="javascript:;">{:GET_F_L('瑞典语')}</a>&nbsp;|&nbsp;			
+						<a onclick="change_lang('hu');" href="javascript:;">{:GET_F_L('匈牙利语')}</a>&nbsp;|&nbsp;
+					</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+	<script>
+	function change_lang(lang){
+		Cookies.set("lang",lang);
+		  location.reload();
+	}
+	</script> 
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+
+</body>
+</html>

@@ -1,0 +1,2 @@
+<?php
+return '{051E5D4E-F47E-CEE1-0E81-A514044239AE}'; ?>

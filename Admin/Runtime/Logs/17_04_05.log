@@ -1,0 +1,14 @@
+[ 2017-04-05T09:33:07+08:00 ] /pc_denglu.php?s=/Public/login | ERR: (ThinkException) Unknown database 'hytx1'
+[ 2017-04-05T09:33:07+08:00 ] /pc_denglu.php?s=/Public/login | ERR: (ThinkException) [17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Core\Db.class.php (214) DbMysql->connect()
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Driver\Db\DbMysql.class.php (122) Db->initConnect()
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Core\Db.class.php (947) DbMysql->query(SELECT a.id FROM yubicloud as a inner join (select id from admin where status=1) b on a.account_id=b.id WHERE state=1 LIMIT 1  )
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Core\Model.class.php (813) Db->select(Array)
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\Admin\Lib\Action\PublicAction.class.php (104) Model->getField(a.id)
+[17-04-05 09:33:04]  () PublicAction->login()
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Core\App.class.php (132) call_user_func(Array)
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Core\App.class.php (159) App::exec()
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Lib\Core\Think.class.php (48) App::run()
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\Common\runtime.php (241) Think::Start()
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\ThinkPHP\ThinkPHP.php (41) require(D:\phpStudy\WWW\hytx\ThinkPHP\Common\runtime.php)
+[17-04-05 09:33:04] D:\phpStudy\WWW\hytx\pc_denglu.php (7) require(D:\phpStudy\WWW\hytx\ThinkPHP\ThinkPHP.php)
+

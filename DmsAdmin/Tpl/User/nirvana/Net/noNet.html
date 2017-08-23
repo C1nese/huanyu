@@ -1,0 +1,219 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Public/js/layer/layer.js"></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame">
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('未激活用户')}</h2>
+        </div>
+        <div class="pull-right">
+            <span class="help-block msg text-danger"></span>
+        </div>
+        <div class="alert alert-success" role="alert" style='margin-top:10px;'>
+            <strong>提示：</strong>
+            当未激活用户等级晋升到 LEVEL-1 时，会自动被激活到消费联盟中
+        </div>
+    </div>
+    
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="col-md-12 col-xs-12">
+
+        <div class="row push-up-12">
+            <div class="panel panel-colorful">
+
+            <div class="panel-body panel-body-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-actions">
+                        <thead>
+                        <tr class="nirvana-lin">
+                              <td>编号</td>
+                              <td>注册时间</td>
+                              <td>用户级别</td>
+                              <td>个人成长值</td>
+                              <td>操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name='data.list' item='v'>
+                            <tr <if condition="$v['lval'] gt 10">class="danger"</if>>
+                                    <td>{$v.编号}</td>
+                                    <td>{$v.注册日期}</td>
+                                    <td>{$v.用户级别}</td>
+                                    <td>{$v.个人业绩}</td>
+                                    <td>
+                                    	<if condition="$v['lval'] gt 10">
+                                    		<a href="javascript:;" onclick="setNet({$v.id});">激活</a>
+                                    	</if>
+                                    </td>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+           
+            <div class="panel-footer">
+                <ul class="pagination pagination-sm pull-right">
+                    <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录')} {$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                    <if condition="$data['nowPage'] neq 1">
+                        <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                        <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                    </if>
+                    <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                    <if condition="isset($data['rollPage'][-2])">
+                        <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][-1])">
+                        <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                    </if>
+                    <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                    <if condition="isset($data['rollPage'][1])">
+                        <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][2])">
+                        <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                    </if>
+                    <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                    <if condition="$data['nowPage'] lt $data['totalPages']">
+                        <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                        <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                    </if>
+                </ul>
+            </div>
+
+        </div>
+
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+
+<div id="conteoer" style="display: none">
+<div class="content-frame pages-edit-liv">
+	<div class="col-md-12" style="padding:0px">
+		<form class="form-horizontal" name="form" method="post"
+			action="__GROUP__/Net/setNet" id="form" style="padding:0px;margin:0px;">
+			<div class="modal-dialog" style="margin:0px auto">
+				<div class="col-md-12" style="padding:0px">
+					<!--用户信息-->
+					<div class="panel panel-colorful" style="padding:0px;margin: 0px;">
+						<div class="panel-body">
+                            <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-pencil"></span>&nbsp;请填写激活用户的联盟伙伴和联盟中心</strong>
+						</div>
+						<div class="panel-body form-group-separated">							
+							<div class="form-group">
+								<label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('联名伙伴')}</label>
+								<div class="col-md-9 col-xs-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<span class="fa fa-user"></span>
+										</span> 
+										<input type="text" id="tu" class="form-control" value="{$userinfo.编号}" name="tuser" readonly/>
+									</div>
+									<span class="help-block msg text-danger" id="{$netinput}_span"></span>						
+								</div>
+								
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('事业伙伴')}</label>
+								<div class="col-md-9 col-xs-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<span class="fa fa-user"></span>
+										</span> 
+										<input type="text" id="gu" class="form-control" value="{$guser}" name="guser"/>
+									</div>
+									<span class="help-block msg text-danger" id="gu_span"></span>						
+								</div>
+								
+							</div>
+							
+							<div class="form-group">
+                                <label class="col-md-3 col-xs-12 control-label label-title">联盟中心</label>
+								<div class="col-md-9 col-xs-12">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<span class="fa fa-user"></span>
+										</span> 
+										<select name="gwhere" class="form-control" id="where">
+											<php>$i=0;</php>
+											<foreach name="ramus" item="ramu" key="key">
+												<option value="{$key}" <if condition="$i eq $gwhere">selected</if>>{$ramu}</option>
+												<php>$i++;</php>
+											</foreach>
+										</select>
+										
+									</div>
+									<span class="help-block msg text-danger" id="where_span"></span>
+								</div>
+							</div>
+							
+						</div>
+
+						<div class="panel-footer">
+							<span class="help-block msg text-danger col-md-9 col-xs-9" id="mes_span" style="text-align: center;margin: 0px;"></span>
+							<input type="hidden" name="id" id="userid" value=""/>
+							<input class="btn btn-primary pull-right" type="button" onclick="checkval();" value="{:GET_F_L('确定')}" id="regsubbutton">
+						</div>
+					</div>
+					<!-- END 用户信息-->
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+
+</div>
+<script type="text/javascript">
+function setNet(uid){
+	
+	$("#userid").val(uid);
+	$("#mes_span").html('');
+	layer.open({
+		  type: 1,
+		  title: false,
+		  area: ['auto', 'auto'],
+		  shade: 0.5,
+		  closeBtn: false,
+		  shadeClose: true,
+		  scrollbar: false,
+		  skin: 'layui-layer-nobg',
+		  content: $("#conteoer"),
+		});
+}
+</script>
+<script type="text/javascript">
+function checkval(){	
+	var gu = $("#gu").val();
+	var gw = $("#where").val();	
+	if(gu==''){
+		$("#mes_span").html('事业伙伴不能为空');
+	}	
+	$.post('__GROUP__/Net/setNetajax',{gu:gu,gw:gw},function(data){
+		if(data.sta==0){
+			$("#form").submit();
+		}else if(data.sta==1){
+			$("#mes_span").html(data.mes);
+		}else if(data.sta==2){
+			$("#mes_span").html(data.mes);
+		}else{
+			alert('错误');
+		}
+	},"json");
+}
+</script>

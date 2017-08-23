@@ -1,0 +1,177 @@
+
+<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/shop.css"/>
+<script type="text/javascript" src="__TMPL__Public/js/shop.js"></script>
+<include file="Public:header" />
+<if condition="($sale:extra eq true)">
+<script src="__PUBLIC__/directSell/area_select.js" type="text/javascript"></script>
+</if>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+	<!-- START CONTENT FRAME TOP -->
+	<div class="content-frame-top">
+		<div class="page-title">
+			<h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('慕斯云币兑换')}</h2>
+		</div>
+												<div class="alert alert-success" role="alert" style='margin-top:10px;'>
+            <strong>提示：</strong>
+            使用固定积分可以兑换以下商品，选择商品后请在最下方填写收货人联系信息
+        </div>
+
+		<!-- <div class="pull-right">
+			<button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
+		</div> -->
+	</div>
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME LEFT -->
+	<form name="form1" method="post" action="__GROUP__/Sale/buySave:__XPATH__"  id="register" class="form-horizontal">
+	<!-- END CONTENT FRAME LEFT -->
+	<input type="hidden" value="{$userinfo['编号']}" size="20" name="userid" id="userid"/>
+	<!-- START CONTENT FRAME BODY -->
+	<div class="col-md-12">
+		<div class="panel-default">
+			<present name="productArr"><include file="product"/></present>
+			
+			<if condition="$sale:extra eq true">
+			 <div class="panel panel-default">
+				<div class="panel-heading">
+					<h3>{:GET_F_L('收货信息')}</h3>
+				</div>
+				<div class="panel-body form-group-separated">
+					<div class="table-responsive">
+			            <table class="table table-bordered table-striped table-actions">
+			                <if condition="adminshow('sale_sendtype') eq true">
+			                	<td class="tbkey" >发货方式：</td>
+			                    <td class="tbval" >
+			                    	<div class="input-group">
+				                        <select name="sendtype" class="form-control select">
+				                            <option value="物流发货">物流发货</option>
+							                <option value="公司自提">公司自提</option>
+							                <option value="专卖店自提">专卖店自提</option>
+				                        </select>
+				                    </div>
+			                    </td>
+			                </if>
+			                <tr>
+			                    <td>地区：</td>
+			                    <td colspan="4">
+			                    	<div class="input-group" style="float:left;margin-right:10px; min-width:120px;">
+				                        <select name="country" id="country_id" data-role="none" class="form-control"  style="border-radius: 4px 4px 4px 4px;">
+				                            <option value="">请选择国家</option>
+				                        </select>
+				                    </div>
+			                   
+			                    	<div class="input-group" style="float:left;margin-right:10px;min-width:120px;">
+				                        <select name="province"  id="province_id" data-role="none" class="form-control" style="border-radius: 4px 4px 4px 4px;" <if condition="$logistic eq true">onChange="user_getTotalzf('{$sale:name}')"</if>>
+				                            <option value="">请选择省</option>
+				                        </select>
+				                    </div>
+			                    
+			                    	<div class="input-group" style="float:left;margin-right:10px;min-width:120px;">
+				                        <select name="city"  id="city_id" data-role="none" class="form-control" style="border-radius: 4px 4px 4px 4px;">
+				                            <option value="">请选择城市</option>
+				                        </select>
+				                    </div>
+			                  
+			                    	<div class="input-group" style="float:left;margin-right:10px;min-width:120px;">
+				                    	<select name="county"  id="county_id" data-role="none" class="form-control" style="border-radius: 4px 4px 4px 4px;">
+				                            <option value="">请选择区/县</option>
+				                        </select>
+				                    </div>
+			                  
+			                    	<div class="input-group" style="float:left;margin-right:10px;min-width:120px;">
+				                        <select name="town"  id="town_id" data-role="none" class="form-control" style="border-radius: 4px 4px 4px 4px;">
+				                            <option value="">请选择街道</option>
+				                        </select>
+				                    </div>
+			                      </td>
+			                    
+			                </tr>
+			                <tr>
+			                    <td>收货人：</td>
+			                    <td>
+			                    	<div class="input-group" style="float:left;margin-right:10px;">
+			                    		<input name="reciver" id="reciver" type="text" value="{$userinfo.收货人}" class="form-control" style="min-width:105px;"/>
+			                    	</div>                    	 
+			                    	<font color='red' style="line-height: 40px;">*</font>
+			                    </td>
+			                    <td>联系电话：</td>
+			                    <td>
+			                    	<div class="input-group" style="float:left;margin-right:10px;">
+			                    		<input name="mobile" id="mobile" type="text" value="{$userinfo.移动电话}" class="form-control" style="min-width:105px;"/>
+			                    	</div> 
+			                    	<font color='red' style="line-height: 40px;">*</font>
+			                    </td>
+		                    </tr>
+                            <tr>
+			                    <td>详细地址：</td>
+			                    <td colspan="3">
+                                     <div class="input-group" style="float:left;margin-right:10px;">
+			                        	<input name="address" id="address" type="text" value="{$userinfo.地址}" size="50" class="form-control"/> 
+			                      	</div>
+			                        <font color='red' style="line-height: 40px;"></font>
+		                        </td>
+		                    </tr>
+			            </table>
+            		</div>
+            	</div>
+            </div>
+        	</if>
+			
+			<div style="width:20%; margin:0 auto;">
+				<input type="button" class="btn btn-primary btn-block" value="{:GET_F_L('确认')}" id='subbut' onclick="tijiao()"/>
+			</div>
+			<!-- <div class="panel panel-default">
+				<div class="col-md-3" style="margin:0;">
+					<input type="button" class="btn btn-primary btn-block" value="{:GET_F_L('确认')}" id='subbut' onclick="tijiao()"/>
+				</div>
+			</div>	 -->		
+		</div>
+		
+	</div>
+	</form>
+	<!-- END CONTENT FRAME BODY -->
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/fileinput/fileinput.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/filetree/jqueryFileTree.js"></script>
+
+<!--<script type="text/javascript" src="__TMPL__Public/js/plugins/cropper/cropper.min.js"></script>-->
+
+<script type="text/javascript" src="__TMPL__Public/js/plugins/jstree/jstree.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/demo_file_handling.js"></script>
+<script type="text/javascript" src="__PUBLIC__/directSell/area_select.js"></script>
+<!-- END WIDGETS -->
+<script type="text/javascript"> 
+<if condition="($sale:extra eq true)">
+$.area_default_show = true; //显示默认区域
+$.area_default_country="{:GET_F_L($userinfo['国家'])}";
+$.area_default_province="{:GET_F_L($userinfo['省份'])}";
+$.area_default_city="{:GET_F_L($userinfo['城市'])}";
+$.area_default_county="{:GET_F_L($userinfo['地区'])}";
+$.area_default_town="{:GET_F_L($userinfo['街道'])}";
+$.area_select_bind( 'country_id' , 'province_id' , 'city_id' , 'county_id','town_id' );
+</if>
+function tijiao(){
+	var ua = navigator.userAgent.toLowerCase();
+	if ((/firefox\/([\d.]+)/).test(ua)) { //判断火狐浏览器
+		$('#subbut').attr('disabled',true);
+		$('#subbut').val('{:GET_F_L("正在提交,请等待...")}');
+		$('#register').submit();
+		$('#subbut').attr('disabled',false);
+	} else {
+		$('#subbut').attr('disabled',true);
+		$('#subbut').val('{:GET_F_L("正在提交,请等待...")}');
+		$('#register').submit();
+	}
+}
+</script>

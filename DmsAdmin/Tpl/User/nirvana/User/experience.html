@@ -1,0 +1,157 @@
+<!-- END WIDGETS -->
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/datatables/jquery.dataTables.min.js"></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('我的成长值明细')}</h2>        
+            <!-- <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('我的成长进度')}</strong> -->
+        </div>
+        <div class="pull-right">
+            <!--<button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>-->
+        </div>
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    
+<div class="row">
+    <!-- START CONTENT FRAME BODY -->
+    <div class="col-md-12">
+
+        <div class="col-md-12">
+
+            <div class="widget widget-info">
+                <div class="widget-subtitle"></div>
+                <div class="widget-int"><span data-toggle="counter" data-to="<eq name='$ltotal[总成长值]' value='0'>0.00<else/>{$ltotal.成长值}</eq>"><eq name="$ltotal['总成长值']" value="0">0.00<else/>{$ltotal.总成长值}</eq></span></div>
+                <div class="widget-subtitle"></div>                
+                <div class="widget-title">{:GET_F_L('升级的个人成长值')}</div>
+                <div class="widget-controls">
+                    
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="widget widget-warning">
+                <div class="widget-subtitle"></div>
+                <div class="widget-int"><span data-toggle="counter" data-to="<eq name='$ltotal[成长值]' value='0'>0.00<else/>{$ltotal.成长值}</eq>"><eq name="$ltotal['成长值']" value="0">0.00<else/>{$ltotal.成长值}</eq></span></div> 
+                <div class="widget-subtitle"></div>               
+                <div class="widget-title">{:GET_F_L('可提现成长值余额')}</div>
+                <div class="widget-controls">
+                    
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-6">
+
+            <div class="widget widget-danger">
+                <div class="widget-subtitle"></div>
+                <div class="widget-int"><span data-toggle="counter" data-to="<eq name='$ltotal[成长值]' value='0'>0.00<else/>{$ltotal.成长值}</eq>"><eq name="$ltotal['成长值']" value="0">0.00<else/>{$ltotal.提现余额}</eq></span></div> 
+                <div class="widget-subtitle"></div>               
+                <div class="widget-title">{:GET_F_L('本周可提现')}</div>
+                <div class="widget-controls">
+                    
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- START LINE CHART -->
+        <div class="panel panel-default  visible-lg">
+            <div class="panel-heading">
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('近期明细')}</strong> 
+<!--                 <h3>{:GET_F_L('近期明细')}</h3> -->
+            </div>
+            <div class="panel-body">
+                <div id="morris-line-example" style="height: 300px;"></div>
+            </div>
+        </div>
+        <!-- END LINE CHART -->
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('总计明细')}</strong>
+                <!-- <h3>{:GET_F_L('总计明细')}</h3> -->
+            </div>
+
+            <div class="panel-body panel-body-table">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-actions">
+                        <thead>
+                        <tr class="nirvana-lin">
+                            <foreach name='data.field' item='naitem'>
+                                <th>{:GET_F_L(str_replace('积分','个人成长值',$naitem))}</th>
+                            </foreach>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <foreach name='data.list' item='tblist'>
+                            <tr>
+                                <foreach name="tblist" item='value' key='name1'>
+                                    <td >{$tblist.$name1}</td>
+                                </foreach>
+                            </tr>
+                        </foreach>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel-footer col-xs-12">
+            	
+            	{$show_page}
+            	
+            </div>
+
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME BODY -->
+</div>
+</div>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/morris/raphael-min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/morris/morris.min.js"></script>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+
+<script type="text/javascript">
+    var morrisCharts = function() {
+        Morris.Line({
+            element: 'morris-line-example',
+            data: [
+                <volist name="data.list" id="vo" offset="0" length='15'>
+                    { y: "{$vo.时间}", a: "{$vo.总成长值}"},
+                </volist>
+            ],
+            xkey: 'y',
+            ykeys: ['a'],
+            labels: ['个人成长值变动'],
+            resize: true,
+            lineColors: ['#33414E']
+        });
+
+    }();
+</script>
+
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,118 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Public/js/zclip/jquery.zclip.js"></script>
+<script type="text/javascript">
+$(function () {
+	$("input[name='copy']").each(function(a){
+		$(this).attr("attr",a);
+	});
+        	$("input[attr]").zclip({
+        		path :  "__TMPL__Public/js/zclip/ZeroClipboard.swf",
+		copy: function () { 
+			return "http://mall.mzooe.com/?"+$(this).attr("cont");
+		},
+		afterCopy: function(){
+			alert("复制成功");
+		}
+	});
+});
+</script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+	<!-- START CONTENT FRAME TOP -->
+	<div class="content-frame-top">
+		<div class="page-title">
+			<h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('推广链接')}</h2>
+		</div>
+		<div class="pull-right">
+			<button class="btn btn-default content-frame-left-toggle"><span class="fa fa-bars"></span></button>
+		</div>
+	</div>
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME LEFT -->
+	<!-- <div class="content-frame-left">
+		<div class="panel panel-primary" >
+			<div class="panel-heading">
+				<h3>{:GET_F_L('已有推广链接')}</h3>
+			</div>
+			<div class="panel-body">
+				<ul class="list-group border-bottom">
+					<li class="list-group-item"><a href='{$link}' target='_self' id='link'>{$link}</a></li>
+				</ul>
+
+			</div>
+		</div>
+
+	</div> -->
+	<!-- END CONTENT FRAME LEFT -->
+
+	<!-- START CONTENT FRAME BODY -->
+	<!-- <div class="content-frame-body"> -->
+	<div class="col-md-12 col-xs-12">
+		<!-- START DEFAULT DATATABLE -->
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong style="font-size:18px;color:#3c3c3c;line-height:40px;"><span class="fa fa-pencil"></span>&nbsp;{:GET_F_L('推广链接申请')}</strong>				
+				<div class="pull-right">
+					<a class="btn btn-primary btn-lg active" href="__GROUP__/User/creatCode" role="button">
+						生成优惠码
+					</a>
+				</div>
+			</div>
+			<div class="panel-body table-responsive">
+
+				<table class="table table-bordered table-striped table-actions">
+					<thead>
+					<tr class="nirvana-lin">
+						<th style="width:50px;text-align: center;">编号</th>
+						<th style="width:200px;text-align: center;">优惠码</th>
+						<th style="width:200px;text-align: center;">使用人</th>
+						<th style="width:200px;text-align: center;">归属人</th>
+						<th style="width:100px;text-align: center;">状态</th>
+						<th style="width:200px;text-align: center;">使用时间</th>
+						<th style="width:400px;text-align: center;">操作</th>
+					</tr>
+					</thead>
+					<tbody>
+						<volist name="data" id="v">
+							<tr>
+								<td style="vertical-align:middle;text-align: center;">{$v.id}</td>
+								<td style="vertical-align:middle;text-align: center;">{$v.code}</td>
+								<td style="vertical-align:middle;text-align: center;">{$v.user}</td>
+								<td style="vertical-align:middle;text-align: center;">{$v.belong}</td>
+								<td style="vertical-align:middle;text-align: center;"><if condition="$v.status == 1">
+										<?php echo "已使用"; ?>
+								        <else/>
+								        		<?php echo "未使用"; ?>
+								        </if>
+								</td>
+								<td style="vertical-align:middle;">
+									<if condition="($v.usetime neq 0)">
+										{$v.usetime|date='Y-m-d H:i:s',###}
+									</if>
+								</td>
+								<td style="vertical-align:middle;"><input class="btn btn-default hidden-xs" type="button" name="copy" value="复制推广链接" cont="{$v.code}">&nbsp<a class="btn btn-default" href="__GROUP__/User/erCode/url/{$v.code}" target="_blank" role="button">生成二维码</a></td>
+							</tr>
+						</volist>
+					</tbody>
+				</table>
+				<div class="panel-footer">
+					{:$show_page}
+				</div>				
+			</div>			
+		</div>
+		<!-- END DEFAULT DATATABLE -->
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->

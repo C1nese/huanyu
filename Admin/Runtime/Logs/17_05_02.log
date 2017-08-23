@@ -1,0 +1,7 @@
+[ 2017-05-02T19:02:17+08:00 ] /pc_denglu.php?s=/public/login | ERR: (ThinkException) 无法加载模块public
+[ 2017-05-02T19:02:17+08:00 ] /pc_denglu.php?s=/public/login | ERR: (ThinkException) [17-05-02 19:02:05] /data/web/yxjifen/ThinkPHP/Lib/Core/App.class.php (159) App::exec()
+[17-05-02 19:02:05] /data/web/yxjifen/ThinkPHP/Lib/Core/Think.class.php (48) App::run()
+[17-05-02 19:02:05] /data/web/yxjifen/ThinkPHP/Common/runtime.php (241) Think::Start()
+[17-05-02 19:02:05] /data/web/yxjifen/ThinkPHP/ThinkPHP.php (41) require(/data/web/yxjifen/ThinkPHP/Common/runtime.php)
+[17-05-02 19:02:05] /data/web/yxjifen/pc_denglu.php (7) require(/data/web/yxjifen/ThinkPHP/ThinkPHP.php)
+

@@ -1,0 +1,179 @@
+<div class="core_main Sale" id="product">
+    <div class="core_conp">
+        <div id="state_productCountMoney"></div>
+        <table class="tablebg" id="table1">
+            <thead>
+                <tr>
+                    <td colspan="8" ><eq name="sale:productName" value="shop">商品<else/>{$sale:productName}</eq>选购</td>
+                </tr>
+                <tr >
+                    <td colspan="8" >
+                        <php>$i=1;</php>
+                        <foreach name="productArr" item="product">
+                        <div id="productCategory_{$i}" productCategoryid="{$i}">{$key}</div>
+                        <php>$i++;</php>
+                        </foreach></td>
+                        <style>
+                            .productSelect {
+                                background: #ccc;
+                                border-radius: 3px;
+                            }
+                        </style>
+                </tr>
+                <tr>
+                    <td >序号</td>
+                    <td >产品名称</td>
+                    <td >图片</td>
+                    <td >数量</td>
+                    <td >{$sale:productMoney}</td>
+                    <eq name="sale:productPV" value="true">
+                    <td >PV</td>
+                    </eq>
+                </tr>
+            </thead>
+            <php>$ii=1;</php>
+            <foreach name="productArr" item="product" key="fenlei">
+            <tbody id="productTbody_{$ii}" style="<neq name="ii" value="1">display:none</neq>">
+                <volist name="product" id="vo">
+                <tr>
+                    <td>{:($key+1)}</td>
+                    <td>{$vo.名称}</td>
+                    <td>
+                        <php>$imgstr=$vo['图片'];</php>
+                        <if condition="(strlen($imgstr) eq 0)" >
+                            无
+                        <php> $productimg='无'; </php>
+                        <else/>
+                        <img src="{$vo.图片}" width='120px' />
+                        <php>
+                        //$productimg='<img src="'.$vo['图片'].'" width="120px"/>'; 
+                        $productimg=$vo['图片']; 
+                        </php>
+                        </if>
+                    </td>
+                    <td><input type="text" name="productNum[{$vo.id}]"  id="productNum_{$vo.id}" productNumInfo="{$vo.id}_{$fenlei}_{$vo.名称}_{$vo[$sale:productMoney]}_{$vo.PV}_{$vo.数量}" productimg="{$productimg}"/></td>
+                    <td>{$vo[$sale:productMoney]}</td>
+                    <eq name="sale:productPV" value="true">
+                    <td>{$vo.PV}</td>
+                    </eq>		
+                </tr>
+                </volist>
+            </tbody>
+            <php>$ii++;</php>
+            </foreach>
+        </table>
+        <table class="tablebg" id="table2">
+            <thead>
+                <tr>
+                    <td colspan="7">已选产品</td>
+                </tr>
+                <tr>
+                    <td >序号</td>
+                    <td >类别</td>
+                    <td >产品名称</td>
+                    <td >图片</td>
+                    <td >总计数量</td>
+                    <td >总金额</td>
+                    <eq name="sale:productPV" value="true">
+                    <td >总PV</td>
+                    </eq>
+                </tr>
+            </thead>
+            <tbody id="selectedProduct">
+            </tbody>
+            <tr id="selectedProductCount">
+                <td colspan="4" >汇总：</td>
+                <td>0</td>
+                <td>0<input type="hidden" name="productCountMoney" value="0"/></td>
+                <eq name="sale:productPV" value="true">
+                <td>0<input type="hidden" name="productCountPV" value="0"/></td>
+                </eq>
+            </tr>
+            <if condition="isset($discount)">
+			<if condition="$discount lt 1">
+				<tr id="selectedProductOver"><td colspan="4" style="text-align:right">实际支付:</td><td>0</td><td>0</td><eq name="sale:productPV" value="true"><td>0</td></eq></tr>
+			</if>
+			</if>
+        </table>
+    </div>
+</div>	
+
+<script>
+    $('[id^=productCategory_]').css({float:'left',cursor:'pointer',padding: '0 5px',margin:'0 3px',border:'1px solid #ccc','border-radius':'3px'});
+    $('[id^=productCategory_]').first().addClass('productSelect');
+	$('[id^=productCategory_]').click(function(){
+		$('[id^=productTbody_]').hide();
+		$('#productTbody_'+$(this).attr('productCategoryid')).show();
+		$('[id^=productCategory_]').removeClass('productSelect');
+        $(this).addClass('productSelect');
+	});
+  $(function(){
+	var productStock = <if condition="$sale:productStock eq true">true;<else/>false;</if>
+	$("[id^=productNum_]").val('');
+    
+	$("[id^=productNum_]").keyup(function(){
+		var product =$(this).attr('productNumInfo').split("_");
+		var zhekou=1
+		if($('#zhekou').val()){
+			zhekou=$('#zhekou').val();
+		}
+		var productimg = $(this).attr('productimg');
+		if(productimg != '无'){
+			productimg = '<img src="'+productimg+'" width="120px"/>';
+		}
+		
+		//alert(product)
+		var num = $(this).val();
+		num = parseInt(num.replace(/\b(0+)/gi,""));
+		//alert(num)
+		if(productStock && num > product[5]){
+			num =  parseInt(product[5]);
+			$(this).val(num);
+		}
+		if(num > 0 && (!isNaN(num))){
+			//$(this).parent().nextAll().eq(2).html(num*product[3]);
+			//$(this).parent().nextAll().eq(3).html(num*product[4]);
+		}else{
+			//$(this).parent().nextAll().eq(2).html('0');
+			//$(this).parent().nextAll().eq(3).html('0');
+			$(this).val('');
+		}
+		
+		var exist = false;
+		var k=0;
+		$("#selectedProduct > tr").each(function(i,v){
+			//<img src="'.$vo['图片'].'" width="120px"/>
+			if($(v).attr('selectedProductid') == product[0]){
+				if(num == 0 || num < 0 || isNaN(num)){ $(this).remove()}
+				$(this).html('<td>'+$(this).find("td:first").html()+'</td><td>'+product[1]+'</td><td>'+product[2]+'</td><td>'+productimg+'</td><td>'+num+'</td><td>'+(num*product[3]).toFixed(2)+'</td><eq name="sale:productPV" value="true"><td>'+(num*product[4]).toFixed(2)+'</td></eq>');
+				exist = true;
+				
+			}
+			k = i+1;
+		});
+		if(exist === false && (!isNaN(num)) && num > 0){
+			$("#selectedProduct").append('<tr selectedProductid="'+product[0]+'" style="border-bottom:1px solid #EDEDED;"><td>'+(k+1)+'</td><td>'+product[1]+'</td><td>'+product[2]+'</td><td>'+productimg+'</td><td>'+num+'</td><td>'+(num*product[3]).toFixed(2)+'</td><eq name="sale:productPV" value="true"><td>'+(num*product[4]).toFixed(2)+'</td></eq></tr>');
+		}
+		var countNum = 0;
+		var countMoney = 0;
+		var countPV = 0;
+		$("#selectedProduct > tr").each(function(i,v){
+			countNum +=parseFloat($(this).find("td:eq(4)").html());
+			countMoney +=parseFloat($(this).find("td:eq(5)").html());
+			countPV +=parseFloat($(this).find("td:eq(6)").html());
+		})
+		$("#selectedProductCount > td:eq(1)").html(countNum);
+		$("#selectedProductCount > td:eq(2)").html(countMoney.toFixed(2)+'<input type="hidden" name="productCountMoney" value="'+countMoney+'"/>');
+		<eq name="sale:productPV" value="true">
+		$("#selectedProductCount > td:eq(3)").html(countPV.toFixed(2)+'<input type="hidden" name="productCountPV" value="'+countPV+'"/>');
+		</eq>
+		if(zhekou<=1){
+			$("#selectedProductOver > td:eq(1)").html(countNum);
+			$("#selectedProductOver > td:eq(2)").html((countMoney*zhekou).toFixed(2));
+			<eq name="sale:productPV" value="true">
+			$("#selectedProductOver > td:eq(3)").html((countPV*zhekou).toFixed(2));
+			</eq>
+		}
+	});
+});
+</script>

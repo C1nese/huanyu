@@ -1,0 +1,57 @@
+<table name='用户' >
+<field name='{$this->name}' type="numeric(13,2)" default="0"/>
+<!-- <field name='{$this->name}托管' type="numeric(13,2)" default="0"/>
+<field name='{$this->name}托管_本月累计' type="numeric(13,2)" default="0"/>
+<field name='{$this->name}托管_本月账户' type="numeric(13,2)" default="0"/> -->
+</table>
+<table name='{$this->name}交易' comment="当用户卖出或购买股票时的记录"  engine="InnoDB">
+<field name="id"      type="int(11)" auto_increment="1" primary="1" />
+<field name='买入ID'  type="int(11)" default="0"/>
+<field name='买入编号'  type="varchar(50)"  default=""/>
+<field name='num'  type="int(11)" default="0"/>
+<field name='price'  type="decimal(15,4)" default="0"/>
+<field name='addtime'  type="varchar(15)"  default=""/>
+<field name='卖出编号'  type="varchar(50)"  default=""/>
+<field name='卖出ID'  type="int(11)" default="0"/>
+<field name='账户'  type="varchar(50)"  default=""/>
+<field name='state'  type="tinyint(1)" default="0"/>
+</table>
+<table name='{$this->name}明细' comment="股票变动明细表"  engine="InnoDB">
+<field name="id"      type="int(11)" auto_increment="1" primary="1" />
+<field name='编号'  type="varchar(50)"  default=""/>
+<field name='num'  type="int(11)" default="0"/>
+<field name='price'  type="decimal(15,4)" default="0"/>
+<field name='addtime'  type="varchar(15)"  default=""/>
+<field name='memo'  type="text" />
+<field name='账户'  type="varchar(25)"  default=""/>
+<field name='余额'  type="decimal(13,2)" default="0"/>
+<field name='type'  type="tinyint(1)" default="0" comment="1 减少  2增加"/>
+<field name='state'  type="tinyint(1)" default="0"/>
+</table>
+<table name='{$this->name}市场' comment="股票市场 买卖股票"  engine="InnoDB">
+<field name="id"      type="int(11)" auto_increment="1" primary="1" />
+<field name='编号'  type="varchar(50)"  default=""/>
+<field name='num2'  type="int(11)" default="0" comment="已成交量"/>
+<field name='num'  type="int(11)" default="0" comment="出售的剩余股数"/>
+<field name='price'  type="decimal(15,4)" default="0"/>
+<field name='addtime'  type="varchar(15)" comment='挂单时间'  default=""/>
+<field name='num1'  type="int(11)" default="0" comment="出售的原始股数" />
+<field name='账户'  type="varchar(25)"  default=""/>
+<field name='type'  type="tinyint(1)" default="0" comment="1 卖出 2 买入"/>
+<field name='state'  type="tinyint(1)" default="0" comment="0为出售中  1为 已撤销"/>
+<field name='tradeinfo'  type="longtext" comment="交易人信息 包括 编号 时间 数量" />
+</table>
+<table name='{$this->name}拆股'   engine="InnoDB">
+<field name="id"      type="int(11)" auto_increment="1" primary="1" />
+<field name='price'  type="decimal(15,4)" default="0"/>
+<field name='price1'  type="decimal(13,2)" default="0"/>
+<field name='addtime'  type="varchar(15)"  default=""/>
+</table>
+<table name='{$this->name}走势'   engine="InnoDB">
+<field name="id"      type="int(11)" auto_increment="1" primary="1" />
+<field name='价格'  type="decimal(15,4)" default="0"/>
+<field name='成交量'  type="decimal(13,2)" default="0"/>
+<field name='认购量'  type="decimal(13,2)" default="0"/>
+<field name='成交金额'  type="decimal(13,2)" default="0"/>
+<field name='计算日期'  type="varchar(15)"  default=""/>
+</table>

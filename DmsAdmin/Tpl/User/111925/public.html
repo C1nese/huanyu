@@ -1,0 +1,12 @@
+<include file="Public:header" />
+<div class="main-top">
+    <span class="part-tit">系统公告</span>
+    <foreach name="nownotice" item="vo">
+    <a href="__GROUP__/User/showNotice/id/{$vo.id}">{$vo.标题}</a>
+    </foreach>
+</div>
+<div class="main-bottom">
+    [template]  
+    <div class="clear"></div>
+</div>
+<include file="Public:footer" />

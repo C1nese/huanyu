@@ -1,0 +1,2 @@
+<?php
+return array ( 1 => array ( 'id' => '1', 'account' => 'admin', 'nickname' => '超级管理员', ), 2 => array ( 'id' => '2', 'account' => 'kefu001', 'nickname' => '客服001', ), 3 => array ( 'id' => '3', 'account' => 'kefu002', 'nickname' => '客服002', ), ); ?>

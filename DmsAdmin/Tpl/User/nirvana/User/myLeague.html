@@ -1,0 +1,192 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="__TMPL__Public/css/base.css">
+    <script type="text/javascript" src="__TMPL__Public/js/jquery-1.8.3.min.js"></script>
+    <title>消费联盟</title>
+
+    <style>
+        .sit span {
+            display: inline-block;
+            border: 1px solid #000;
+            border-radius: 99999999px;
+            width: 5vw;
+            height: 5vw;
+            font-size: 4vw;
+            text-align: center;
+        }
+
+        .block-2 {
+            display: none;
+        }
+
+        .display-block > .block-2 {
+            display: block !important;
+        }
+
+        .lm-check {
+            height: 0.6rem;
+            display: inline-block;
+            width: 0.6rem;
+            margin-left: 8px;
+            background-color: #FFF;
+            float: right;
+            margin-top: 0.4rem
+        }
+        .lm-checks {
+            height: 0.4rem;
+            display: inline-block;
+            width: 0.4rem;
+            background-color: #FFF;
+            border:ridge;
+        }
+
+        .lm-not-check {
+            background-color: #000 !important;
+        }
+    </style>
+</head>
+<body style="background-color: #FFF !important;padding:18px;">
+<div style="padding: 10px 10px 20px;height: 40vw;">
+    <img src="__TMPL__Public/img/lm-4.png" style="height:14vw;margin-top:-2vw;float:left;"/>
+    <span style="line-height: 12vw;font-size: 1rem;color: #2f2f2f;font-weight: 600">消费联盟</span>
+
+    <div data-id="1" class="lm-check"
+         style="background-color: #000 !important;color: #fff;height:auto !important;;width:auto !important;float: right;padding: 4px 12px;border-radius: 9999px;margin-right: 10px;font-size: 0.4rem;margin-top: 3vw">
+        自动激活
+    </div>
+
+    <div style="font-size: 11px;margin-top: 5vw;color:#666;">说明：本页面默认为所有联盟自动激活，如需选择激活单独联盟，请点击对应联盟项后的<div class="lm-checks"></div>进行激活。激活成功后该联盟后的<div class="lm-checks"></div>显示为<div class="lm-checks" style="background:#000;"></div>；如需指定伙伴编号为其开启自动激活功能，请在下方“我要帮助TA”项输入伙伴账号，并点击该项后的<div class="lm-checks"></div>为该伙伴进行激活。</div>
+</div>
+
+<div>
+    <foreach name="yeji" item="v">
+        <!-- 模块1 -->
+        <div class="block-1"
+             style="padding:4px 5px;background-color: #ea4040;color:#FFF;text-align: center;margin-top: 4px">
+            <div style="float: left;font-size: 0.5rem;line-height: 1.4rem">{$v.name}</div>
+            <span style="font-size: 1rem;font-weight: 600;" class="display">{$v.display}</span>
+            <if condition="$v['check'] == 1">
+                <div class="lm-check  lm-not-check" data-id="{$v.area}"></div>
+            <else/>
+                <div class="lm-check" data-id="{$v.area}"></div>
+            </if>
+
+            <div style="float: right;font-size: 0.5rem;line-height: 1.4rem">共 {$v.num} 位
+
+            </div>
+
+            <!-- 模块2 -->
+            <div class="block-2"
+                 style="padding:4px 5px;background-color: #f3a8a8;color:#FFF;text-align: right;margin-top: 2px">
+                <div style="float: left;font-size: 0.5rem;line-height: 1.4rem">本周联盟新增积分</div>
+                <span style="font-size: 0.8rem">{$v.add}</span>
+            </div>
+            <!-- 模块2 -->
+            <div class="block-2"
+                 style="padding:4px 5px;background-color: #f3a8a8;color:#FFF;text-align: right;margin-top: 2px">
+                <div style="float: left;font-size: 0.5rem;line-height: 1.4rem">本周联盟结转积分</div>
+                <span style="font-size: 0.8rem;">{$v.last}</span>
+            </div>
+            <!-- 模块2 -->
+            <div class="block-2"
+                 style="padding:4px 5px;background-color: #f3a8a8;color:#FFF;text-align: right;margin-top: 2px">
+                <div style="float: left;font-size: 0.5rem;line-height: 1.4rem">本周联盟累计积分</div>
+                <span style="font-size: 0.8rem">{$v.total}</span>
+            </div>
+        </div>
+    </foreach>
+    <!--帮助伙伴-->
+    <div style="font-size: 0.5rem;line-height: 1rem;padding-left: 5px;margin-top: 1rem">
+        我要帮助TA
+    </div>
+    <div style="padding:4px 5px;background-color: #ea4040;color:#FFF;text-align: center;margin-top: 4px">
+        <div style="float: left;font-size: 0.5rem;line-height: 1.4rem">伙伴账号</div>
+        <input style="border-bottom: 1px solid #FFF;font-size: 0.6rem;line-height: 0.8rem;height: 0.8rem;background-color: transparent" id="friend" value="{$check}"/>
+        <if condition="$check">
+            <div class="lm-check union lm-not-check non" data-id=""></div>
+        <else/>
+            <div class="lm-check union non" data-id=""></div>
+        </if>
+        <div style="float: right;font-size: 0.5rem;line-height: 1.4rem;margin-right: 4px">所在联盟：<span id="union"></span>
+
+        </div>
+    </div>
+
+    <!--激活伙伴-->
+    <div style="font-size: 0.5rem;line-height: 1rem;padding-left: 5px;margin-top: 1rem">
+        本周新增激活伙伴
+    </div>
+    <div style="font-size: 1rem;line-height: 2rem;font-weight: 600;text-align: center;background-color: #ea4040;color: #FFF">
+        {$num} 位
+    </div>
+    <!--未激活伙伴-->
+    <div style="font-size: 0.5rem;line-height: 1rem;padding-left: 5px;margin-top: 1rem">
+        本周未激活伙伴
+    </div>
+    <div style="font-size: 1rem;line-height: 2rem;font-weight: 600;text-align: center;background-color: #ea4040;color: #FFF">
+        {$nums} 位
+    </div>
+    
+</div>
+
+
+</body>
+</html>
+<script>
+    $(function () {
+        $('.block-1').on('click', function () {
+            if ($(this).hasClass('display-block')) {
+                $(this).removeClass('display-block');
+            } else {
+                $(this).addClass('display-block');
+            }
+        });
+        $('.lm-check').unbind('click');
+        $('.lm-check').on('click', function () {
+            if(!$(this).hasClass("non")){
+                if($(this).prev().html() == "暂未开启"){
+                    alert('该联盟中心尚未开启');
+                }else{
+                    $('.lm-check').removeClass('lm-not-check')
+                    $(this).addClass('lm-not-check');
+                    $.get("http://pcc.mzooe.com/index.php?s=/User/User/autoPlace",
+                            {data: $(this).attr("data-id")},
+                            function(e){
+                                if(e.data == 1){
+                                    alert("激活成功")
+                                }else{
+                                    alert("激活失败")
+                                }
+                            },
+                            "json");
+                    event.stopPropagation();
+                }
+            }
+        })
+        $("#friend").blur(function(){
+            $.get("http://pcc.mzooe.com/index.php?s=/User/User/checkMember",
+                {data: $("#friend").val()},
+                function(e){
+                    if(e.data == 1){
+                        $("#friend").next().removeClass('non');
+                        $(".union").attr("data-id",$("#friend").val());
+                        $("#union").html(e.msg);
+                    }else{
+                        alert(e.msg)
+                    }
+                },
+                "json");
+        });
+    })
+
+</script>

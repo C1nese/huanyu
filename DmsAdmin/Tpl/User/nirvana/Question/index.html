@@ -1,0 +1,105 @@
+<include file="Public:header" />
+<script type="text/javascript" src="__TMPL__Public/js/faq.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/highlight/jquery.highlight-4.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="__TMPL__Public/css/charity.css" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="page-title">
+<h2>
+<span class="fa fa-arrow-circle-o-left"></span>
+常见问题
+</h2>
+</div>
+<div class="page-content-wrap">
+	<div class="row">
+		<div class="col-md-8">
+			<foreach name="data" item="v" key='key'>
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h3 class="push-down-0">{$key}</h3>
+					</div>
+					<div class="panel-body faq">
+						<foreach name="v" item="e">
+							<div class="faq-item">
+								<div class="faq-title">
+									<span class="fa fa-angle-down"></span>
+									{$e['标题']}
+								</div>
+								<div class="faq-text">
+									{$e['内容']}
+								</div>
+							</div>
+						</foreach>
+					</div>
+				</div>
+			</foreach>
+		</div>
+		<div class="col-md-4">
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					<h3>查询</h3>
+						<form id="faqForm">
+							<div class="input-group">
+								<input id="faqSearchKeyword" style="border-radius:5px 0 0 5px;" class="form-control" type="text" placeholder="输入关键字">
+								<div class="input-group-btn">
+									<button id="faqSearch" class="btn btn-primary" style="height:34px;border-radius:0 5px 5px 0;">查询</button>
+								</div>
+							</div>
+						</form>
+						<div class="push-up-10">
+							<strong>查询结果:</strong>
+							<span id="faqSearchResult">
+								<span id="faqSearchResult">请输入要查询的内容</span>
+							</span>
+						</div>
+						<div class="push-up-10">
+							<button id="faqRemoveHighlights" class="btn btn-primary">移除高亮</button>
+							<div class="pull-right">
+								<button id="faqOpenAll" class="btn btn-default">
+									<span class="fa fa-angle-down"></span>
+									打开全部
+								</button>
+								<button id="faqCloseAll" class="btn btn-default">
+									<span class="fa fa-angle-up"></span>
+									关闭全部
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-primary">
+					<form id="sendform" class="form-horizontal" onsubmit="return form_check()" method="post" action="/index.php?s=/User/Mail/send_email" role="form" style="">
+						<div class="panel-body">
+							<h3>联系我们</h3>
+							<p>如果您对我们的系统有任何疑问，请随时联系我们。</p>
+							<div class="form-group" style="margin-right:2px;">
+								<label>标题</label>
+								<input class="form-control" type="text" placeholder="请输入标题" name="title">
+							</div>
+							<div class="form-group" style="margin-right:2px;">
+								<label>内容</label>
+								<textarea class="form-control" rows="3" placeholder="请输入内容" name="center"></textarea>
+							</div>
+						</div>
+						<div class="panel-footer">
+							<button class="btn btn-success pull-right">
+								<span class="fa fa-envelope-o"></span>
+								发送
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+</body>
+</html>

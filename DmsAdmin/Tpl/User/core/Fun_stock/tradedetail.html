@@ -1,0 +1,34 @@
+<div class="core_main Fun_deal" id="deal_list">
+<div class="core_title">
+    	<span class="core_title_con"><span>当前位置</span>：{$name}</span>        
+    </div>
+    <div class="core_con">
+        <table class="tablebg">
+			<TR class="shuang" >
+			  <TD width="15%"  style="text-align:center">{:L('交易编号')}</TD>
+			  <TD width="15%" style="text-align:center">{:L('交易数量')}</TD>
+			  <TD width="15%" style="text-align:center">{:L('交易价格')}</TD>
+			  <TD width="15%" style="text-align:center">{:L('交易金额')}</TD>
+			  <TD width="40%" style="text-align:center">{:L('交易时间')}</TD>
+			</TR>
+			<foreach name="infos" item="info">
+		    <TR class="shuang">
+			  <td style="text-align:center">{$info.name}</td>
+			  <td style="text-align:center">{$info.num}</td>
+			  <td style="text-align:center">{$info.price}</td>
+			  <td style="text-align:center">{$info.money}</td>
+			  <td style="text-align:center">{$info.time|date="Y-m-d H:i:s",###}</td>
+			</TR>
+			</foreach>
+				<TR class="shuang">
+			  <td colspan="5" style="text-align:center">
+		      <input class="button_text" onMouseDown="this.className='button_onmousedown'" onMouseOver="this.className='button_onmouseover'" onMouseOut="this.className='button_onmouseout'" type="button" value="返回" onclick="history.back()"/> 
+		      </td>
+			</TR>
+		</TABLE> 
+	</table>
+    </div>
+    <div class="core_page">
+    	{$page}
+    </div>
+</div>

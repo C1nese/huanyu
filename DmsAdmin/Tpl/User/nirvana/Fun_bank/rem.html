@@ -1,0 +1,366 @@
+<php>
+function printStatus($status)
+{
+	if($status==0)
+	{
+		return "未审核";
+	}
+	else
+	{
+		return "已审核";
+	}
+}
+</php>
+<load href="__PUBLIC__/My97DatePicker/WdatePicker.js" />
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="row">
+    <div class="col-md-12">
+        <!-- START TABLE HOVER ROWS -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3>{:GET_F_L('汇款通知')}</h3>
+                <div class="pull-right">
+                    <!-- Button trigger modal -->
+                   <!--  <button type="button" class="btn btn-primary" >
+                        <span class="fa fa-upload"></span> {:GET_F_L('添加汇款通知')}
+                    </button> -->
+                   <if condition="$is_huikuanimg">
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="fa fa-upload"></span> {:GET_F_L('添加汇款通知')}</a>
+                        <else />
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#myModal_two"><span class="fa fa-upload"></span> {:GET_F_L('添加汇款通知')}</a>
+                    </if>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover ">
+                    <thead>
+                    <tr>
+                        <th ><nobr>{:GET_F_L('汇款时间')}</nobr></th>
+                        <th ><nobr>{:GET_F_L('金额')}</nobr></th>
+                        <if condition="$is_huikuanimg">
+                            <th ><nobr>{:GET_F_L('汇入账户卡号')}</nobr></th>
+                            <th ><nobr>{:GET_F_L('汇入账户开户名')}</nobr></th>
+                            <th ><nobr>{:GET_F_L('汇入账户开户行')}</nobr></th>
+                            <else />
+                            <th ><nobr>{:GET_F_L('汇入账户')}</nobr></th>
+                        </if>
+                        <th ><nobr>{:GET_F_L('开户银行')}</nobr></th>
+                        <th ><nobr>{:GET_F_L('银行卡号')}</nobr></th>
+                        <th ><nobr>{:GET_F_L('开户名')}</nobr></th>
+                        <th ><nobr>{:GET_F_L('备注')}</nobr></th>
+                        <th ><nobr>{:GET_F_L('状态')}</nobr></th>
+                        <th ><nobr>{:GET_F_L('操作')}</nobr></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name='data.list' item='vo'>
+                        <tr class="datalist">
+                            <td ><nobr>{:date('y-m-d h:i:s',$vo['汇款时间'])}</nobr></td>
+                            <td ><nobr>{$vo.金额}</nobr></td>
+                            <if condition="$is_huikuanimg">
+                                <td ><nobr>{$vo.汇入账户卡号}</nobr></td>
+                                <td ><nobr>{$vo.汇入账户开户名}</nobr></td>
+                                <td ><nobr>{$vo.汇入账户开户行}</nobr></td>
+                                <else />
+                                <td ><nobr>{$vo.汇入账户}</nobr></td>
+                            </if>
+                            <td ><nobr>{$vo.开户银行}</nobr></td>
+                            <td ><nobr>{$vo.银行卡号}</nobr></td>
+                            <td ><nobr>{$vo.开户名}</nobr></td>
+                            <td ><nobr>{$vo.备注}</nobr></td>
+                            <td ><nobr>{:printstatus($vo['状态'])}</nobr></td>
+                            <td ><nobr><if condition="($vo['状态'] neq 1)"><a href="__group__/fun_bank/rem_delete/id/{$vo.id}" onclick="return confirm({:GET_F_L('确定要删除吗?')})">{:GET_F_L('删除')}</a></if></nobr></td>
+
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer">
+                <ul class="pagination pagination-sm pull-right">
+                    <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录')} {$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                    <if condition="$data['nowPage'] neq 1">
+                        <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                        <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                    </if>
+                    <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                    <if condition="isset($data['rollPage'][-2])">
+                        <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][-1])">
+                        <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                    </if>
+                    <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                    <if condition="isset($data['rollPage'][1])">
+                        <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][2])">
+                        <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                    </if>
+                    <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                    <if condition="$data['nowPage'] lt $data['totalPages']">
+                        <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                        <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                    </if>
+                </ul>
+            </div>
+        </div>
+        <!-- END TABLE HOVER ROWS -->
+    </div>
+</div>
+<include file="Public:footer" />
+<script>
+    function submit_chick(){
+        if($('#tobank').val()=='' || $('#tobank').val()==null)
+        {
+            alert("{:GET_F_L('请选择汇入账户！')}");
+            return false;
+        }
+        if($('#bank').val()==''){
+            alert("{:GET_F_L('请输入开户银行！')}");
+            $('#bank').focus();
+            return false;
+        }
+        if($('#bank_no').val()=='')
+        {
+            alert("{:GET_F_L('请输入银行卡号！')}");
+            $('#bank_no').focus();
+            return false;
+        }
+        if($('#money').val()=='')
+        {
+            alert("{:GET_F_L('请输入汇款金额！')}");
+            $('#money').focus();
+            return false;
+        }
+        if(isNaN($('#money').val()))
+        {
+            alert("{:GET_F_L('汇款金额必须为数字！')}");
+            $('#money').focus();
+            return false;
+        }
+        if($('#giveTime').val()=='')
+        {
+            alert("{:GET_F_L('请输入汇款时间！')}");
+            $('#giveTime').focus();
+            return false;
+        }
+        var ua = navigator.userAgent.toLowerCase();
+        var s;
+        if ((/firefox\/([\d.]+)/).test(ua)) { //判断火狐浏览器
+            $('#subbut').attr('disabled',true);
+            $('#subbut').val('{:GET_F_L("正在提交,请等待...")}');
+            $('#register').submit();
+            $('#subbut').val('{:GET_F_L("确认")}');
+            $('#subbut').attr('disabled',false);
+        } else {
+            $('#subbut').attr('disabled',true);
+            $('#subbut').val('{:GET_F_L("正在提交,请等待...")}');
+            $('#register').submit();
+        }
+    }
+    $(function(){
+        $('#money').keyup(function(){
+            var str=$(this).val();
+            if({$USER_REMIT_MIN} != 0 && {$USER_REMIT_MAX}!=0){
+                if(parseInt(str)<parseInt({$USER_REMIT_MIN})){
+                    $('#hkts').html({:GET_F_L("填写金额小于最低汇款金额限制".$USER_REMIT_MIN."元")});
+                    $('#subbut').attr('disabled',true);
+                }else{
+                    $('#hkts').html('');
+                    $('#subbut').attr('disabled',false);
+                }
+            }
+            if({$USER_REMIT_MIN} == 0 && {$USER_REMIT_MAX}!=0){
+                if(parseInt(str)>parseInt({$USER_REMIT_MAX})){
+                    $('#hkts').html({:GET_F_L("填写金额大于最高汇款金额限制".$USER_REMIT_MAX."元")});
+                    $('#subbut').attr('disabled',true);
+                }else{
+                    $('#hkts').html('');
+                    $('#subbut').attr('disabled',false);
+                }
+            }
+            if({$USER_REMIT_MIN} != 0 && {$USER_REMIT_MAX}!=0){
+                if(parseInt(str)<parseInt({$USER_REMIT_MIN})){
+                    $('#hkts').html({:GET_F_L("填写金额小于最低汇款金额限制".$USER_REMIT_MIN."元")});
+                    $('#subbut').attr('disabled',true);
+                }
+                if(parseInt(str)>parseInt({$USER_REMIT_MAX})){
+                    $('#hkts').html({:GET_F_L("填写金额大于最高汇款金额限制".$USER_REMIT_MAX."元")});
+                    $('#subbut').attr('disabled',true);
+                }
+                if(parseInt(str)>=parseInt({$USER_REMIT_MIN}) && parseInt(str)<parseInt({$USER_REMIT_MAX}) || parseInt(str)>parseInt({$USER_REMIT_MIN}) && parseInt(str)<=parseInt({$USER_REMIT_MAX})){
+                    $('#hkts').html('');
+                    $('#subbut').attr('disabled',false);
+                }
+            }
+            if(str==''){
+                $('#hkts').html('');
+                $('#subbut').attr('disabled',false);
+            }
+        });
+        $('#money').blur(function(){
+            var str=$(this).val();
+            if({$USER_REMIT_MIN} != 0 && {$USER_REMIT_MAX}!=0){
+                if(parseInt(str)<parseInt({$USER_REMIT_MIN})){
+                    $('#hkts').html({:GET_F_L("填写金额小于最低汇款金额限制".$USER_REMIT_MIN."元")});
+                    $('#subbut').attr('disabled',true);
+                }else{
+                    $('#hkts').html('');
+                    $('#subbut').attr('disabled',false);
+                }
+            }
+            if({$USER_REMIT_MIN} == 0 && {$USER_REMIT_MAX}!=0){
+                if(parseInt(str)>parseInt({$USER_REMIT_MAX})){
+                    $('#hkts').html({:GET_F_L("填写金额大于最高汇款金额限制".$USER_REMIT_MAX."元")});
+                    $('#subbut').attr('disabled',true);
+                }else{
+                    $('#hkts').html('');
+                    $('#subbut').attr('disabled',false);
+                }
+            }
+            if({$USER_REMIT_MIN} != 0 && {$USER_REMIT_MAX}!=0){
+                if(parseInt(str)<parseInt({$USER_REMIT_MIN})){
+                    $('#hkts').html({:GET_F_L("填写金额小于最低汇款金额限制".$USER_REMIT_MIN."元")});
+                    $('#subbut').attr('disabled',true);
+                }
+                if(parseInt(str)>parseInt({$USER_REMIT_MAX})){
+                    $('#hkts').html({:GET_F_L("填写金额大于最高汇款金额限制".$USER_REMIT_MAX."元")});
+                    $('#subbut').attr('disabled',true);
+                }
+                if(parseInt(str)>=parseInt({$USER_REMIT_MIN}) && parseInt(str)<parseInt({$USER_REMIT_MAX}) || parseInt(str)>parseInt({$USER_REMIT_MIN}) && parseInt(str)<=parseInt({$USER_REMIT_MAX})){
+                    $('#hkts').html('');
+                    $('#subbut').attr('disabled',false);
+                }
+            }
+            if(str==''){
+                $('#hkts').html('');
+                $('#subbut').attr('disabled',false);
+            }
+        });
+    })
+</script>
+<!-- Modal1 -->
+<div class="modal fade" id="myModal_two" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{:GET_F_L('添加汇款通知')}</h4>
+            </div>
+           	<form action="__GROUP__/Fun_bank/rem_save_two" method="post"
+			id="register" name='register' enctype="multipart/form-data"
+			class="form-horizontal" onsubmit="return submit_chick();">
+			<div class="modal-body form-group-separated">
+		
+				<if condition="$hkzhxz eq 'select_hrzh'">
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇入账户')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<input type="text" id="tobank" name="汇入账户" value=""
+							onkeyup='checkAjax()' class="form-control"> &nbsp; &nbsp;
+						&nbsp; &nbsp; &nbsp; &nbsp;<span id="state_tobank"><if
+								condition="in_array('requrie_hrzh2',$requrie) eq true ">*</if></span>
+					</div>
+				</div>
+				<else />
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇入账户')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<select name="汇入账户" id="tobank" class="form-control select">
+							<foreach name="bank" item="vo">
+							<option
+								<eq name="userinfo.开户银行" value="$vo.开户行"> selected="true" </eq>
+								>{$vo.卡号}({:GET_F_L($vo[开户行])},{$vo.户名})
+							</option>
+							</foreach>
+						</select>
+					</div>
+				</div>
+				</if>
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇款银行')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<input type="text" id="bank" name="开户银行" value="{$userinfo['开户银行']}"
+							class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇款卡号')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<input type="text" id="bank_no" name="银行卡号"
+							value="{$userinfo['银行卡号']}" class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇款开户名')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<input type="text" name="开户名" value="{$userinfo['开户名']}"
+							class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇款金额')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<input type="text" name="金额" id="money" value="{$userinfo['金额']}"
+							class="form-control">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇款时间')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<input type="text" class="form-control" name="汇款时间"
+							title="{:GET_F_L('点击选择汇款日期')}"
+							onclick="new WdatePicker({dateFmt:'yyyy-M-d H:mm:ss'})"
+							id="giveTime" value="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-3 col-xs-5 control-label">{:GET_F_L('汇款留言')}：</label>
+					<div class="col-md-9 col-xs-7">
+						<textarea value="" name="备注" class="form-control"></textarea>
+					</div>
+				</div>
+				
+				<div class="modal-footer">
+					<input type="hidden" name="编号" value="{$userinfo.编号}" />
+					<button type="button" class="btn btn-default" data-dismiss="modal">{:GET_F_L('返回')}</button>
+					<input class="button_text btn btn-primary"
+						onMouseDown="this.className='button_onmousedown btn btn-primary'"
+						onMouseOver="this.className='button_onmouseover btn btn-primary'"
+						onMouseOut="this.className='button_onmouseout btn btn-primary'"
+						type="submit" value="{:GET_F_L('确认')}" name="subbut" id='subbut'
+					/>
+				</div>
+		
+			</div>
+		</form>
+        </div>
+    </div>
+</div>
+<!-- END WIDGETS -->
+
+<!-- Modal1 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">{:GET_F_L('添加汇款通知')}</h4>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<!-- END WIDGETS -->
+
+
+</body>
+</html>
+

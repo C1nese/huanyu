@@ -1,0 +1,4 @@
+<table name='用户'   engine="InnoDB">
+<field name='{$this->name}'  type="INT(10)" default="0"/>
+<field name='INDEX (`{$this->name}`)' type="KEY"/>
+</table>

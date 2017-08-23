@@ -1,0 +1,52 @@
+@charset="utf-8";
+.mask {
+    z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .5);
+    filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#7F000000,endcolorstr=#7F000000);
+}
+.notice-content {
+    position: relative;
+    margin: 150px auto 0 auto;
+    padding: 10px 0;
+    width: 600px;
+    height: 400px;
+    font-size: 14px;
+    color: #000;
+    text-indent: 2em;
+    background: #fff;
+    border: 5px solid #6cf;
+    border-radius: 3px;
+}
+.notice-content h1 {
+    margin: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+.mask-main {
+    padding: 5px 10px 0 10px;
+    height: 350px;
+    overflow-y: auto;
+}
+.mask-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 23px;
+    height: 23px;
+    text-indent: 0;
+    color: #fff;
+    font-size: 20px;
+    font-family: SimHei;
+    font-weight: bold;
+    background: #b00;
+    cursor: pointer;
+}
+.mask-close:hover {
+    background: #f00;
+}
+

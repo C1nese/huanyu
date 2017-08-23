@@ -1,0 +1,258 @@
+<if condition="($sale:extra eq true) or (count($area) gt 0)">
+<script type="text/javascript" src="__PUBLIC__/directSell/area_select.js"></script></if>
+<link rel="stylesheet" type="text/css" href="__TMPL__Public/css/shop.css"/>
+<script type="text/javascript" src="__TMPL__Public/js/shop.js"></script>
+<!-- <extend name="Public:head" /> -->
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame pages-edit-liv">
+
+	<!-- START CONTENT FRAME TOP -->
+	<div class="content-frame-top">
+		<div class="page-title">
+			<h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L(申请联盟机构)}</h2>
+		</div>
+		
+	</div>
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME LEFT -->
+	<form name="form1" method="post" action="__GROUP__/Sale/upSave:__XPATH__" id="register" class="form-horizontal">
+	<div class="col-md-12" style="padding-right:0px;">		
+		<div class="panel panel-default" style="z-index:3;">
+			<div class="row">
+				<div class="panel panel-colorful" style="margin-bottom: 0px;">
+					<div class="panel-heading ui-draggable-handle" style="border-bottom: 0px;">
+						<h3 style="margin: 0px;"><span class="fa fa-user"></span> {:GET_F_L('用户信息')}</h3>
+					</div>					
+					<!-- <div class="text-center" >
+						<p style="text-align:center;font-size:16px;margin-top: 20px;">补齐差额即可升级成为对应级别</p>
+					</div> -->
+				</div>
+				<div class="panel-body form-group-separated">
+					<div class="form-group col-md-3 col-xs-12" style="padding:0px;margin: 0px;">
+						<label class="col-md-6 col-xs-6 control-label label-title">{:GET_F_L('用户编号')}</label>
+						<div class="col-md-6 col-xs-6 line-height-35 label-title" style="margin:0;">
+							{$userinfo.编号}
+							<input type="hidden" value="{$userinfo['编号']}" size="20" name="userid" id="userid"/>
+						</div>
+					</div>
+					<div class="form-group col-md-3 col-xs-12" style="padding:0px;margin: 0px;">					
+						<label class="col-md-6 col-xs-6 control-label label-title">{:GET_F_L('用户级别')}</label>
+						<div class="col-md-6 col-xs-6 line-height-35 label-title" style="margin:0;">
+					                     <foreach name="levels" item="v" key="key">
+					                     		<if condition="($userinfo['用户级别'] eq $key)">
+					                     			{:GET_F_L($v)}
+					                     		</if>
+					                     </foreach>
+						</div>
+					</div>
+					<div class="form-group col-md-4 col-xs-12" style="padding:0px;margin: 0px;border-bottom: 1px dashed #D5D5D5;">
+						<label class="col-md-6 col-xs-6 control-label label-title">{:GET_F_L('联盟机构级别选择')}</label>
+						<div class="col-md-6 col-xs-6 line-height-35 label-title" style="margin:0;">
+							<select name="lv"  id="lv" class="form-control select" style="margin:0;">
+								<option value="">{:GET_F_L('请选择')}</option>
+								<if condition="($sale:lockMe eq true)">
+		                            <foreach name='levelsopts'  item='level'>
+		                            <option value="{$level.lv}">{:GET_F_L($level[name])}</option>
+		                            </foreach>            
+	                            </if>    
+							</select>							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			</div>
+	</div>
+	<!-- END CONTENT FRAME LEFT -->
+
+	<!-- START CONTENT FRAME BODY -->
+	<div class="col-md-12" style="position:relative;">
+		<div class="panel-default">
+			<present name="productArr"><include file="product"/></present>		
+			<!-- <div class="panel panel-default">
+				<div class="col-md-3" style="margin:0;">
+					<input type="button" class="btn btn-primary btn-block" value="{:GET_F_L('确认')}" id='subbut' onclick="tijiao()"/>
+				</div>
+			</div>	 -->		
+		</div>	
+		<div style="width:20%; margin:0 auto;">
+			<input type="button" class="btn btn-primary btn-block" value="{:GET_F_L('确认')}" id='subbut' onclick="tijiao()"/>
+		</div>		
+	</div>	
+	</form>
+	<!-- END CONTENT FRAME BODY -->
+</div>
+<!-- END CONTENT FRAME -->
+
+<include file="Public:footer" />
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/fileinput/fileinput.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/filetree/jqueryFileTree.js"></script>
+
+<!--<script type="text/javascript" src="__TMPL__Public/js/plugins/cropper/cropper.min.js"></script>-->
+
+<script type="text/javascript" src="__TMPL__Public/js/plugins/jstree/jstree.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/demo_file_handling.js"></script>
+<script type="text/javascript" src="__PUBLIC__/directSell/area_select.js"></script>
+<!-- END WIDGETS -->
+<script type="text/javascript">
+
+var vd;
+function getInfo(e)
+{
+	clearTimeout(vd);
+	vd = setTimeout("upAjax('"+e.id+"')",600);
+}
+
+function upAjax(id)
+{
+	var userid	   = $.trim($('#'+id).val());
+	$.get('__GROUP__/Sale/upAjax:__XPATH__/userid/'+userid,function(data){
+		try
+		{
+			eval("var json="+data);
+			if( json.status == 0 )
+			{
+				$('#state_userid').html("请输入正确的{$userName}编号！");
+			}else{
+				$('#state_userid').html("");
+			}
+
+			$('#lv').empty().append("<option value=''>请选择</option>");
+			var level_list = json.data;
+			for(i=0;i<level_list.length;i++)
+			{
+				$('#lv').append("<option value='"+level_list[i].lv+"'>"+level_list[i].name+"</option>");
+			}
+
+		}
+		catch(e)
+		{
+			alert(data);
+			alert("网络异常!");
+
+		}
+	});
+}
+
+function fn()
+{
+	if($('#tjr').val()==''){
+		$('#rt').html("请输入正确的推荐人编号！");
+				$('#rt').css('color','red');
+	}else{
+	$.get('__GROUP__/Sale/upf:__XPATH__/userid/'+$('#tjr').val(),function(data){
+		try
+		{
+			eval("var json="+data);
+			if( json.status == 0 )
+			{
+				$('#rt').html("请输入正确的推荐人编号！");
+				$('#rt').css('color','red');
+			}else{
+				var a = json.data;
+				$('#rt').html(a);
+			}
+		}
+		catch(e)
+		{
+			alert(data);
+			alert("网络异常!");
+		}
+	});}
+}
+function tijiao(){
+	var ua = navigator.userAgent.toLowerCase();
+	if ((/firefox\/([\d.]+)/).test(ua)) { //判断火狐浏览器
+		$('#subbut').attr('disabled',true);
+		$('#subbut').val('正在提交,请等待...');
+		$('#register').submit();
+		$('#subbut').val('确认');
+		$('#subbut').attr('disabled',false);
+	} else {
+		$('#subbut').attr('disabled',true);
+		$('#subbut').val('正在提交,请等待...');
+		$('#register').submit();
+	}
+}
+<if condition="($sale:extra eq true)">
+var country		= "{$userinfo['国家']}";
+var province	= "{$userinfo['省份']}";
+var city		= "{$userinfo['城市']}";
+var county		= "{$userinfo['地区']}";
+var town		= "{$userinfo['街道']}";
+$.area_select_bind( 'country_id' , 'province_id' , 'city_id' , 'county_id','town_id' );
+if(country!='')
+{
+	$("#country_id option[value='{$userinfo['国家']}']").attr('selected',true);
+	$("#country_id").change();
+}
+if(province!='')
+{
+	$("#province_id option[value='{$userinfo['省份']}']").attr('selected',true);
+	//触发省份的 change事件
+	$("#province_id").change();
+}
+if( city!='' )
+{
+	//触发城市的 change事件
+	$("#city_id option[value='{$userinfo['城市']}']").attr('selected',true);
+	$("#city_id").change();
+}
+if(county!='')
+{
+	$("#county_id option[value='{$userinfo['地区']}']").attr('selected',true);
+	$("#county_id").change();
+}
+if( town!='' )
+{
+	$("#town_id option[value='{$userinfo['街道']}']").attr('selected',true);
+}
+</if>
+<if condition="(count($area) gt 0)">
+var country1		= "{$userinfo['代理国家']}";
+var province1	= "{$userinfo['代理省份']}";
+var city1		= "{$userinfo['代理城市']}";
+var county1		= "{$userinfo['代理地区']}";
+var town1		= "{$userinfo['代理街道']}";
+$.area_select_bind( 'country_id1' , 'province_id1' , 'city_id1' , 'county_id1','town_id1' );
+if(country1!='')
+{
+	$("#country_id1 option[value='{$userinfo['代理国家']}']").attr('selected',true);
+	$("#country_id1").change();
+}
+if(province1!='')
+{
+	$("#province_id1 option[value='{$userinfo['代理省份']}']").attr('selected',true);
+	//触发省份的 change事件
+	$("#province_id1").change();
+}
+if( city1!='' )
+{
+	//触发城市的 change事件
+	$("#city_id1 option[value='{$userinfo['代理城市']}']").attr('selected',true);
+	$("#city_id1").change();
+}
+if(county1!='')
+{
+	$("#county_id1 option[value='{$userinfo['代理地区']}']").attr('selected',true);
+	$("#county_id1").change();
+}
+if( town1!='' )
+{
+	$("#town_id1 option[value='{$userinfo['代理街道']}']").attr('selected',true);
+}
+</if>
+</script>
+
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+</body>
+</html>

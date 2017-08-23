@@ -1,0 +1,54 @@
+
+
+</div>
+<!-- END PAGE CONTENT -->
+
+</div>
+<!-- END PAGE CONTAINER -->
+<!-- MESSAGE BOX-->
+<div class="message-box animated fadeIn" data-sound="alert" id="mb-signout">
+	<div class="mb-container">
+		<div class="mb-middle">
+			<div class="mb-title"><span class="fa fa-sign-out"></span> <strong>{:GET_F_L('退出')}</strong> ?</div>
+			<div class="mb-content">
+				<p>{:GET_F_L('你确定要退出吗？')}</p>
+				<p>{:GET_F_L('如果你想继续工作点击否；点击是注销当前用户。')}</p>
+			</div>
+			<div class="mb-footer">
+				<div class="pull-right">
+					<a href="__GROUP__/Public/logout" class="btn btn-success btn-lg">{:GET_F_L('是')}</a>
+					<button class="btn btn-default btn-lg mb-control-close">{:GET_F_L('否')}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END MESSAGE BOX-->
+
+
+<!-- START THIS PAGE PLUGINS-->
+<script type='text/javascript' src='__TMPL__Public/js/plugins/icheck/icheck.min.js'></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/mcustomscrollbar/jquery.mCustomScrollbar.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-file-input.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/bootstrap/bootstrap-select.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/owl/owl.carousel.min.js"></script>
+<!-- END THIS PAGE PLUGINS-->
+<script>
+	$(document).ready(function(){
+		var $subnav = $(".page-sidebar"), url, title;
+		/* 左边菜单高亮 */
+		url = window.location.pathname + window.location.search;
+		url = url.replace(/(\/(p)\/\d+)|(&p=\d+)|(\/(id)\/\d+)|(&id=\d+)|(\/(group)\/\d+)|(&group=\d+)/, "");
+		title = $subnav.find("a[href='" + url + "']").text();
+		$subnav.find("a[href='" + url + "']").parent().addClass("active");
+		$subnav.find("a[href='" + url + "']").parents("li.xn-openable").addClass("active");
+	});
+</script>
+<!-- END PLUGINS -->
+<script type="text/javascript" src="__TMPL__Public/js/settings.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/actions.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/demo_edit_profile.js"></script>
+<div style="display: none;"><script language="javascript" type="text/javascript" src="http://js.users.51.la/19060463.js"></script>
+<noscript><a href="http://www.51.la/?19060463" target="_blank"><img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="http://img.users.51.la/19060463.asp" style="border:none" /></a></noscript></div>
+

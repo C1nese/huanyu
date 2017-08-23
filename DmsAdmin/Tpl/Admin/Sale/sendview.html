@@ -1,0 +1,149 @@
+<if condition="$edit eq true"><script type="text/javascript" src="__PUBLIC__/directSell/area_select.js"></script></if>
+<script language="javascript">
+function dialogAjaxDone9(json)
+{
+	DWZ.ajaxDone(json);
+
+	if (json.statusCode == DWZ.statusCode.ok)
+	{
+		//navTab.open('');
+		navTab.reload();
+		$.pdialog.closeCurrent(); //关闭添加节点对话框
+	}
+}
+</script>
+<div layoutH="0">
+<table align="left" id="print_list">
+<tr>
+<td valign="top" align="left">
+<form action="__URL__/sendsave" method="post"  class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone9)">
+	<table width="780">
+	<tr>
+		<td valign="top" align="left"><table width="100%"  class="list">
+			<tbody>
+			<if condition="$edit eq true">
+			<tr>
+                <td width="25%">国家：</td>
+                <td style="text-align:left">
+                    <select name="country" id="country_id" data-role="none">
+                        <option value="">请选择</option>
+                    </select>
+                    <select name="province"  id="province_id" data-role="none">
+                        <option value="">请选择省</option>
+                    </select>
+                    <select name="city"  id="city_id" data-role="none">
+                        <option value="">请选择城市</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>区县：</td>
+                <td style="text-align:left"><select name="county"  id="county_id" data-role="none" >
+                        <option value="">请选择</option>
+                    </select>
+                    <select name="town"  id="town_id" data-role="none" >
+                        <option value="">请选择街道</option>
+                    </select>
+                </td>
+            </tr>
+			<tr>
+				<td>收货人:</td>
+				<td style="text-align:left" ><input type="text" name="receiver" value="{$sale['收货人']}"> <font color='red'>*</font></td>
+			</tr>
+			<tr>
+				<td>联系电话:</td>
+				<td style="text-align:left" ><input type="text" name="mobile" value="{$sale['联系电话']}"> <font color='red'>*</font></td>
+			</tr>
+			<tr>
+				<td>收货地址:</td>
+				<td style="text-align:left" ><input type="text" name="address" value="{$sale.收货地址}" size="60"> <font color='red'>*</font></td>
+			</tr>
+			<else />
+			<tr>
+				<td>收货人:</td>
+				<td style="text-align:left" >{$sale['收货人']}</td>
+			</tr>
+			<tr>
+				<td>联系电话:</td>
+				<td style="text-align:left" >{$sale['联系电话']}</td>
+			</tr>
+			<tr>
+				<td>收货地址:</td>
+				<td style="text-align:left" >{$sale.收货省份}{$sale.收货城市}{$sale.收货地区}{$sale.收货街道}{$sale.收货地址}</td>
+			</tr>
+			</if>
+			<tr>
+				<td>发货时间:</td>
+				<td style="text-align:left" ><input name="sendtime" value="{:date('Y-m-d',$sale['发货日期'])}" class="date textInput" type="text"/></td>
+			</tr>
+			<tr>
+				<td>快递公司:</td>
+				<td style="text-align:left" >
+				<select name="company" id="com">
+				<option value="">请选择</option>
+				<foreach name="express" item="kd">
+				<option value="{$kd.company}" <eq name="kd['company']" value="$sale['快递公司']">selected</eq>>{$kd.company}</option>
+				</foreach>
+				</select> <font color='red'>*</font>
+			</td>
+			</tr>
+			<tr>
+				<td>快递单号:</td>
+				<td style="text-align:left" ><input type="text" name="kddd" value="{$sale.快递订单}"> <font color='red'>*</font></td>
+			</tr>
+			<tr>
+				<td>快递备注:</td>
+				<td style="text-align:left" ><input type="text" name="kdmemo" value="{$sale.快递备注}" size="60"></td>
+			</tr>
+			<tr>
+				<input type="hidden" name="id" value="{$id}">
+				<td colspan="2"><button type="submit">确定</button><button type="button" onclick="$.pdialog.closeCurrent()">取消返回</button></td>
+			</tr>
+			</tbody>
+		</table>
+		</form>
+		
+	</tr>
+	
+	</table>
+</td>
+</tr>
+</table>
+<if condition="$edit eq true">
+<script type="text/javascript">
+var country		= "{$sale['收货国家']}";
+var province	= "{$sale['收货省份']}";
+var city		= "{$sale['收货城市']}";
+var county		= "{$sale['收货地区']}";
+var town		= "{$sale['收货街道']}";
+$.area_select_bind( 'country_id' , 'province_id' , 'city_id' , 'county_id', 'town_id' );
+
+if(country!='')
+{
+	$("#country_id option[value='{$sale['收货国家']}']").attr('selected',true);
+	$("#country_id").change();
+}
+if(province!='')
+{
+	$("#province_id option[value='{$sale['收货省份']}']").attr('selected',true);
+	//触发省份的 change事件
+	$("#province_id").change();
+}
+if( city!='' )
+{
+	//触发城市的 change事件
+	$("#city_id option[value='{$sale['收货城市']}']").attr('selected',true);
+	$("#city_id").change();
+}
+if(county!='')
+{
+	$("#county_id option[value='{$sale['收货地区']}']").attr('selected',true);
+	$("#county_id").change();
+}
+if(town!='')
+{
+	$("#town_id option[value='{$sale['收货街道']}']").attr('selected',true);
+}
+</script>
+</if>
+</div>

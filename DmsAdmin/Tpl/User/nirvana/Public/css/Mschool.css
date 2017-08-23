@@ -1,0 +1,88 @@
+html {
+	background-color: #eeeeee
+}
+
+body {
+	width: 94%;
+	max-width: 1200px;
+	margin: 0 auto;
+	border: 0;
+	font-family: '微软雅黑' !important;
+	/*font-size: 14px;*/
+	background-color: #fff;
+	padding: 3vw;
+	color: #aba7a7;
+	font-size: 3.6vw;
+	min-height: 100%;
+}
+
+.title {
+	font-size: 4.4vw;
+	/*font-weight: 500;*/
+	color: #000;
+}
+
+.info {
+	margin: 10px 0;
+}
+
+.blue {
+	color: #139ee2;
+	cursor:pointer;
+}
+
+.info>span {
+	margin-right: 2vw;
+	/*line-height: 5vw*/
+}
+
+.content {
+	margin: 10px 0;
+}
+.content img {
+	max-width:95% !important;
+	height: auto !important;
+}
+.content * {
+	max-width:100% !important;	
+}
+.button {
+	color: #FFF;
+	width: 40%;
+	background: #EC5759;
+	font-weight: bold;
+	font-size: 4.4vw;
+	line-height: 6vw;
+	padding: 3vw 2vw;
+	text-align: center;
+	border-radius: 2vw;
+	/*margin-left: 30%;*/
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: inline-block;
+}
+
+#zanbtn {
+	cursor:pointer;
+}
+
+@media screen and (min-width: 768px) {
+	body {
+		font-size: 18px
+	}
+	.title {
+		font-size: 30px
+	}
+	.button {
+		line-height: 30px;
+		width: 200px;
+		font-size: 18px;
+		padding: 16px 12px;
+		border-radius: 10px;
+	}
+}
+@media (max-width: 767px){
+	.hidden-xs {
+	    display: none !important;
+	}
+}

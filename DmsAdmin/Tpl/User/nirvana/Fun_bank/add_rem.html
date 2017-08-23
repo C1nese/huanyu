@@ -1,0 +1,34 @@
+<load href="__PUBLIC__/My97DatePicker/WdatePicker.js" />
+<load href="__PUBLIC__/jquery-1.9.1.min.js" />
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="core_main Fun_bank" id="add_rem">
+	<div class="core_title">
+    	<span class="core_title_con"><span>{:GET_F_L('当前位置')}</span>：{:GET_F_L('添加汇款通知')}</span>
+        <span class="core_title_edit"></span>
+    </div>
+    <div class="core_con">
+        <form  id="register" name='register'>
+        <table class="tablebg">
+            <TR>
+              <TD class="tbkey">{:GET_F_L('选择银行')}：</TD>
+              <TD class="tbval">
+              <ul>
+              <foreach name="tp" item="vo">
+              	<li><a href='__GROUP__/Fun_bank/add_rem1/id/{$vo.id}'><img src="__PUBLIC__/Images/{$vo.图标}"/></a></li>
+              </foreach>
+              </ul>
+              </TD>
+            </TR>
+        </TABLE>
+        </form>
+    </div>
+    <div class="core_page"></div>
+</div>
+<include file="Public:footer" />
+<!-- END WIDGETS -->

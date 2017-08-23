@@ -1,0 +1,286 @@
+<style type="text/css">
+tr,td{vertical-align:top;padding-top:3px;}
+</style>
+<link rel="stylesheet" href="__PUBLIC__/stock/css/demo.css" type="text/css" media="screen">
+<script src="__PUBLIC__/stock/js/raphael.js"></script>
+<script src="__PUBLIC__/stock/js/popup.js"></script>
+<!--浮动的线条和数字-->
+<!-- <script src="__PUBLIC__/stock/js/jquery.js"></script> -->
+<script src="__PUBLIC__/stock/js/analytics.js"></script>
+<style type="text/css" media="screen">
+    #holder {
+        height: 250px;
+        position:relative;
+        padding-top:100px;        
+        width: 800px;
+    }
+</style>
+<div class="core_main Fun_pay" id="paylist">
+<div class="core_title"> <span class="core_title_con">当前位置：{$stockName}管理&gt;&gt;大厅</span> <span class="core_title_edit"></span> </div>
+<div class="core_con">
+<div style="height:285px;overflow:hidden">
+  <table class="tablebg">
+    <div style="text-align:center"><font style='font-size:18px;color:#000000'>欢迎访问{$stockName}交易大厅</font></div>
+    <TR class="datafield" style="height:256px">
+      <td width="50%" colspan="2" align="center"><div style="width:100%;padding-left:3px;height:265px;">
+          <div style="width:880px; height:265px;padding:0px;">
+            <table id='rowset'>
+              <tfoot>
+                <tr>
+                <!--js自动获取下面2个值，最小最大-->
+                <input type="hidden" id="maxrate" value="0.2">
+                <input type="hidden" id="minrate" value="0.1"><!--最小值请和getxml内对应-->
+                  <th>0.20</th>
+                  <th>0.19</th>
+                  <th>0.18</th>
+                  <th>0.17</th>
+                  <th>0.16</th>
+                  <th>0.15</th>
+                  <th>0.14</th>
+                  <th>0.13</th>
+                  <th>0.12</th>
+                  <th>0.11</th>
+                  <th>0.10</th>
+                </tr>
+              </tfoot>
+            </table>
+            <table id="data">
+              <tfoot>
+                <tr>
+				  <foreach name="list" item="v" key="key">
+	                 <th  title='{:date("Y-m-d",$list[$key]["计算日期"])}'>{:date("d",$list[$key]["计算日期"])}</th>
+	              </foreach>
+                </tr>
+              </tfoot>
+              <tbody>
+                <tr >
+				   <foreach name="list" item="vo" key="k">
+                  		<td>{$list[$k]['价格']}</td>
+	                </foreach>
+                </tr>
+              </tbody>
+            </table>
+            <div id="holder"></div>
+          </div>
+        </div></td>
+  </table>
+</div>
+<div>
+<table width="100%">
+<TR class="datalist">
+  <TD width="50%">
+  <form id="form_buy" name="form1" method="post" action="">
+    <table class="tablebg">
+      <TR class="datafield">
+        <td colspan="2" >购买{$stockName}</td>
+      </TR>
+      <TR class="datalist">
+        <TD ><nobr>购买数量：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input id="inp1_buy" type="text" name="num" style="width:40%;height:16px;" onkeyup="SumNum('buy')" >
+          </nobr></TD>
+      </TR>
+      <TR class="datalist">
+        <TD ><nobr>买入单价：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input type="text" id="inp2_buy" name="price" style="width:40%;height:16px;"  value="{$price}" <if condition="$stockInputPrice eq false"> readonly="readonly"<else />  onkeyup="SumNum('buy')" maxlength="{$decimalLen+2}"</if>>
+      </TR>
+      <TR class="datalist">
+        <TD ><nobr>总买入价：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input type="text"  id="inp3_buy"   readonly="readonly" style="width:40%;height:15px;"  value="0" />
+          </nobr></TD>
+      </TR>
+	  <TR class="datalist">
+        <TD ><nobr>交易密码：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input type="password"  id="inp4_buy"  name="password"  style="width:40%;height:15px;"  value="" />
+          </nobr></TD>
+      </TR>
+      <TR class="datalist">
+        <TD colspan="2" ><nobr>&nbsp;</nobr><nobr>
+		  <if condition="$stockBuybutton eq true">
+          <input class="button_text" onMouseDown="this.className='button_onmousedown'" onMouseOver="this.className='button_onmouseover'" onMouseOut="this.className='button_onmouseout'" type="button" value="立即购买" onclick="sh('buy');" id="regsubbutton">
+		  <else />
+		  <input  type="button" disabled="disabled" class="button_onmouseover" value="{:L('暂停买入')}" >
+		  </if>
+          </nobr></TD>
+      </TR>
+    </table>
+	 </form>
+    </TD>
+	<TD width="50%">
+  <form id="form_sell" name="form2" method="post" action="">
+    <table class="tablebg">
+      <TR class="datafield">
+        <td colspan="2" >出售{$stockName}</td>
+      </TR>
+      <TR class="datalist">
+        <TD ><nobr>卖出数量：/nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input id="inp1_sell" type="text" name="num" style="width:40%;height:16px;" onkeyup="SumNum('sell')">
+          </nobr></TD>
+      </TR>
+      <TR class="datalist">
+        <TD ><nobr>卖出单价：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input type="text" id="inp2_sell" name="price"  style="width:40%;height:16px;"  value="{$price}"  <if condition="$stockInputPrice eq false"> readonly="readonly"<else />  onkeyup="SumNum('sell')" maxlength="{$decimalLen+2}"</if>>
+      </TR>
+      <TR class="datalist">
+        <TD ><nobr>总卖出价：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input type="text"  id="inp3_sell"   readonly="readonly" style="width:40%;height:15px;"  value="0" />
+          </nobr></TD>
+      </TR>
+	  <TR class="datalist">
+        <TD ><nobr>交易密码：</nobr></TD>
+        <TD style="text-align:left;padding-left:20px;"><nobr>
+          <input type="password"  id="inp4_sell"  name="password"  style="width:40%;height:15px;"  value="" />
+          </nobr></TD>
+      </TR>
+      <TR class="datalist">
+        <TD colspan="2" ><nobr>&nbsp;</nobr><nobr>
+		 <if condition="$stockSalebutton eq true">
+          <input class="button_text" onMouseDown="this.className='button_onmousedown'" onMouseOver="this.className='button_onmouseover'" onMouseOut="this.className='button_onmouseout'" type="button" value="立即出售" onclick="sh('sell');" id="regsubbutton">
+		  <else />
+		  <input  type="button" disabled="disabled" class="button_onmouseover" value="{:L('暂停出售')}" >
+		  </if>
+          </nobr></TD>
+      </TR>
+    </table>
+	 </form>
+    </TD>
+  </TR>
+</table>
+<table width="100%" style="margin-top:8px;">
+   <tr  class="datalist">
+    <TD ><table class="tablebg">
+          <tr class="datafield">
+            <td colspan="2" align="center" width="100%">我的股票信息</td>
+          </tr>
+		  <TR class="datalist">
+            <TD ><nobr>{$tradeName}余额：</nobr></TD>
+            <TD style="text-align:left;padding-left:20px;"><nobr> {$trade} </nobr></TD>
+          </TR>
+          <TR class="datalist">
+            <TD ><nobr>当前价格：</nobr></TD>
+            <TD style="text-align:left;padding-left:20px;"><nobr> {$price} </nobr></TD>
+          </TR>
+          <TR class="datalist">
+            <TD ><nobr>持有总数量：</nobr></TD>
+            <TD style="text-align:left;padding-left:20px;">{$stockTotal}</TD>
+          </TR>
+          <TR class="datalist">
+            <TD ><nobr>待出售数量：</nobr></TD>
+            <TD style="text-align:left;padding-left:20px;"><nobr> {$stockTotal-$stockSale} </nobr></TD>
+			</tr>
+			<TR class="datalist">
+            <TD ><nobr>出售中数量：</nobr></TD>
+            <TD style="text-align:left;padding-left:20px;"><nobr> {$stockSale} </nobr></TD>
+			</tr>
+        </table></td>
+    </TR>
+  </table>  
+  <div class="widgetcontent" style="width:100%;margin-top:10px;">
+		<table width="100%" border="0" cellpadding="2" cellspacing="0"  class="tablebg">
+		
+				<tr class="datafield">
+					<th><center>{:L('类型')}</center></th>
+					<th><center>{:L('时间')}</center></th>
+					<th><center>{:L('价格')}</center></th>
+					<th><center>{:L('原始数量')}</center></th>
+					<th><center>{:L('已成交量')}</center></th>
+					<th><center>{:L('剩余数量')}</center></th>
+					<th><center>{:L('总价')}</center></th>
+					<th><center>{:L('状态')}</center></th>
+					<th><center>{:L('操作')}</center></th>
+				</tr>
+	
+			<tbody>
+				<notempty name="lists">
+					<foreach name="lists" item="list">
+						<tr style="text-align:center;" >
+							<td class="center"><eq name="list.type" value="1">{:L('卖出')}</eq><eq name="list.type" value="2">{:L('买入')}</eq></td>
+							<td class="center nbo">{$list.addtime|date="Y-m-d H:i:s",###}</td>
+							<td class="center nbo">{:(number_format($list['price'],$decimalLen))}</td>
+							<td class="center nbo">{$list.num1}</td>
+							<td class="center nbo">{$list.num2}</td>
+							<td class="center nbo">{$list.num}</td>
+							
+							<td class="center nbo">{:(number_format($list['num1']*$list['price'],$decimalLen))}</td>
+							<td class="center nbo"><eq name="list.num" value="0">{:L('已完成')}</eq><if condition="($list.num neq 0) AND ($list.state eq 0)">{:L('正常')}</if><eq name="list.state" value="1">{:L('已撤销')}</eq></td>
+							<td class="center nbo"><!--<if condition="($list.state eq 1)"><button class="button_orange_c" onclick="if(confirm('{:L('确定删除吗')}')) window.location.href='__GROUP__/Fun_deal/stockdelete:__XPATH__/id/{$list.id}'">{:L('删除')}</button></if>-->
+							<if condition="($list['num'] gt 0) AND ($list['state'] eq 0) AND ($list['type'] eq 2) AND ($stockBuycancel eq true)"><button class="button_orange_c" onclick="if(confirm('{:L('确定撤销该订单吗')}')) window.location.href='__GROUP__/Fun_stock/stockcancel:__XPATH__/id/{$list.id}'">{:L('撤销')}</button></if>
+							<if condition="($list['num'] gt 0) AND ($list['state'] eq 0) AND ($list['type'] eq 1) AND ($stockSalecancel eq true)"><button class="button_orange_c" onclick="if(confirm('{:L('确定撤销该订单吗')}')) window.location.href='__GROUP__/Fun_stock/stockcancel:__XPATH__/id/{$list.id}'">{:L('撤销')}</button></if>
+							</td>
+						</tr>
+					</foreach>
+				</notempty >
+			</tbody>
+		</table>               
+	</div>             
+</div>
+</div>
+</div>
+<script type="text/javascript">
+function SumNum(type){
+	var sumValue;
+	a=$("#inp1_"+type).val();
+	b=$("#inp2_"+type).val();
+	if (isNaN(a))
+	{a=0}
+	if (isNaN(b))
+	{b=0}
+	sumValue = a*b;
+	$('#inp3_'+type).val(sumValue.toFixed({$decimalLen})) ;	
+}
+
+function sh(type){
+	var startprice={$price};
+	var highprice={$highprice};
+    var lowprice={$lowprice};
+	var num=$("#inp1_"+type).val();
+	var price=$("#inp2_"+type).val();
+	var pass=$("#inp4_"+type).val();
+	var model=type;
+	var input='{$stockInputPrice}';
+	var con=true;
+	if((num<0 || num=='')){
+		con=false;
+		alert("{:L('数量输入有误')}");
+		return;
+	}
+	if((price<0 || price=='')){
+		con=false;
+		alert("{:L('单价输入有误')}");
+		return;
+	}
+	if(pass==''){
+		con=false;
+		alert("{:L('请输入交易密码')}");
+		return;
+	}
+	if(input){
+		if(price<lowprice && lowprice>0){
+			con=false;
+			alert("{:L('交易价格')}{:L('不能低于')}"+lowprice);
+			return;
+		}else if(price>highprice  && highprice>0){
+			con=false;
+			alert("{:L('交易价格')}{:L('不能高于')}"+highprice);
+			return;
+		}
+	}
+	
+	if(con){
+		if(model =='buy'){
+			var url="__APP__/User/Fun_stock/stock_buy:__XPATH__";
+		}
+		if(model =='sell'){
+			var url="__APP__/User/Fun_stock/stock_sell:__XPATH__";
+		}
+		$("#form_"+type).attr("action",url);
+		$('#form_'+type).submit();
+	}
+}
+</script>

@@ -1,0 +1,206 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<div class="col-md-12">
+    <div class="alert alert-warning" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+		</button>
+        <strong>{:GET_F_L('提示！')}</strong>{:GET_F_L('密码修改后，请牢记您修改的密码')}
+    </div>
+</div>
+
+<!-- END BREADCRUMB -->
+<div class="row pages-edit">
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action="__GROUP__/User/passSave"  method="post">
+            <div class="panel panel-colorful">
+                <div class="panel-heading">
+                    <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-wrench"></span>&nbsp;{:GET_F_L('密码修改')}</strong>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body form-group-separated">
+                	<eq name="pwd3Switch" value="false">
+					 <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('确认交易密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" id="pwd1" class="form-control" name="oldpwd2" placeholder="{:GET_F_L('确认交易密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+                    </eq>
+            		<eq name="pwd3Switch" value="true">
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('确认三级密码')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <input type="password" id="pwd1" class="form-control" name="oldpwd2	" placeholder="{:GET_F_L('确认三级密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+                    </eq>
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('新登录密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" id="pwd1" class="form-control" name="pwd1" placeholder="{:GET_F_L('新登录密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('确认新登录密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" class="form-control" name="repwd1"  id="repwd1"  placeholder="{:GET_F_L('确认新登录密码')}" style="border-radius:4px;"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('新交易密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" id="pwd2" class="form-control" name="pwd2" placeholder="{:GET_F_L('新交易密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('确认新交易密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" id="repwd2" class="form-control" name="repwd2" placeholder="{:GET_F_L('确认新交易密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+                    <eq name="pwd3Switch" value="true">
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('三级新密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" id="repwd2" class="form-control" name="pwd3" placeholder="{:GET_F_L('三级新密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('确认三级新密码')}</label>
+                        <div class="col-md-6 col-xs-12" style="margin-top:3px;">
+                            <input type="password" id="repwd2" class="form-control" name="repwd3" placeholder="{:GET_F_L('确认三级新密码')}" style="border-radius:4px;">
+                        </div>
+                    </div>
+                    </eq>
+                    <if condition="$verificateSwitch eq 1 and $verificatesmsContent neq ''">
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('短信验证码')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <input type="text" id="repwdSms" class="form-control" name="repwdSms" placeholder="{:GET_F_L('短信验证码')}" style="border-radius:4px;">
+                            <input style="margin-left:10px" type="button" id="sendMess" value="{:GET_F_L('点击获取')}" style="border-radius:4px;"/>
+                        </div>
+                    </div>                    
+                    </if>
+                    <eq name="changePwdmailSwitchyanzheng" value="1">
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('邮件验证')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <input type="text" id="repwdMail" class="form-control" name="repwdMail" placeholder="{:GET_F_L('邮件验证')}" style="border-radius:4px;">
+                            <input style="margin-left:10px" type="button" id="sendMailMess" value="{:GET_F_L('点击获取')}" style="border-radius:4px;"/>
+                        </div>
+                    </div>    
+                    </eq>
+
+                    <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('确认操作')}</label>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="input-group pull-right">
+                                <input class="btn btn-primary" type="submit" id="subbut" value="{:GET_F_L('确定')}" name="but"/>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="panel-footer">
+
+                    &nbsp;
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script type="text/javascript" src="__TMPL__Public/js/plugins/smartwizard/jquery.smartWizard-2.0.min.js"></script>
+<script type="text/javascript" src="__TMPL__Public/js/plugins/jquery-validation/jquery.validate.js"></script>
+<script>
+var wait=300;
+var sta = true;
+function time(o) {
+    if(sta == true){
+        var content = '{$verificatesmsContent}';
+        if(content==""){
+        	return false;
+        }
+        $.post('__URL__/sendSmsVerify',{type:'修改密码',content: content},function(data){
+            
+            eval('var data='+data);
+            if(data.status == 1){
+                alert('{:GET_F_L('发送成功!')}');
+            }else{
+                wait=0;
+                alert('{:GET_F_L('发送失败!')}');
+            }
+        });
+        sta = false;
+    }
+    if (wait == 0) {
+      o.removeAttribute("disabled");      
+      o.value="{:GET_F_L('点击获取')}";
+      wait = 300;
+      sta = true;
+    } else {
+      o.setAttribute("disabled", true);
+      o.value="{:GET_F_L('重新发送')}(" + wait + ")";
+      wait--;
+      setTimeout(function() {
+        time(o)
+      },
+      1000)
+    }
+  }
+  if($("#sendMess").length>0)
+  document.getElementById("sendMess").onclick=function(){time(this);}
+  
+var mwait=300;
+var msta = true;
+function mtime(o) {
+    if(msta == true){
+        var content = '{$changePwdmailContentyanzheng}';
+        $.post('__URL__/sendMailVerify',{type:'修改密码',content: content},function(data){
+            
+            eval('var data='+data);
+            if(data.status == 1){
+                alert('{:GET_F_L('发送成功!')}');
+            }else{
+                mwait=0;
+                alert('{:GET_F_L('发送失败!')}');
+            }
+        });
+        msta = false;
+    }
+    if (mwait == 0) {
+      o.removeAttribute("disabled");      
+      o.value="{:GET_F_L('点击获取')}";
+      mwait = 300;
+      msta = true;
+    } else {
+      o.setAttribute("disabled", true);
+      o.value="{:GET_F_L('重新发送')}(" + mwait + ")";
+      mwait--;
+      setTimeout(function() {
+        mtime(o)
+      },
+      1000)
+    }
+  }
+  if($("#sendMailMess").length>0)
+  document.getElementById("sendMailMess").onclick=function(){mtime(this);}
+</script>

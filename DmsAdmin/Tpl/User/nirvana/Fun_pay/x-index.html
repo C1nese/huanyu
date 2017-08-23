@@ -1,0 +1,126 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<div class="row pages-edit">
+    <div class="col-md-12">
+
+        <form class="form-horizontal" action="__URL__/pay_confirm"  method="post">
+            <div class="panel panel-colorful">
+                <div class="panel-heading">
+                    <h3>{:GET_F_L('在线支付')}</h3>
+                    <ul class="panel-controls">
+                        <li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+                    </ul>
+                </div>
+                <div class="panel-body form-group-separated">
+                	 <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('支付货币类型')}</label>
+                        <div class="col-md-6 col-xs-12 label-title">
+                        	<if condition="count($type) eq 1">
+                        		{$type[0]}
+                        		<input name="type" class="form-control" type="hidden" value="{$type[0]}">
+                        	<else/>
+		                        <select name="type" id="type" onChange="calScale()" class="form-control">
+		                            <foreach name="type" item="vo">
+		                             <option value="{$vo}">{$vo}</option>
+		                            </foreach>
+		                        </select>
+		                    </if>
+                        </div>                        
+                    </div>
+					 <div class="form-group">
+                        <label class="col-md-3 col-xs-12 control-label label-title">{:GET_F_L('选择支付方式')}</label>
+                        <div class="col-md-6 col-xs-12">
+                             <select  name="payment" onchange="inputname()" id="test"  class="form-control">
+			                   <option value="">{:GET_F_L('请选择支付方式')}</option>
+			                    <foreach name="list" item="payInfo" >
+			                     <present name="payInfo.banklist">
+			                     <foreach name="payInfo.banklist" key="bank_code" item="bank_name">
+			                   		<option value="{$key}:{$bank_code}" class="{$key}" >{$bank_name}</option>
+			                   	</foreach>
+                        
+		                        <else />
+		                        
+		                        <option value="{$key}" class="{$key}">{$payInfo.name}</option>
+		                        
+		                        </present>
+		                        
+		                        </foreach>
+			                </select>
+                        </div>                        
+                    </div>
+                    <div class="form-group">
+						<label class="col-md-3 col-xs-5 control-label label-title">{:GET_F_L('支付金额')}</label>
+						<div class="col-md-6 col-xs-12">
+							<div class="input-group">
+							<span class="input-group-addon"><span class="fa fa-pencil"></span></span> 
+							<input type="text" name="money" id="money" onKeyup="calScale()" class="form-control"/> 
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-md-6 col-xs-7">
+							<div class="input-group pull-right">
+								<input class="btn btn-primary btn-block"  type="submit" value="确认支付" />
+							</div>
+						</div>
+					</div>           		
+                </div>
+
+                <div class="panel-footer">
+
+                    &nbsp;
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+<script language="javascript">
+function inputname(){
+var test = document.getElementById('test');
+	for(var i = 0; i < test.options.length; i++){
+
+				var opt = test.options[i];
+
+				if (opt.selected) {
+                var payname = opt.className;
+                 $("#banknames").val(payname);
+				};
+
+			}
+}
+function calScale(){
+	var money=$("#money").val();
+	var banktype=$("#type").val();
+	var postdata={};
+	postdata['money']	= money;
+	postdata['banktype']	= banktype;
+	if(money>=0){
+		$.ajax({
+	       url:"__APP__/User/Fun_pay/scaleAjax",
+	       type:"POST",
+	       data:postdata,
+	       dataType:"text",
+	       global:false,
+	       success:function(data){
+			   if(data == ''){
+				  $("#scale_notice").html('');
+			   }else{
+				  $("#scale_notice").html(data);
+			   }
+	       }  
+	    });
+	}
+}
+</script>

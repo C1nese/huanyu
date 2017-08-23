@@ -1,0 +1,187 @@
+<script language="JavaScript">
+function dialogAjaxDone1(json)
+{
+	DWZ.ajaxDone(json);
+
+	if (json.statusCode == DWZ.statusCode.ok)
+	{
+		navTab.reload('__APP__/Admin/Fun_stock/config:__XPATH__');
+	}
+}
+</script>
+<form action="__URL__/configSave:__XPATH__" method="post"  class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone1)">
+<div layoutH="0">
+<table width="650px" class="list">
+<thead><tr><th colspan="3" style="text-align:left">&nbsp;<img src="__PUBLIC__/Images/stock_set.png" style="vertical-align:middle"/>&nbsp;&nbsp;用户{$stockname}交易设定</th></tr></thead>
+<tbody>
+<td  style="text-align:right;width:20%">{$stockname}总发行量:</td>
+<td  style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockAllNum" value="{$stockAllNum}" size="10"></td>
+<td  style="text-align:left;width:60%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;0代表不限制，公司的总发行数量</td>
+</tr>
+<tr>
+<td  style="text-align:right;width:20%">{$stockname}已认购量:</td>
+<td  style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockHasGive" value="{$stockHasGive}" size="10"></td>
+<td  style="text-align:left;width:60%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;表示已经发行的{$stockname}数量，公司发行的，被用户买入的数量</td>
+</tr>
+<tr>
+<td  style="text-align:right;width:20%">买卖整数单位:</td>
+<td  style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockMinint" value="{$stockMinint}" size="10"></td>
+<td  style="text-align:left;width:60%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;限制交易{$stockname}数量必须为此参数的整数倍</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">交易的小数位:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="decimalLen" value="{$decimalLen}" size="10"></td>
+<td  style="text-align:left;width:60%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;最多4位数</td>
+</tr>
+<if condition="$splitStart eq true">
+<tr>
+<td style="text-align:right;width:20%">{$stockname}拆分倍数:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="StockSplit" value="{$StockSplit}" size="10"></td>
+<td  style="text-align:left;width:60%">&nbsp;</td>
+</tr>
+</if>
+<tr>
+<td style="text-align:right;width:20%">优先买入公司发行:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="buyComStock" value="true" <if condition="$buyComStock eq true "> checked </if>>开启</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;是否先购买公司发行股，总发行量-已认购量为用户可购买量</td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">{$stockname}原始价格:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockStartMoney" value="{$stockStartMoney}" size="10">元/股</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}当前价格:</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;{$stockNowPrice}</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">用户自定义价格:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockInputPrice" value="true" <if condition="$stockInputPrice eq true "> checked </if>>开启</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;如果开启，用户出价会被以下4条限制，否则按照当前价</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}买卖最低价格1:</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockLowPrice" value="{$stockLowPrice}" size="10">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;买入或卖出不得低于此价格，<font color='red'>0代表不限制</font></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}买卖最高价格2:</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockHighPrice" value="{$stockHighPrice}" size="10">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;买入或卖出不得高于此价格，<font color='red'>0代表不限制</font></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}买卖价格跌幅%3:</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockDrop" value="{$stockDrop}" size="10">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;买入或卖出，用户自己的定价不能低于当前价格的%</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}买卖价格涨幅%4:</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockRise" value="{$stockRise}" size="10">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;买入或卖出，用户自己的定价不能高于当前价格的%</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}交易总数:</td>
+<td  style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockTrade" value="{$stockTrade}" size="10"></td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;用户间成交量，可用于计算涨价</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}价格公式:</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockMoneyForm" value="{$stockMoneyForm}" size="80"></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%"></td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;<font style="text-decoration:underline">[股票原始价格]+floor([股票交易总数]/100000)*0.001</font>，表示每当{$stockname}交易总数达到100000股时，{$stockname}价格上涨0.001元</td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}市场:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockClose" value="true" <if condition="$stockClose eq true "> checked </if>>开启休市</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">买入:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockBuybutton" value="true" <if condition="$stockBuybutton eq true "> checked </if>>开启</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">卖出:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockSalebutton" value="true" <if condition="$stockSalebutton eq true "> checked </if>>开启</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">买入撤销:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockBuycancel" value="true" <if condition="$stockBuycancel eq true "> checked </if>>开启</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">卖出撤销:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockSalecancel" value="true" <if condition="$stockSalecancel eq true "> checked </if>>开启</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">买卖提交间隔:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockSec" value="{$stockSec}" size="10">秒</td>
+<td  style="text-align:left;width:60%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;单个用户每次交易提交间隔</td>
+</tr>
+<thead>
+    <tr>
+     <th  style="text-align:left" colspan="4"><img style="vertical-align:middle" src="__PUBLIC__/Images/cog.png" />&nbsp;&nbsp;封顶设置<font color='red'>（用户最高持有数量：当前账户+出售中）</font></th>
+    </tr>
+	</thead>
+<foreach name="levels" item="level">
+<tr>
+<td  style="text-align:right;width:25%">{$level['name']}:</td>
+<td  style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockMax{$key}" value="{$level['max']}" size="10"></td>
+<td  style="text-align:left;">&nbsp;<if condition="$key eq 1"><img style="vertical-align:middle" src="__PUBLIC__/Images/cog.png" />&nbsp;0代表不限制</if></td>
+</tr>
+</foreach>
+<!--
+<tr>
+<td style="text-align:right;width:20%">{$stockname}出售的手续费:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockOutTax" value="{$stockOutTax}" size="10">%</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+<tr>
+<td style="text-align:right;width:20%">{$stockname}购买的手续费:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockBuyTax" value="{$stockBuyTax}" size="10">%</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+-->
+<!--
+<tr>
+<td style="text-align:right;width:20%">买入的三进三出开关:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="startStockAutoBuy" value="true" <if condition="$startStockAutoBuy eq true "> checked </if>>开启三进三出</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;是否开启三进三出，若开启则会执行下面的三进三出设置 否则卖出的金额全部进入规定的账户</td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">买入的三进三出比例:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockAutoBuyRate" value="{$stockAutoBuyRate}" size="10">%</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;用户卖股劵所得的金额里有百分之几是回到交易账户里用于再次购买市场的{$stockname}做三进三出</td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">三进三出金额自动购买:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="stockAutoBuy" value="true" <if condition="$stockAutoBuy eq true "> checked </if>>开启自动购买</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;三进三出得到金额是回到购买{$stockname}的账户，还是再次进行购买市场的{$stockname}</td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">托管账户每月限卖:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="text" name="stockTrustMax" value="{$stockTrustMax}" size="10">%</td>
+<td  style="text-align:left;width:60%"></td>
+</tr>
+
+<tr>
+<td style="text-align:right;width:20%">托管账户三进三出:</td>
+<td style="text-align:left;width:20%">&nbsp;&nbsp;<input type="checkbox" name="TrustAuto" value="true" <if condition="$TrustAuto eq true "> checked </if>>开启</td>
+<td colspan="2" style="text-align:left;width:20%">&nbsp;<img style="vertical-align:middle" src="__PUBLIC__/Images/notice.png" />&nbsp;控制托管账户的三进三出开关</td>
+</tr>
+-->
+<tr>
+<td ></td><td><div class="buttonActive"><div class="buttonContent"><button id="submit" type="submit">确定</button></div></div>
+</div></td>
+<td ></td>
+</tr>
+</tbody>
+</table>
+</div>
+</form>

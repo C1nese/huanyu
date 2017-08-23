@@ -1,0 +1,135 @@
+<include file="Public:header" />
+<script type='text/javascript' src='__TMPL__Public/js/plugins/bootstrap/bootstrap-datepicker.js'></script>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- PAGE CONTENT WRAPPER -->
+<div class="page-content-wrap">
+
+	 <div class="row">
+        <div class="col-md-12">
+
+            <!-- START TIMELINE FILTER -->
+<div class="content-frame">
+	<div class="content-frame-top">
+		<div class="page-title" style="margin-top: 10px;">
+			<span class="fa fa-image" style="font-size: 18px; color: #3c3c3c;"></span><strong
+                style="font-size: 18px; color: #3c3c3c;">&nbsp;{:GET_F_L('最新消息')}</strong>
+		</div>
+
+		<form action="__GROUP__/User/viewNotice" method="post">
+			<div class="pull-right input-group push-down-10 col-md-5 col-xs-12"
+				style="margin-top: 10px;">
+				<span class="input-group-addon" style="line-height: 28px;"> <span
+					class="fa fa-search"></span>
+				</span> <input class="form-control" type="text" name="keywords"
+					placeholder="{:GET_F_L('关键词')}" style="border-radius: 0px;">
+				<div class="input-group-btn">
+					<button class="btn btn-primary"
+						style="margin-top: -5px; border-radius: 0px 4px 4px 0px; height: 33px;">搜索</button>
+				</div>
+			</div>
+										<div class="alert alert-success" role="alert" style='margin-top:10px;'>
+            <strong>提示：</strong>
+            您可以在这里查看我们的最新动态，如需搜索指定内容，请在搜索框中输入关键词
+        </div>
+
+		</form>
+	</div>
+</div>
+
+	<div class="row">
+		<div class="col-md-12">
+
+			<!-- START TIMELINE -->
+			<div class="timeline timeline-right">
+
+				<!-- START TIMELINE ITEM -->
+				<foreach name='data.list' item='name'> <!-- START TIMELINE ITEM -->
+				<div class="timeline-item timeline-main">
+					<div class="timeline-date">{$name.years}</div>
+				</div>
+				<!-- END TIMELINE ITEM -->
+				<foreach name='name.note' item='note'> <!-- START TIMELINE ITEM -->
+				<div class="timeline-item timeline-item-right">
+					<div class="timeline-item-info">{$note.创建时间|date='Y-m-d',###}</div>
+					<div class="timeline-item-icon">
+						<span class="fa fa-globe"></span>
+					</div>
+					<div class="timeline-item-content">
+						<div class="timeline-heading">
+							<img src="__TMPL__Public/assets/images/users/user2.jpg" /> 
+							<a href="__URL__/showNotice/id/{$note.id}">{:GET_C_L($note['标题'],'notice',$note[id],'tit')}</a>
+							<p style="text-indent: 2em;">{:GET_C_L($note['内容'],'notice',$note[id],'des')}</p>
+						</div>
+						<div class="timeline-body"></div>
+						<div class="timeline-footer">
+							<a href="__URL__/showNotice/id/{$note.id}">{:GET_F_L('查看')}</a>
+							<div class="pull-right">
+								<a href="__URL__/showNotice/id/{$name.id}"><span
+									class="fa fa-clock-o"></span> {$note.创建时间|date='Y-m-d	H:i:s',###}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END TIMELINE ITEM --> 
+				</foreach>
+				</foreach>
+
+
+				<!-- START TIMELINE ITEM -->
+				<div class="timeline-item timeline-main">
+					<div class="timeline-date">
+						<a href="#"><span class="fa fa-ellipsis-h"></span></a>
+					</div>
+				</div>
+				<!-- END TIMELINE ITEM -->
+			</div>
+			<!-- END TIMELINE -->
+
+			<div class="core_page">
+				<ul class="pagination pagination-sm pull-right">
+					<li class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录
+							')}{$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+					<!-- <if condition="$data['nowPage'] neq 1">
+					<li class="disabled"><a href="{$data.firstRow}">«</a></li>
+					<else />
+					<li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+					</if> -->
+					<li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+					<if condition="isset($data['rollPage'][-2])">
+					<li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+					</if>
+					<if condition="isset($data['rollPage'][-1])">
+					<li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+					</if>
+					<li class="disabled"><a href="#">{$data.nowPage}</a></li>
+					<if condition="isset($data['rollPage'][1])">
+					<li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+					</if>
+					<if condition="isset($data['rollPage'][2])">
+					<li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+					</if>
+					<li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+					<!-- <if condition="$data['nowPage'] lt $data['totalPages']">
+					<li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+					<else />
+					<li class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+					</if> -->
+				</ul>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- END PAGE CONTENT WRAPPER -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+</body>
+</html>
+
+
+

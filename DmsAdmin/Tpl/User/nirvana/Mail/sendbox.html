@@ -1,0 +1,102 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="content-frame">
+    <!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-inbox"></span> {:GET_F_L('发件列表')}</h2>
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME TOP -->
+
+    <!-- START CONTENT FRAME LEFT -->
+    <div class="content-frame-left">
+        <div class="block">
+            <a href="__GROUP__/Mail/send" class="btn btn-danger btn-block btn-lg"><span class="fa fa-edit"></span> {:GET_F_L('提交工单')}</a>
+        </div>
+        <div class="block">
+            <div class="list-group border-bottom">
+                <a href="__GROUP__/Mail/index" class="list-group-item"><span class="fa fa-inbox"></span> {:GET_F_L('收件列表')} </a>
+                <a href="__GROUP__/Mail/sendbox" class="list-group-item  active"><span class="fa fa-star"></span> {:GET_F_L('发件列表 ')}<span class="badge badge-warning">{$data.count}</span></a>
+                <a href="__GROUP__/User/viewNotice" class="list-group-item"><span class="fa fa-rocket"></span> {:GET_F_L('最新信息')}</a>
+            </div>
+        </div>
+
+    </div>
+    <!-- END CONTENT FRAME LEFT -->
+
+    <!-- START CONTENT FRAME BODY -->
+    <div class="content-frame-body">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+            </div>
+            <div class="panel-body mail">
+                <if condition="$data['count'] == 0">
+                    <div class="mail-item mail-unread mail-danger">
+                        <span class="fa fa-star-o">还没有发送过工单！</span>
+                    </div>
+                <else/>
+                    <volist name="data.list" id="vo">
+                        <div class="mail-item mail-unread mail-danger">
+                            <div class="mail-checkbox col-md-1 col-xs-1">
+                                <a  href="__GROUP__/Mail/del/id/{$vo.id}"><span class="fa fa-trash-o"></span></a>
+                            </div>
+                            <div class="mail-star col-md-1 col-xs-1 <gt name='vo.回复时间' value='0'>starred</gt>">
+                                <span class="fa fa-star-o"></span>
+                            </div>
+                            <div class="mail-user col-md-1 col-xs-10">{$vo.发件人}</div>
+                            <div class="col-md-7 col-xs-12">
+                                <a href="__GROUP__/Mail/sendview/id/{$vo.id}" class="mail-text">{$vo.标题|htmlspecialchars}</a>
+                            </div>
+                            <div class="mail-date col-md-2 col-xs-12">{:date('Y-m-d H:i:s',$vo['发送时间'])}</div>
+                        </div>
+                    </volist>
+                </if>
+        </div>
+        <div class="panel-footer">
+            <ul class="pagination pagination-sm pull-right">
+                <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录')} {$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                <!-- <if condition="$data['nowPage'] neq 1">
+                    <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                    <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                </if> -->
+                <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                <if condition="isset($data['rollPage'][-2])">
+                    <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                </if>
+                <if condition="isset($data['rollPage'][-1])">
+                    <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                </if>
+                <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                <if condition="isset($data['rollPage'][1])">
+                    <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                </if>
+                <if condition="isset($data['rollPage'][2])">
+                    <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                </if>
+                <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                <!-- <if condition="$data['nowPage'] lt $data['totalPages']">
+                    <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                    <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                </if> -->
+            </ul>
+        </div>
+    </div>
+
+    </div>
+<!-- END CONTENT FRAME BODY -->
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
+</body>
+</html>

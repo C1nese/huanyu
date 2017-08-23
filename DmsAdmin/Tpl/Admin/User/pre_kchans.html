@@ -1,0 +1,60 @@
+<script language="JavaScript">
+function accok(){
+	$('#submit').attr("disabled", true); 
+	$('#submit').css("color", 'gray');
+	var post_str = "ids="+$("#ids").val()+"&"+"deduct_acc="+$("input[name='deduct_acc']:checked").val()+"&"+"point="+$("input[name='point']:checked").val();
+	var url = "__APP__/Admin/User/kcsave";
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		var data = eval('('+html+')');
+		$("#tblok tr").each(function(){
+			if($(this).index()==0)return true;
+			$(this).children("td").eq(7).text(data[$(this).children("td").eq(0).text()]['msg']);
+		});	
+		navTab.reload();          //刷新列表	
+	}};
+	jQuery.ajax(ajax);
+}
+</script>
+<div class="pageContent">
+	<form id="form1" action="" method="post" class="pageForm required-validate" onsubmit="return false">
+		<input type="hidden" name="callbackType" value="closeCurrent"/>
+		<input type="hidden" id="ids" name="ids" value="{$ids}"/>
+	    <div class="pageFormContent" layoutH="58">
+	    <div class="grid">
+		<div class="gridHeader">
+		<table id="tblok" cellpadding="3" cellspacing="3" class="list">
+			<tr>
+				<th style="display:none;">ID</th>
+				<th width="110px;">用户编号</th>
+				<th width="110px;">注册日期</th>
+				<th width="110px;">审核日期</th>
+				<th width="110px;">状态</th>
+				<th width="110px;">扣除货币</th>
+				<th width="110px;">产生业绩</th>
+				<th width="110px;">处理结果</th>
+			</tr>
+			<foreach name="sdata" item="vo" key='k'>
+				<tr>
+				<td style="border:1px solid #aaa;display:none;">{$k}</td>
+				<td style="border:1px solid #aaa;">{$vo.编号}</td>
+				<td style="border:1px solid #aaa;">{$vo.注册日期|date="Y-m-d",###}</td>
+				<td style="border:1px solid #aaa;">{$vo.审核日期|date="Y-m-d",###}</td>
+				<td style="border:1px solid #aaa;">{$vo.状态}</td>
+				<td style="border:1px solid #aaa;"><input type="radio" name="deduct_acc" value="1" checked="cheacked"/>&nbsp;是&nbsp;<input type="radio" name="deduct_acc" value="0"/>&nbsp;否</td>
+				<td style="border:1px solid #aaa;"><input type="radio" name="point" value="1" checked="cheacked"/>&nbsp;是&nbsp;<input type="radio" name="point" value="0"/>&nbsp;否</td>
+				<td style="border:1px solid #aaa;"></td>
+				</tr>
+			</foreach>
+        </table>
+        </div>
+        </div>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button id="submit" type="submit" onclick="accok()">确认</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">关闭</button></div></div></li>
+			</ul>
+		</div>
+  </form>
+	
+</div>

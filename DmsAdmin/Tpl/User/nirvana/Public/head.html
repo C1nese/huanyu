@@ -1,0 +1,91 @@
+<!-- START WIDGETS -->
+<div class="row">
+
+    <div class="col-md-3">
+
+        <div class="widget widget-success widget-item-icon">
+            <div class="widget-item-left">
+                <span class="fa fa-credit-card"></span>
+            </div>
+            <div class="widget-data">
+                <div class="widget-int num-count">{$funbank["申购钱包"]["num"]}</div>
+                <div class="widget-title">申购钱包</div>
+                <div class="widget-subtitle">申购金用于进行用户申购注册</div>
+            </div>
+            <div class="widget-controls">
+                <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="col-md-3">
+
+        <div class="widget widget-info widget-item-icon">
+            <div class="widget-item-left">
+                <span class="fa fa-yen"></span>
+            </div>
+            <div class="widget-data">
+                <div class="widget-int num-count">{$funbank["用户收益"]["num"]}</div>
+                <div class="widget-title">用户收益</div>
+                <div class="widget-subtitle">用户收益内的金额可以进行提现</div>
+            </div>
+            <div class="widget-controls">
+                <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="col-md-3">
+
+        <!--<div class="widget widget-danger widget-item-icon">
+                                <div class="widget-item-left">
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
+                                </div>
+                                <div class="widget-data">
+                                    <div class="widget-int num-count">{$funbank["换购钱包"]["num"]}</div>
+                                    <div class="widget-title">换购钱包</div>
+                                    <div class="widget-subtitle">换购积分用于兑换联盟企业商品</div>
+                                </div>
+                                <div class="widget-controls">                                
+                                    <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+                                </div>                            
+                            </div>-->
+        <div class="widget widget-info widget-carousel" style="height:112px;">
+            <div class="owl-carousel" id="owl-example">
+                <foreach name="funbank" item="fun_bank" key="key">
+                    <div>
+                        <div class="widget-int" style="line-height: 32px;">{$fun_bank.num}</div>
+                        <div class="widget-title" style="font-size: 16px; line-height: 24px;margin-bottom:0">{:GET_F_L($fun_bank['name'])}</div>
+                        <div class="widget-subtitle">换购积分用于兑换联盟企业商品</div>
+                    </div>
+                </foreach>
+            </div>
+            <div class="widget-controls">
+                <a href="#" class="widget-control-right widget-remove" data-toggle="tooltip" data-placement="top" title="Remove Widget"><span class="fa fa-times"></span></a>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-3">
+
+        <div class="widget widget-warning widget-item-icon">
+            <div class="widget-item-left">
+                <span class="fa fa-money"></span>
+            </div>
+            <div class="widget-data">
+                <div class="widget-int num-count">{$funbank["持股数量"]["num"]}</div>
+                <div class="widget-title">持股数量</div>
+                <div class="widget-subtitle">您目前持有的股权数量总额</div>
+            </div>
+            <div class="widget-controls">
+                <a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

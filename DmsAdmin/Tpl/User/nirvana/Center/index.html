@@ -1,0 +1,466 @@
+<include file="Public:header"/>
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+<!-- END BREADCRUMB -->
+<!-- START CONTENT FRAME -->
+<div class="row">
+	<div class="col-md-12">
+		<div class="col-md-6">
+			<div class="widget widget-info">				
+				<div class="widget-subtitle"></div>
+				<div class="widget-int"><span data-toggle="counter" data-to="0.00">{$zb|default="0.00"}</span></div>
+				<div class="widget-subtitle"></div>
+				<div class="widget-title">消费额度指标</div>
+				<div class="widget-controls">
+					<a href="#" class="widget-control-left"><span class="fa fa-upload"></span></a>
+					<a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="widget widget-danger">
+				<div class="widget-subtitle"></div>
+				<div class="widget-int"><span data-toggle="counter" data-to="0.00"><gt name="infodata.状态" value="2">{$complete|default="0.00"} <else/>0.00</gt></span></div>
+				<div class="widget-subtitle"></div>
+				<div class="widget-title">完成消费额度</div>
+				<div class="widget-controls">
+					<a href="#" class="widget-control-left"><span class="fa fa-upload"></span></a>
+					<a href="#" class="widget-control-right"><span class="fa fa-times"></span></a>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+    <div class="col-md-12">
+        <!-- START TABLE HOVER ROWS -->
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3>{:GET_F_L('申请商业中心')}</h3>
+                <if condition="empty($sdata)">
+                    <div class="pull-right" style="margin-right: 30px;">
+                        <a class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span
+                                class="fa fa-upload"></span> {:GET_F_L('申请')}</a>
+                    </div>
+                </if>
+            </div>
+            <div class="panel panel-body panel-body-table">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-actions">
+                    <thead>
+                    <tr>
+                        <th>
+                            <nobr>{:GET_F_L('申请编号')}</nobr>
+                        </th>
+                        <th>
+                            <nobr>{:GET_F_L('申请时间')}</nobr>
+                        </th>
+                        <th>
+                            <nobr>{:GET_F_L('申请人')}</nobr>
+                        </th>
+                        <th>
+                            <nobr>{:GET_F_L('商业中心编号')}</nobr>
+                        </th>
+                        <th>
+                            <nobr>{:GET_F_L('商业中心级别')}</nobr>
+                        </th>
+                        <th>
+                            <nobr>{:GET_F_L('总金额')}</nobr>
+                        </th>
+                        <th>
+                            <nobr>{:GET_F_L('申请类型')}</nobr>
+                        </th>
+                        <if condition="$infodata[类型] eq 2">
+                            <th>
+                                <nobr>{:GET_F_L('合作伙伴')}</nobr>
+                            </th>
+                        </if>
+                        <th>
+                            <nobr>{:GET_F_L('出资金额')}</nobr>
+                        </th>
+                        <th style="text-align: center;" >
+                            <nobr>{:GET_F_L('状态')}</nobr>
+                        </th>
+                        <th style="text-align: center;">
+                            <nobr>{:GET_F_L('操作')}</nobr>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <foreach name='sdata' item='vo'>
+                        <tr class="datalist">
+                            <td>
+                                <nobr>{$vo.shnum}</nobr>
+                            </td>
+                            <td>
+                                <nobr>{:date('Y-m-d H:i:s',$vo['stime'])}</nobr>
+                            </td>
+                            <td>
+                                <nobr>{$vo.shuser}</nobr>
+                            </td>
+                            <td>
+                                <nobr>{$vo.cenuser}</nobr>
+                            </td>
+                            <td>
+                                <nobr>{$infodata.商业中心级别}</nobr>
+                            </td>
+                            <td>
+                                <nobr>{$infodata.总金额}</nobr>
+                            </td>
+                            <td>
+                                <nobr>
+                                    <if condition="$infodata[类型] eq 1">自主</if>
+                                    <if condition="$infodata[类型] eq 2">众筹</if>
+                                </nobr>
+                            </td>
+                            <if condition="$infodata[类型] eq 2">
+                                <td>
+                                    <nobr>{$vo.paruser}</nobr>
+                                </td>
+                            </if>
+                            <td>
+                                <nobr>{$vo.muchmoney}</nobr>
+                            </td>
+                            <td style="text-align: center;" >
+                                <nobr>{$vo.staus}</nobr>
+                            </td>
+                            <td style="text-align: center;" >
+                                <nobr>
+                                    <if condition="$userinfo['编号'] eq $vo['paruser']">
+                                        <if condition="$infodata['状态'] eq 0">
+                                            <if condition="$vo['status'] eq 0 || $vo['status'] eq -1">
+                                                <a href="javascript:;" data-toggle="modal" data-target="#agreeModal">签订协议</a>
+                                            </if>
+                                        </if>
+                                        <if condition="$infodata['状态'] eq 1">
+                                            <if condition="$vo['status'] eq 1">
+                                                <a href="javascript:;" data-toggle="modal"
+                                                   data-target="#payModal">付款</a>
+                                            </if>
+                                        </if>
+									<if condition="$infodata['状态'] eq 3">
+                                            <if condition="$vo['status'] eq 3">
+                                                <a href="/index.php?s=/User/Center/redeem/fication/{$peopledata.用户编号}/uid/{$infodata.id}" >赎回</a>&nbsp;&nbsp;<a href="/index.php?s=/User/Center/delay/fication/{$peopledata.用户编号}/uid/{$infodata.id}" >延期</a>
+                                            </if>
+										<if condition="$vo['status'] eq 4">
+											<a href="/index.php?s=/User/Center/delay/fication/{$peopledata.用户编号}/uid/{$infodata.id}" >延期</a>
+                                            </if>
+										<if condition="$vo['status'] eq 5">
+											<a href="/index.php?s=/User/Center/redeem/fication/{$peopledata.用户编号}/uid/{$infodata.id}" >赎回</a>
+                                            </if>
+                                        </if>
+                                    </if>
+                                </nobr>
+                            </td>
+
+                        </tr>
+                    </foreach>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+            <div class="panel-footer">
+
+            </div>
+        </div>
+        <!-- END TABLE HOVER ROWS -->
+    </div>
+</div>
+
+<include file="Public:footer"/>
+<if condition="empty($sdata)">
+    <!-- Modal1 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{:GET_F_L('申请商业中心')}</h4>
+                </div>
+                <div id="pincode" class="modal-body form-group-separated form-horizontal" style="border-top: 0;">
+                    <div class="form-group" style="border-top: 1px dashed #D5D5D5;border-bottom: 1px dashed #D5D5D5;">
+                        <label class="col-md-5 col-xs-5 control-label label-title" style="margin-bottom: 0;"><span
+                                id="error-msg" style="color:red;margin-right: 25px;"></span>{:GET_F_L('PIN码')}：</label>
+                        <div class="col-md-7 col-xs-7  control-label label-title" style="text-align: left">
+                            <input type="text" value="" size="20" name="pincode" id="textpin" class="form-control"
+                                   style="width: 60%;display: inline"/>
+                            <button type="button" class="btn btn-info active" onclick="checkpin();">验证</button>
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+
+                </div>
+                <!--<div class="modal-footer"></div>-->
+                <div id="formcont" style="display: none">
+                    <form action="__GROUP__/Center/scenterSave" method="post" class="form-horizontal">
+
+                        <input type="hidden" name="picode" id="picode" value="" readonly/>
+                        <div class="modal-body form-group-separated form-material" style="border-top: 0;">
+                            <div class="form-group" style="border-top: 1px dashed #D5D5D5;">
+                                <label class="col-md-5 col-xs-5 control-label label-title">{:GET_F_L('商业中心级别')}：</label>
+                                <div class="col-md-5 col-xs-5 label-title" style="font-size: 16px;">
+                                    <strong class="text-info" id="lvtext"></strong>
+                                    <input type="hidden" name="lv" id="lv" value="" readonly/>
+                                    <input type="hidden" name="lvinfo" id="lvinfo" value="" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-5 control-label label-title">{:GET_F_L('金额')}：</label>
+                                <div class="col-md-5 col-xs-5 label-title" style="font-size: 16px;">
+                                    ￥<span class="text-danger" id="muchmoneytext"></span>
+                                    <input type="hidden" name="muchmoney" id="muchmoney" value="" readonly/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-5 control-label label-title">申请类型</label>
+                                <div class="col-md-5 col-xs-5 label-title">
+                                    <label class="radio-material">
+                                        <input id="radio1" type="radio" name="stype" value="1" checked/>
+                                        <span class="outer"><span class="inner"></span></span>自主
+                                    </label>
+                                    <label class="radio-material">
+                                        <input id="radio2" type="radio" name="stype" value="2"/>
+                                        <span class="outer"><span class="inner"></span></span>众筹
+                                    </label>
+                                </div>
+                            </div>
+                            <div id="text-input-one" style="display: none">
+                                <div class="form-group"
+                                     style="border-bottom: 1px dashed #D5D5D5;">
+                                    <div class="col-md-12 col-xs-12  control-label label-title"
+                                         style="text-align: center">
+                                        <button type="button" class="btn btn-success active" id="input-add">
+                                            {:GET_F_L('增加合作伙伴')}
+                                        </button>
+                                        {:GET_F_L('选中者作为商业中心')}
+                                    </div>
+                                    <div style="clear:both"></div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="button_text btn btn-primary" type="submit" value="{:GET_F_L('确认')}"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</if>
+<if condition="$infodata['状态'] eq 0">
+    <div class="modal fade" id="agreeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{:GET_F_L('商业中心协议')}</h4>
+                </div>
+
+                <!--<div class="modal-footer"></div>-->
+                <div>
+                    <div class="modal-body form-group-separated form-material" style="border-top: 0;">
+                        {$sagree}
+                        <div class="modal-footer">
+                            <a href="__GROUP__/Center/agreeidonot">
+                                <button class="btn btn-default active" type="button">{:GET_F_L('不同意')}</button>
+                            </a>
+                            <a href="__GROUP__/Center/agreeido">
+                                <button class="btn btn-success active" type="button">{:GET_F_L('我同意')}</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</if>
+<if condition="$infodata['状态'] eq 1">
+    <div class="modal fade" id="payModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{:GET_F_L('支付')}</h4>
+                </div>
+
+                <!--<div class="modal-footer"></div>-->
+                <div>
+                    <form action="__GROUP__/Center/pay_confirm" method="post" class="form-horizontal">
+
+                        <div class="modal-body form-group-separated form-material" style="border-top: 0;">
+                            <div class="form-group" style="border-top: 1px dashed #D5D5D5;">
+                                <label class="col-md-5 col-xs-12 control-label label-title">{:GET_F_L('商业中心级别')}：</label>
+                                <div class="col-md-5 col-xs-5 label-title" style="font-size: 16px;">
+                                    <strong class="text-info" id="paylvtext">{$infodata.商业中心级别}</strong>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-12 control-label label-title">{:GET_F_L('总金额')}：</label>
+                                <div class="col-md-5 col-xs-5 label-title" style="font-size: 16px;">
+                                    ￥<span class="text-danger" id="allmuch">{$infodata.总金额}</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-12 control-label label-title">申请类型：</label>
+                                <div class="col-md-5 col-xs-5 label-title">
+                                <span class="text-info" id="paystyle" style="font-size: 14px;">
+                                    <if condition="$infodata[类型] eq 1">自主</if>
+                                    <if condition="$infodata[类型] eq 2">众筹</if>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-12 control-label label-title">{:GET_F_L('待支付金额')}：</label>
+                                <div class="col-md-5 col-xs-5 label-title" style="font-size: 16px;">
+                                    ￥<span class="text-danger" id="paymuch">{$peopledata.用户金额}</span>
+                                    <input type="hidden" name="paymuch" value="{$peopledata.用户金额}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-5 col-xs-12 control-label label-title">{:GET_F_L('选择支付方式')}</label>
+                                <div class="col-md-5 col-xs-12" style="margin-top:3px">
+                                    <select name="payment" onchange="inputname()" id="test" class="form-control"
+                                            style="border-radius:4px;">
+                                        <option value="">{:GET_F_L('请选择支付方式')}</option>
+                                        <foreach name="list" item="payInfo">
+                                            <present name="payInfo.banklist">
+                                                <foreach name="payInfo.banklist" key="bank_code" item="bank_name">
+                                                    <option value="{$key}:{$bank_code}" class="{$key}">{$bank_name}
+                                                    </option>
+                                                </foreach>
+
+                                                <else/>
+                                                <option value="{$key}" class="{$key}">{$payInfo.name}</option>
+                                            </present>
+                                        </foreach>
+                                        <option value="centerpay" class="centerpay">中心钱包</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input class="button_text btn btn-primary" type="submit" value="{:GET_F_L('确认')}"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</if>
+</body>
+</html>
+<if condition="empty($sdata)">
+    <script>
+        $(function () {
+            var count = 0;
+            showCont();
+            $("input[name=stype]").click(function () {
+                showCont();
+            });
+            $(document).on('click','#input-del', function () {
+                var muchmoney = $("#muchmoney").val();
+                if (count == 0) {
+                    var checkedval = 'checked';
+                } else {
+                    var checkedval = '';
+                }
+                var much = (muchmoney / (count - 1)).toFixed(2);
+                if ($('#text-input-one').children().length > 2) {
+                    $(this).parent().parent().remove();
+                    count--;
+                    $("input[id^=partnermoney]").val(much);
+                }
+            })
+            $('#input-add').on('click', function () {
+                var muchmoney = $("#muchmoney").val();
+                if (count == 0) {
+                    var checkedval = 'checked';
+                } else {
+                    var checkedval = '';
+                }
+                var much = (muchmoney / (count + 1)).toFixed(2);
+                if ($('#text-input-one').children().length <= 10) {
+                    $('#text-input-one').append(' <div class="form-group"' +
+                            'style="border-bottom: 1px dashed #D5D5D5;">' +
+                            ' <label class="col-md-5 col-xs-5 control-label label-title">' +
+                            '<label class="radio-material" style="padding-right: 0px;">' +
+                            '<input id="radio1" type="radio" name="centuser" value="' + count + '" ' + checkedval + '/>' +
+                            '<span class="outer"><span class="inner"></span></span>' +
+                            '</label>' +
+                            '{:GET_F_L("合作伙伴编号")}：</label>' +
+                            '  <div class="col-md-7 col-xs-7 label-title" style="text-align: left">' +
+                            '      <input type="text" value="" size="20" name="partner[' + count + '][people]" class="form-control"' +
+                            'style="width: 30%;display: inline"/>' +
+                            '      金额：<input type="text" value="' + much + '" id="partnermoney' + count + '" size="20" name="partner[' + count + '][money]" class="form-control"' +
+                            'style="width: 30%;display: inline"/><button type="button" class="btn btn-success active" id="input-del" style="margin-top:-3px;margin-left:5px;">{:GET_F_L("删除")}</button>' +
+                            '</div>' +
+                            ' <div style="clear:both"></div>' +
+                            '  </div>')
+                    count++;
+                    $("input[id^=partnermoney]").val(much);
+                } else {
+                    $('#more-msg').text('最多只能添加十个');
+                    $('#more-msg').css('display', 'inline');
+                    $('#more-msg').fadeOut(2000);
+                }
+            })
+        });
+        function showCont() {
+            switch ($("input[name=stype]:checked").attr("id")) {
+                case "radio1":
+                    //alert("one");
+                    $('#text-input-one').hide();
+                    break;
+                case "radio2":
+                    $('#text-input-one').show();
+                    break;
+                default:
+                    break;
+            }
+        }
+        function checkpin() {
+            var pincode = $("#textpin").val();
+
+            $.post('__GROUP__/Center/checkpin', {code: pincode}, function (data) {
+
+                eval("var json=" + data);
+                if (json.status == 1) {
+                    $('#formcont').show();
+                    for (var x in json) {
+                        if (x == 'data') {
+                            var bata = json[x];
+                            console.log(bata);
+
+                            $("#picode").val(pincode);
+                            $("#lvtext").html(bata.lvtext);
+                            $("#lvinfo").val(bata.lvtext);
+                            $("#lv").val(bata.级别);
+                            $("#muchmoneytext").html(bata.金额);
+                            $("#muchmoney").val(bata.金额);
+                        }
+                    }
+                } else {
+                    var error_info;
+                    if (json.status == 0) {
+                        error_info = "PIN码不存在";
+                    }
+                    if (json.status == -1) {
+                        error_info = "PIN码已失效";
+                    }
+                    $('#textpin').css('background', '#FF2828');
+                    $('#error-msg').text(error_info);
+                    $('#error-msg').css('display', 'inline');
+                    $('#error-msg').fadeOut(2000);
+                    $('#textpin').animate({backgroundColor: '#FFF'}, 2000);
+                }
+
+            });
+        }
+
+    </script>
+</if>

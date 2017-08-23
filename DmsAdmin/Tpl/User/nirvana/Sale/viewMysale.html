@@ -1,0 +1,321 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+	<li><a href="#">{:GET_F_L('当前位置')}</a></li>
+	<li class="active">{$nowtitle}</li>
+</ul>
+<div class="content-frame">
+	<!-- START CONTENT FRAME TOP -->
+    <div class="content-frame-top">
+        <div class="page-title">
+            <h2><span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('我的订单记录')}</h2>        
+            <!-- <strong style="font-size:18px;color:#3c3c3c;"><span class="fa fa-info"></span>&nbsp;{:GET_F_L('我的成长进度')}</strong> -->
+        </div>
+    </div>
+        
+           <div class="content-frame-left">
+        <div class="panel panel-primary" >
+          <div class="panel-body">
+                <div class="list-group border-bottom">
+                                    <a class="list-group-item <eq name='name' value='我的产品订单'>active</eq>" href="/index.php?s=/User/Sale/productmysale" id="我的产品订单">{:GET_F_L('我的产品订单')}</a>
+                     <a class="list-group-item <eq name='name' value='我的用户订单'>active</eq>" href="/index.php?s=/User/User/myreg" id="我的用户订单">{:GET_F_L('我的用户订单')}</a>
+
+                    <a class="list-group-item <eq name='name' value='用户订单审核'>active</eq>" href="/index.php?s=/User/Sale/acclist" id="用户订单审核">{:GET_F_L('用户订单审核')}</a>
+                    <a class="list-group-item <eq name='name' value='联盟机构订单'>active</eq>" href="/index.php?s=/User/User/fwsale" id="联盟机构订单">{:GET_F_L('联盟机构订单')}</a>
+            </div>
+          </div>
+        </div>
+    </div> 
+	<!-- END CONTENT FRAME TOP -->
+
+	<!-- START CONTENT FRAME BODY -->
+	<div class="content-frame-body">
+
+		<div class="row push-up-10">
+			<div class="col-md-7">
+
+				<div class="row">
+					<!-- START PANEL WITH CONTROL CLASSES -->
+					<div class="panel panel-colorful form-horizontal">
+						<div class="panel-heading">
+							<h3><i class="fa fa-users"></i> {:GET_F_L('商品信息')}</h3>
+							<ul class="panel-controls">
+								<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+								<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+								<li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+								<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+							</ul>
+						</div>
+						<div class="panel-body form-group-separated">
+							<foreach name="productData" item="paydata">
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('商品名称')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$paydata['名称']}</span>
+								</div>
+							</div>
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('商品数量')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$paydata['数量']}</span>
+								</div>
+							</div>
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('商品价格')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$paydata['价格']}</span>
+								</div>
+							</div>
+							<if condition="$adminshow eq true">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">PV</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$paydata['PV']}</span>
+									</div>
+								</div>
+							</if>
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('商品总价')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$paydata['总价']}</span>
+								</div>
+							</div>
+							<if condition="$adminshow eq true">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('总PV')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$paydata['总PV']}</span>
+									</div>
+								</div>
+							</if>
+							</foreach>
+
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('购物金额')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$saleData.购物金额}</span>
+								</div>
+							</div>
+							<if condition="$adminshow eq true">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('购物PV')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.购物PV}</span>
+									</div>
+								</div>
+							</if>
+						</div>
+					</div>
+					<!-- END PANEL WITH CONTROL CLASSES -->
+
+					<!-- START PANEL WITH CONTROL CLASSES -->
+					<div class="panel panel-colorful form-horizontal">
+						<div class="panel-heading">
+							<h3 ><i class="fa fa-users"></i> {:GET_F_L('付款信息')}</h3>
+							<ul class="panel-controls">
+								<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+								<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+								<li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+								<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+							</ul>
+						</div>
+						<div class="panel-body form-group-separated">
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('用户编号')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$saleData.编号}</span>
+								</div>
+							</div>
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('购买日期')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span><if condition="$saleData['购买日期']">{$saleData.购买日期|date='Y-m-d H:i:s',###}</if></span>
+								</div>
+							</div>
+							<if condition="$saleData['到款日期'] gt 0">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('到款日期')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span><if condition="$saleData['到款日期']">{$saleData.到款日期|date='Y-m-d H:i:s',###}</if></span>
+									</div>
+								</div>
+							</if>
+							<if condition="$saleData['发货日期'] gt 0">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('发货日期')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span><if condition="$saleData['到款日期']">{$saleData.发货日期|date='Y-m-d H:i:s',###}</if></span>
+									</div>
+								</div>
+							</if>
+							<if condition="$saleData['收货日期'] gt 0">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('收货日期')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span><if condition="$saleData['到款日期']">{$saleData.收货日期|date='Y-m-d H:i:s',###}</if></span>
+									</div>
+								</div>
+							</if>
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('付款类别')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$saleData.报单类别}</span>
+								</div>
+							</div>
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('付款状态')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$saleData.报单状态}</span>
+								</div>
+							</div>
+							<!--<if condition="$saleData['报单金额'] neq 0">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('报单金额')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.报单金额}</span>
+									</div>
+								</div>
+							</if>
+
+							<if condition="$saleData['产品'] eq 1">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('购物金额')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.购物金额}</span>
+									</div>
+								</div>
+								<if condition="$adminshow eq true">
+									<div class="form-group line-height-30">
+										<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('购物PV')}</label>
+										<div class="col-md-8 col-xs-7">
+											<span>{$saleData.购物PV}</span>
+										</div>
+									</div>
+								</if>
+							</if>-->
+
+							<div class="form-group line-height-30">
+								<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('实付款')}</label>
+								<div class="col-md-8 col-xs-7">
+									<span>{$saleData.实付款}</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END PANEL WITH CONTROL CLASSES -->
+				</div>
+
+			</div>
+
+			<div class="col-md-5">
+
+				<div class="row">
+					<!-- START PANEL WITH CONTROL CLASSES -->
+					<div class="panel panel-colorful form-horizontal">
+						<div class="panel-heading">
+							<h3><i class="fa fa-users"></i> {:GET_F_L('物流信息')}</h3>
+							<ul class="panel-controls">
+								<li><a href="#" class="panel-fullscreen"><span class="fa fa-expand"></span></a></li>
+								<li><a href="#" class="panel-collapse"><span class="fa fa-angle-down"></span></a></li>
+								<li><a href="#" class="panel-refresh"><span class="fa fa-refresh"></span></a></li>
+								<li><a href="#" class="panel-remove"><span class="fa fa-times"></span></a></li>
+							</ul>
+						</div>
+						<div class="panel-body form-group-separated">
+							<if condition="$saleData['升级数据'] gt 0">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('原始级别')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$oldlevel}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('升至级别')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$nowlevel}</span>
+									</div>
+								</div>
+							</if>
+							<if condition="$saleData['物流费'] gt 0">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('产品重量')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData['产品总重量']}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('物流费')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData['物流费']}</span>
+									</div>
+								</div>
+							</if>
+							<if condition="$saleData['发货方式'] neq ''">
+								<tr>
+									<td class="tbkey">{:GET_F_L('发货方式')}：</td>
+									<td class="tbval">{$saleData['发货方式']}</td>
+								</tr>
+							</if>
+							<if condition="($saleData['产品'] eq 1) or (adminshow('baodan_wuliu') eq true)">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('收货人')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.收货人}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('联系电话')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.联系电话}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('收货地址')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.收货省份}{$saleData.收货城市}{$saleData.收货地区}{$saleData.收货街道}{$saleData.收货地址}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('物流状态')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.物流状态}</span>
+									</div>
+								</div>
+							</if>
+							<if condition="$saleData['快递公司'] neq ''">
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('快递公司')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.快递公司}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('快递订单')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.快递订单}</span>
+									</div>
+								</div>
+								<div class="form-group line-height-30">
+									<label class="col-md-4 col-xs-5 control-label">{:GET_F_L('快递备注')}</label>
+									<div class="col-md-8 col-xs-7">
+										<span>{$saleData.快递备注}</span>
+									</div>
+								</div>
+							</if>
+
+						</div>
+					</div>
+					<!-- END PANEL WITH CONTROL CLASSES -->
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+
+</div>
+<!-- END BREADCRUMB -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->

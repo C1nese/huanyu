@@ -1,0 +1,328 @@
+<div class="pageContent">
+	<form method="post" action="__URL__/funbankConfigUpdate:__XPATH__" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDoneReload);">
+		<div class="pageFormContent" layoutH="56">
+            <div style="margin-bottom: 20px;">
+				<label style="float: left;width: 150px; text-align: right;"><b>功能开关：</b></label>
+				<span><label><input type="radio" name="use" value="true" <if condition="($bank:use eq 1) OR ($bank:use eq true)">checked</if> />开启</label>
+     <label><input type="radio" name="use" value="false" <if condition="($bank:use eq 0) OR ($bank:use eq false)">checked</if> />关闭</label></span>
+			</div>
+           
+            <div style="margin: 5px;"><b>提现设置</b></div>
+            <div class="divider"></div>
+			<p>
+				<label style="float: left;width: 150px; text-align: right;">允许提现：</label>
+				<label><input type="radio" name="getMoney" id="getmoney1" value="true" <if condition="($bank:getMoney eq 1) OR ($bank:getMoney eq true)">checked</if>  onclick="navTab.getCurrentPanel().find('#hideGetMoney').show();"/>允许</label>
+     <label><input type="radio" name="getMoney" id="getmoney2" value="false" <if condition="($bank:getMoney eq 0) OR ($bank:getMoney eq false)">checked</if> onclick="navTab.getCurrentPanel().find('#hideGetMoney').hide();"/>不允许</label>
+			</p>
+            <div style="clear: left;<if condition="($bank:getMoney eq 0) OR ($bank:getMoney eq false)">display:none</if>" id="hideGetMoney">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">提现手续费比率：</label>
+				<input type="text" value="{$bank:getMoneyTax}" name="getMoneyTax"  class="number" />&nbsp;<span class="unit">%</span>
+			</p>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">提现手续费下限：</label>
+				<input type="text" value="{$bank:getMoneyTaxMin}" size="20" class="number" name="getMoneyTaxMin"/>
+			</p>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">提现手续费上限：</label>
+				<input type="text" value="{$bank:getMoneyTaxMax}" size="20" name="getMoneyTaxMax" class="number"/>
+			</p>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">最小提款额：</label>
+				<input type="text" value="{$bank:getMoneyMin}" size="20" name="getMoneyMin" class="number" />
+			</p>
+			<php>
+			  //判断豪华版和简化版 如果是简化版不能设置提现发放换算比
+			  if(C('VERSION_SWITCH') == '0'){
+			</php>
+				<p style="width: 350px;">
+					<label style="float: left;width: 150px; text-align: right;">提现发放换算比</label>
+					<input type="text" value="{$bank:getMoneyRatio}" name="getMoneyRatio" class="number"/>
+				</p>
+			<php>}</php>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">提现时单独输入银行账号：</label>
+				<input type="radio" value="true" name="getMoneyBank" <if condition="($bank:getMoneyBank eq 1) OR ($bank:getMoneyBank eq true)">checked</if> />是
+     <input type="radio" value="false" name="getMoneyBank" <if condition="($bank:getMoneyBank eq 0) OR ($bank:getMoneyBank eq false)">checked</if>/>否
+			</p>
+			<php>
+			 //判断如果是简化版的话 简化版则不享有提现后清楚银行信息
+			 if(C('VERSION_SWITCH') == '0'){
+			</php>
+				<p style="width: 350px;">
+					<label style="float: left;width: 150px; text-align: right;">提现确认后清除银行信息：</label>
+					<input type="radio" value="true" name="getMoneyBankClear" <if condition="($bank:getMoneyBankClear eq 1) OR ($bank:getMoneyBankClear eq true)">checked</if>/>是
+	     <input type="radio" value="false" name="getMoneyBankClear" <if condition="($bank:getMoneyBankClear eq 0) OR ($bank:getMoneyBankClear eq false)">checked</if>/>否
+				</p>
+			<php>}</php>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">整数倍设置：</label>
+				<input type="text" value="{$bank:getMoneyInt}" name="getMoneyInt" class="digits"/>
+			</p>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">有未审记录不能提现：</label>
+				<input type="radio" value="true" name="getOnly" <if condition="($bank:getOnly eq 1) OR ($bank:getOnly eq true)">checked</if>/>是
+     			<input type="radio" value="false" name="getOnly" <if condition="($bank:getOnly eq 0) OR ($bank:getOnly eq false)">checked</if>/>否
+			</p>
+			<p style="width: 550px;">
+				<label style="float: left;width: 150px; text-align: right;">周几不能提现：</label>
+				<input type="checkbox" name="getMoneyWeek[]" value="1" <php>if(in_array(1,$weekary)) echo "checked";</php> />周一&nbsp;&nbsp;
+				<input type="checkbox" name="getMoneyWeek[]" value="2" <php>if(in_array(2,$weekary)) echo "checked";</php>  />周二&nbsp;&nbsp;
+				<input type="checkbox" name="getMoneyWeek[]" value="3" <php>if(in_array(3,$weekary)) echo "checked";</php>  />周三&nbsp;&nbsp;
+				<input type="checkbox" name="getMoneyWeek[]" value="4" <php>if(in_array(4,$weekary)) echo "checked";</php>  />周四&nbsp;&nbsp;
+				<input type="checkbox" name="getMoneyWeek[]" value="5" <php>if(in_array(5,$weekary)) echo "checked";</php>  />周五&nbsp;&nbsp;
+				<input type="checkbox" name="getMoneyWeek[]" value="6" <php>if(in_array(6,$weekary)) echo "checked";</php>  />周六&nbsp;&nbsp;
+				<input type="checkbox" name="getMoneyWeek[]" value="0" <php>if(in_array(0,$weekary)) echo "checked";</php>  />周日&nbsp;&nbsp;
+			</p>
+			<p style="width: 650px;">
+				<label style="float: left;width: 150px; text-align: right;">每月中的几号不能提现：</label>
+				<input type="text" value="{$bank:getMoneyMday}" name="getMoneyMday" size="70" /> <font color='red'>多个请用逗号分隔</font>
+			</p>
+
+            <!--金额输入-->
+            <p style="width: 350px; position:relative;">
+				<label style="float: left;width: 150px; text-align: right;">金额输入：</label>
+				<input class="money-yes" type="radio" value="true" name="???" onclick="money_yes()" <if condition="true">checked</if>/>是
+                <input class="money-no" type="radio" value="false" name="???" onclick="money_no()" <if condition="false">checked</if>/>否
+                <!--可选金额-->
+                <span class="moneySelect" style="display: none;">
+                    →<textarea class="moneytext numberb" name="aaa" style="width: 60px;height: 60px;position: absolute;top: 8px;left: 245px;background: #fff;z-index:999;"></textarea>
+                </span>
+
+                </span>
+                <script>
+                    //下拉菜单
+                    function money_yes() {
+                        $('.moneySelect').hide();
+                    }
+                    function money_no() {
+                        $('.moneySelect').show();
+                    }
+                    /*
+                    $(function() {
+                        $('.money-box').hide();
+                        $('.moneyinput').click(function () {
+                            $('.money-box').toggle();
+                        });
+                        var moneyval = $('.money-box').find('span');
+                        moneyval.hover(function () {
+                            $(this).css('background','#e8edf3');
+                            },function () {
+                            $(this).css('background','none');
+                        });
+                        moneyval.click(function () {
+                            $('.moneyinput').val($(this).text());
+                            $('.money-box').hide();
+                        });
+                    });*/
+
+                    //验证数字
+                    $.validator.addMethod("numberb", function(value, element) {
+                        return this.optional(element) || /^(\d+\n*)+$/.test(value);
+                    }, "请输入合法的数字");
+
+                    //去空格
+                   
+                    $('.moneyinput').blur(function () {
+                        var str = $(this).val();
+                        str = str.replace(/[ 　]*/g,"");
+                        $(this).val(str);
+                    });
+                </script>
+			</p>
+            <!--end-->
+
+		    <php>
+			 //判断如果是简化版的话 简化版则不享有提现后清楚银行信息
+			 if(C('VERSION_SWITCH') == '0'){
+			</php>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">提现需要二级密码：</label>
+				<input type="radio" value="true" name="getMoneyPass2"  <if condition="($bank:getMoneyPass2 eq 1) OR ($bank:getMoneyPass2 eq true)">checked</if>/>是
+     <input type="radio" value="false" name="getMoneyPass2" <if condition="($bank:getMoneyPass2 eq 0) OR ($bank:getMoneyPass2 eq false)">checked</if>/>否
+			</p>
+			<php>}</php>
+			<eq name="pwd3Switch" value="true">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">提现需要三级密码：</label>
+				<input type="radio" value="true" name="getMoneyPass3" <if condition="($bank:getMoneyPass3 eq 1) OR ($bank:getMoneyPass3 eq true)">checked</if> />是
+     <input type="radio" value="false" name="getMoneyPass3" <if condition="($bank:getMoneyPass3 eq 0) OR ($bank:getMoneyPass3 eq false)">checked</if>/>否
+			</p>
+			</eq>
+			<if condition="adminshow('smsSwitch') eq true">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">短信验证码：</label>
+				<input type="radio" value="true" name="getMoneySmsSwitch" <if condition="($bank:getMoneySmsSwitch eq 1) OR ($bank:getMoneySmsSwitch eq true)">checked</if>/>是
+				<input type="radio" value="false" name="getMoneySmsSwitch" <if condition="($bank:getMoneySmsSwitch eq 0) OR ($bank:getMoneySmsSwitch eq false)">checked</if>/>否
+			</p>
+			
+			<p style="width: 550px;height:100px;<if condition="($bank:getMoneySmsSwitch eq 0) OR ($bank:getMoneySmsSwitch eq false)">display:none</if>" id="getMoneySmsContent">
+				<label style="float: left;width: 150px; text-align: right;">短信内容：</label>
+				<textarea name="getMoneySmsContent" cols="50" rows="3">{$bank:getMoneySmsContent}</textarea>
+			</p>
+			</if>
+			<if condition="adminshow('mibao') eq true">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px;text-align: right;">提现需要回答密保问题：</label>
+				<input type="radio" value="true" name="getSecretSafe" <if condition="($bank:getSecretSafe eq 1) OR ($bank:getSecretSafe eq true)">checked</if> />是
+     <input type="radio" value="false" name="getSecretSafe" <if condition="($bank:getSecretSafe eq 0) OR ($bank:getSecretSafe eq false)">checked</if>/>否
+			</p>
+			</if>
+            </div>
+            
+            <div style="margin: 5px;padding-top: 15px;clear: both;"><b>在线支付管理</b></div>
+            <div class="divider"></div>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">开启在线支付：</label>
+				<label><input type="radio" value="true" name="bankIn" id="bankin1" <if condition="$bank:bankIn eq 1">checked</if> onclick="navTab.getCurrentPanel().find('#hideInline').show();"/>是</label>
+     <label><input type="radio" value="false" name="bankIn" id="bankin2" <if condition="$bank:bankIn eq 0">checked</if> onclick="navTab.getCurrentPanel().find('#hideInline').hide();"/>否</label>
+			</p>
+            <div style="clear: left;<if condition="$bank:bankIn eq 0">display:none</if>" id="hideInline">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">在线支付换算比：</label>
+				<input type="text" value="{$bank:bank_scale}" name="bank_scale" size="4" />充值金额/换算比
+			</p>
+			</div>
+			<!--
+            <div style="clear: left;<if condition="$bank:bankIn eq 0">display:none</if>" id="hideInline">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">在线支付配置：</label>
+				<input type="text" value="{$bank:bankInConStr}" name="bankInConStr" />
+			</p>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">每日提现次数：</label>
+				<input type="text" value="{$bank:getMoneyInDayNum}" name="getMoneyInDayNum" class="digits" />
+			</p>
+			<p style="width: 350px;clear: left;">
+				<label style="float: left;width: 150px; text-align: right;">货币单位多语言标签：</label>
+				<input type="text" value="{$bank:money_l_name}" name="money_l_name" />
+			</p>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">冻结功能：</label>
+				<input type="radio" value="true" name="frozen" <if condition="($bank:frozen eq 1) OR ($bank:frozen eq true)">checked</if>/>是
+     <input type="radio" value="false" name="frozen" <if condition="($bank:frozen eq 0) OR ($bank:frozen eq false)">checked</if>/>否
+			</p>
+            -->
+            
+            <!--<div style="margin: 5px;padding-top: 15px;clear: both;"><b>转账设置</b></div>
+            <div class="divider"></div>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">允许转账：</label>
+				<label><input type="radio" value="true" name="giveMoney" id="givemoney1" <if condition="($bank:giveMoney eq 1) OR ($bank:giveMoney eq true)">checked</if> onclick="navTab.getCurrentPanel().find('#hideGiveMoney').show()"/>是</label>
+     <label><input type="radio" value="false" name="giveMoney" id="givemoney2" <if condition="($bank:giveMoney eq 0) OR ($bank:giveMoney eq false)">checked</if> onclick="navTab.getCurrentPanel().find('#hideGiveMoney').hide()"/>否</label>
+			</p>
+            <div style="clear: left;<if condition="($bank:giveMoney eq 0) OR ($bank:giveMoney eq false)">display:none</if>" id="hideGiveMoney">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">转账需要二级密码：</label>
+				<label><input type="radio" value="true" name="giveMoneyPass2" <if condition="($bank:giveMoneyPass2 eq 1) OR ($bank:giveMoneyPass2 eq true)">checked</if>/>是</label>
+     <label><input type="radio" value="false" name="giveMoneyPass2" <if condition="($bank:giveMoneyPass2 eq 0) OR ($bank:giveMoneyPass2 eq false)">checked</if>/>否</label>
+			</p>
+			<eq name="pwd3Switch" value="true">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">转账需要三级密码：</label>
+				<label><input type="radio" value="true" name="giveMoneyPass3" <if condition="($bank:giveMoneyPass3 eq 1) OR ($bank:giveMoneyPass3 eq true)">checked</if>/>是</label>
+     <label><input type="radio" value="false" name="giveMoneyPass3" <if condition="($bank:giveMoneyPass3 eq 0) OR ($bank:giveMoneyPass3 eq false)">checked</if>/>否</label>
+			</p>
+			</eq>
+			<if condition="adminshow('smsSwitch') eq true">
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">短信验证码：</label>
+				<input type="radio" value="true" name="giveMoneySmsSwitch" <if condition="($bank:giveMoneySmsSwitch eq 1) OR ($bank:giveMoneySmsSwitch eq true)">checked</if>/>是
+				<input type="radio" value="false" name="giveMoneySmsSwitch" <if condition="($bank:giveMoneySmsSwitch eq 0) OR ($bank:giveMoneySmsSwitch eq false)">checked</if>/>否
+			</p>
+			
+			<p style="width: 550px;height:100px;<if condition="($bank:giveMoneySmsSwitch eq 0) OR ($bank:giveMoneySmsSwitch eq false)">display:none</if>" id="giveMoneySmsContent">
+				<label style="float: left;width: 150px; text-align: right;">短信内容：</label>
+				<textarea name="giveMoneySmsContent" cols="50" rows="3">{$bank:giveMoneySmsContent}</textarea>
+			</p>
+			</if>
+			<p style="width: 350px;">
+				<label style="float: left;width: 150px; text-align: right;">添加转账配置：</label>
+                
+				<a href="__URL__/addGive:__XPATH__" target="dialog" mask="true" title="添加转账配置" height="500" width="520"><span style="padding-right: 5px;"><img src="__PUBLIC__/Images/ExtJSicons/table/table_add.png"/></span>添加</a>
+			</p>
+            <volist name="givecon" id="vo" key="key">
+            <div id="vo_{$key}">
+                <div class="divider"></div>
+                <div style="float:right;padding-right:5px"><span style="cursor:pointer" onclick="removeGivecon('{$key}');"><img src="__PUBLIC__/Images/b_drop.png"/></span>
+                </div>
+                <div>
+                    <table style="">
+    				<tr>
+                    <td style="text-align: right;width:100px">转账目标：</td>
+    				<td style="text-align: left;width:200px">{$vo.giveTo}</td>
+    				<td style="text-align: right;width:100px">最小转账金额：</td>
+    				<td style="text-align: left;width:100px">{$vo.leastMoney}</td></span>
+    				<td style="text-align: right;width:100px">手续费：</td>
+    				<td style="text-align: left;width:100px">{$vo.comCharge}</td></span>
+    			
+    				<td style="text-align: right;width:100px">手续费下限：</td>
+    				<td style="text-align: left;width:100px">{$vo.leastComCharge}</td>
+    				<td style="text-align: right;width:100px">手续费上限：</td>
+    				<td style="text-align: left;width:100px">{$vo.limitComCharge}</td>
+                    </tr>
+                    <tr>
+					<td style="text-align: right;">标题：</td>
+    				<td style="text-align: left;"><empty name="vo.giveTitle">{$vo.giveTo}<else/>{$vo.giveTitle}</empty></td>
+					<if condition="($vo.issave eq '0')">
+    				<td style="text-align: right;">转换比例：</td>
+    				<td style="text-align: left;">{$vo.scale}%</td>
+					</if>
+    				<td style="text-align: right;">网络体系限定：</td>
+    				<td style="text-align: left;">{$vo.leastNet}</td>
+    				<td style="text-align: right;">整数倍设置：</td>
+    				<td style="text-align: left;">{$vo.giveMoneyInt|intval}</td>
+                    <input type="hidden" name="givecon[]" value="{$key}" />
+                    </tr>
+					<if condition="($vo.issave eq '1')">
+    				<td style="text-align: center;" colspan='2'>转换比例：</td>
+    				<td style="text-align: right;">{$vo.bank_scale_day_1}天：</td>
+    				<td style="text-align: left;">{$vo.bank_scale_1}%</td>
+    				<td style="text-align: right;">{$vo.bank_scale_day_2}天：</td>
+    				<td style="text-align: left;">{$vo.bank_scale_2}%</td>
+    				<td style="text-align: right;">{$vo.bank_scale_day_3}天：</td>
+    				<td style="text-align: left;">{$vo.bank_scale_3}%</td>
+					</if>
+                    </table>
+                </div>
+            </div>
+            </volist>
+            </div>-->
+        </div>
+		<div class="formBar">
+			
+			<ul style="margin:0 auto;float:left">
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>
+<script>
+$(function(){
+	$('input[name=getMoneySmsSwitch]',navTab.getCurrentPanel()).change(function(){
+		if($(this).val() == 'true'){
+			$('#getMoneySmsContent',navTab.getCurrentPanel()).show();
+		}else{
+			$('#getMoneySmsContent',navTab.getCurrentPanel()).hide();
+		}
+	});
+	$('input[name=giveMoneySmsSwitch]',navTab.getCurrentPanel()).change(function(){
+		if($(this).val() == 'true'){
+			$('#giveMoneySmsContent',navTab.getCurrentPanel()).show();
+		}else{
+			$('#giveMoneySmsContent',navTab.getCurrentPanel()).hide();
+		}
+	});
+});
+function removeGivecon(key){
+	alertMsg.confirm("确定要删除该配置项吗?", {
+        okCall: function(){
+			navTab.getCurrentPanel().find('#vo_'+key).remove();
+				$.post('__URL__/deleteGiveCon:__XPATH__',{key:key},function(data){
+			});
+        }
+	});
+}
+</script>

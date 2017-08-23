@@ -1,0 +1,128 @@
+<include file="Public:header" />
+<!-- START BREADCRUMB -->
+<ul class="breadcrumb">
+    <li><a href="#">{:GET_F_L('当前位置')}</a></li>
+    <li class="active">{$nowtitle}</li>
+</ul>
+
+<div class="col-md-12">
+    <div class="alert alert-warning" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">×</span><span class="sr-only">Close</span>
+		</button>
+        <strong>{:GET_F_L('提示！')}</strong>{:GET_F_L('您可以通过在下方搜索框输入用户编号或者姓名搜索到您联盟机构注册的用户')}
+    </div>
+</div>
+
+<!-- END BREADCRUMB -->
+<div class="content-frame-top">
+		<!-- <div class="page-title">
+			<h2>
+				<span class="fa fa-arrow-circle-o-left"></span> {:GET_F_L('我的用户订单')}
+			</h2>
+		</div>
+		<div class="pull-right">
+		</div> -->
+		<table width="100%">
+		<tbody>
+		<tr>
+			<td height="30" align="center">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<form class="form-horizontal"  action="__URL__/myreg" method="post" name="form1" id="form1">
+									<input name="nettype" type="hidden" value="{$style}"/>
+									<div class="form-group">
+										<div class="col-md-6">
+											<div class="input-group">
+												<div class="input-group-addon" style="line-height:30px">
+													<span class="fa fa-search"></span>
+												</div>
+												<input id='userid' type="text" class="form-control" name="name" value="" size="12" style="border-radius:0px;" class="col-md-4"/>
+												<div class="input-group-btn">
+													<input id="button" class="btn btn-primary"	 class="button_onmousedown" type="submit" value="{:GET_F_L('搜索')}" style="height:34px;border-radius:0px 4px 4px 0px;">
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	</div>
+<!-- START CONTENT FRAME -->
+	<div class="col-md-9_1">
+		<form action="#" class="form-horizontal">
+
+			<div class="panel panel-colorful">
+				<div class="panel-heading">
+				</div>
+				<div class="panel-body form-group-separated">
+					<div class="table-responsive">
+						<table class="table table-bordered table-striped table-actions">
+							<thead>
+								<tr>
+									<foreach name="data.field" item="vo">
+									<th>{:GET_F_L($vo)}</th>
+									</foreach>
+								</tr>
+							</thead>
+							<tbody>
+								<foreach name="data.list" item="vo">
+								<tr class="datalist">
+									<foreach name="vo" item="vo1">
+									<td><nobr>{$vo.$key}</nobr></td>
+									</foreach>
+								</tr>
+								</foreach>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<!-- END CONTENT FRAME BODY -->
+
+
+    <div class="panel-footer">
+                <ul class="pagination pagination-sm pull-right">
+                    <li  class="disabled"><a href="#">{:GET_F_L('共')}{$data.count}{:GET_F_L('条记录')} {$data.nowPage}/{$data.totalPages}{:GET_F_L('页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] neq 1">
+                        <li class="disabled"><a href="{$data.firstRow}">«</a></li>
+                        <else/><li class="active"><a href="#">{:GET_F_L('首页')}</a></li>
+                    </if> -->
+                    <li><a href="{$data.upRow}">{:GET_F_L('上一页')}</a></li>
+                    <if condition="isset($data['rollPage'][-2])">
+                        <li><a href="{$data.rollPage.-2}">{$data['nowPage']-2}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][-1])">
+                        <li><a href="{$data.rollPage.-1}">{$data['nowPage']-1}</a></li>
+                    </if>
+                    <li class="disabled"><a href="#">{$data.nowPage}</a></li>
+                    <if condition="isset($data['rollPage'][1])">
+                        <li><a href="{$data.rollPage.1}">{$data['nowPage']+1}</a></li>
+                    </if>
+                    <if condition="isset($data['rollPage'][2])">
+                        <li><a href="{$data.rollPage.2}">{$data['nowPage']+2}</a></li>
+                    </if>
+                    <li><a href="{$data.downRow}">{:GET_F_L('下一页')}</a></li>
+                    <!-- <if condition="$data['nowPage'] lt $data['totalPages']">
+                        <li><a href="{$data.theEndRow}">{:GET_F_L('尾页')}</a></li>
+                        <else/><li  class="disabled"><a href="#">{:GET_F_L('尾页')}</a></li>
+                    </if> -->
+                </ul>
+            </div>
+
+    <!-- END CONTENT FRAME BODY -->
+
+</div>
+<!-- END CONTENT FRAME -->
+<include file="Public:footer" />
+<!-- END WIDGETS -->
